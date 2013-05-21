@@ -456,6 +456,8 @@
 		10FD1D60162C647100F4A366 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10FD1D5F162C647100F4A366 /* GameKit.framework */; };
 		10FD1D6C162C761300F4A366 /* PlayerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 10FD1D6B162C761300F4A366 /* PlayerModel.m */; };
 		10FFDACA15EE513B00226A8A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10FFDAC915EE513B00226A8A /* SystemConfiguration.framework */; };
+		C07DD983174B53A4002BB522 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C07DD981174B53A4002BB522 /* libsqlite3.dylib */; };
+		C07DD984174B53A4002BB522 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C07DD982174B53A4002BB522 /* Security.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -967,6 +969,8 @@
 		10FD1D6A162C761300F4A366 /* PlayerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerModel.h; sourceTree = "<group>"; };
 		10FD1D6B162C761300F4A366 /* PlayerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerModel.m; sourceTree = "<group>"; };
 		10FFDAC915EE513B00226A8A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		C07DD981174B53A4002BB522 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		C07DD982174B53A4002BB522 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -974,6 +978,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C07DD983174B53A4002BB522 /* libsqlite3.dylib in Frameworks */,
+				C07DD984174B53A4002BB522 /* Security.framework in Frameworks */,
 				10FD1D60162C647100F4A366 /* GameKit.framework in Frameworks */,
 				10B3EAE21625ADD4003ED046 /* Social.framework in Frameworks */,
 				10B3EADF1625ADCC003ED046 /* Accounts.framework in Frameworks */,
@@ -1065,6 +1071,8 @@
 		105683BB1578DC7A0030A2ED = {
 			isa = PBXGroup;
 			children = (
+				C07DD981174B53A4002BB522 /* libsqlite3.dylib */,
+				C07DD982174B53A4002BB522 /* Security.framework */,
 				10B3EAE31625B058003ED046 /* resources */,
 				10B3E8C91625AAF6003ED046 /* SpotDiferences */,
 				105683C91578DC7A0030A2ED /* Frameworks */,
