@@ -113,9 +113,9 @@
 {
     [super viewWillAppear:animated];
     
-    //self.imageview.image = [UIImage imageNamed:@"splash_screen"]; 
+    self.imageview.image = [UIImage imageNamed:@"splash_screen"];
     
-    [self playmov];
+    //[self playmov];
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -267,8 +267,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    //[self startTimer];    
-    //self.time = 0;
+    [self startTimer];    
+    self.time = 0;
     [[MyDocumentHandler sharedDocumentHandler] performWithDocument:^(UIManagedDocument *document){
         _document = document;
         [self useDocument];
