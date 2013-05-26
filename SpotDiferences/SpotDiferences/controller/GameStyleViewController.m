@@ -10,6 +10,10 @@
 #import "UikitFramework.h"
 #import "SoundManager.h"
 #import "InicialViewController.h"
+#import "GameViewController.h"
+#import "Maze+Manage.h"
+#import "MyDocumentHandler.h"
+
 
 @interface GameStyleViewController ()
 @property (nonatomic,weak) IBOutlet UIImageView *imageview;
@@ -17,6 +21,7 @@
 
 @implementation GameStyleViewController
 @synthesize imageview = _imageview;
+@synthesize document = _document;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -30,6 +35,11 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [[MyDocumentHandler sharedDocumentHandler] performWithDocument:^(UIManagedDocument *document){
+        _document = document;
+    }];
+
 	// Do any additional setup after loading the view.
     self.imageview.image = [UIImage imageNamed:@"background_clear"];
 }
@@ -75,7 +85,20 @@
 {
     [self playInterfaceSound];
     [self setGameState:@"normal"];
+    /*
     [self performSegueWithIdentifier:@"go to dificulty" sender:self];
+     */
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+	[prefs setObject:@"beginner" forKey:@"difficulty"];
+    [prefs setObject:@"surprise" forKey:@"gameFlow"];
+    [prefs synchronize];
+    NSArray *allMAzes = [Maze getMazeByState:@"normal" inManagedObjectContext:self.document.managedObjectContext];
+    if ([allMAzes count] == 0) {
+        NSLog(@"cdcsdc");
+    }else {
+        [self performSegueWithIdentifier:@"SoftExciting" sender:self];
+    }
+    
 }
 
 -(void)finishedGameButtonTapped:(UIButton*)sender
@@ -142,5 +165,21 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft) || (interfaceOrientation == UIInterfaceOrientationLandscapeRight);
+}
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"SoftExciting"]) {
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    //NSString *gameFlow = [prefs objectForKey:@"gameFlow"];
+    NSString *gameState = [prefs stringForKey:@"gameState"];
+    
+    NSArray *allMAzes = [Maze getMazeByState:gameState inManagedObjectContext:self.document.managedObjectContext];
+    int number = (arc4random()%[allMAzes count]);
+    Maze *maze = [allMAzes objectAtIndex:number];
+    GameViewController *gvc = (GameViewController*)segue.destinationViewController;
+    [gvc setupWith:maze andContext: [_document managedObjectContext]];
+    }
+    
 }
 @end

@@ -7,7 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Maze.h"
 
 @interface GameStyleViewController : UIViewController
+
+@property (nonatomic,weak) Maze *maze;
+@property (nonatomic, weak)IBOutlet UIManagedDocument *document;
+
 
 @end
