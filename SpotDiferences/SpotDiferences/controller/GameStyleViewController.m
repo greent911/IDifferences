@@ -37,7 +37,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self playSound];
+    //[self playSound];
     int offset = 25;
     int halfViewSize = [self view].frame.size.width / 2;
     UIImage *image = [UIImage imageNamed:@"btn_wine"];
@@ -52,18 +52,19 @@
     [homeButton addTarget:self action:@selector(homeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:homeButton];
 
-    UIButton *resumeGameButton = [UikitFramework createButtonWithBackgroudImage:@"btn_darkpink" title:@"RESUME" positionX:halfViewSize - image.size.width / 2 positionY:150];
+//    UIButton *resumeGameButton = [UikitFramework createButtonWithBackgroudImage:@"btn_darkpink" title:@"RESUME" positionX:halfViewSize - image.size.width / 2 positionY:150];
+    UIButton *resumeGameButton = [UikitFramework createButtonWithBackgroudImage:@"btn_darkpink" title:@"RESUME" positionX:halfViewSize +image.size.width * 0.5+ offset positionY:150];
     [resumeGameButton addTarget:self action:@selector(resumeGameButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:resumeGameButton];
     
     UIButton *newGameButton = [UikitFramework createButtonWithBackgroudImage:@"btn_wine" title:@"NEW" positionX:halfViewSize - image.size.width * 1.5 - offset  positionY:150];
     [newGameButton addTarget:self action:@selector(newGameButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:newGameButton];
-    
+    /*
     UIButton *finishedGameButton = [UikitFramework createButtonWithBackgroudImage:@"btn_pink" title:@"FINISHED" positionX:halfViewSize +image.size.width * 0.5+ offset  positionY:150];
     [finishedGameButton addTarget:self action:@selector(finishedGameButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:finishedGameButton];
-    
+    */
     UILabel *label = [UikitFramework createLableWithText:@"SELECT GAME STATUS" positionX:0 positionY:0 width:self.view.frame.size.width height:100];
     label.textAlignment = UITextAlignmentCenter;
     label.font = [UIFont fontWithName:[UikitFramework getFontName] size: 25];
