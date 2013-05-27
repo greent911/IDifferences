@@ -97,7 +97,13 @@
     [prefs synchronize];
     NSArray *allMAzes = [Maze getMazeByState:@"normal" inManagedObjectContext:self.document.managedObjectContext];
     if ([allMAzes count] == 0) {
-        NSLog(@"cdcsdc");
+        UIAlertView *alertView = [[UIAlertView alloc]
+                                  initWithTitle:@"No Game!!!"
+                                  message:nil
+                                  delegate:self
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+        [alertView show];
     }else {
         [self performSegueWithIdentifier:@"SoftExciting" sender:self];
     }
@@ -126,6 +132,13 @@
 
     } else {
         NSLog(@"No Resume Game!!!");
+        UIAlertView *alertView = [[UIAlertView alloc]
+                                  initWithTitle:@"No Resume Game!!!"
+                                  message:nil
+                                  delegate:self
+                                  cancelButtonTitle:@"OK"
+                                  otherButtonTitles:nil];
+        [alertView show];
     }
 }
 
