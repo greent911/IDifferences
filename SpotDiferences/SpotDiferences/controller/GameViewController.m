@@ -50,6 +50,9 @@
  */
 
 @interface GameViewController () <UIScrollViewDelegate,FBLoginViewDelegate>
+{
+    NSString *gameMode;
+}
 
 // ScrollViews
 @property (weak, nonatomic) IBOutlet UIScrollView *rightScrollView;
@@ -520,7 +523,9 @@
         time = 0;
     }
     if (![self.maze.state isEqualToString:@"finished"]) {
-         NSArray *resumeMazes = [Maze getMazeByState:@"paused" inManagedObjectContext:self.document.managedObjectContext];
+        NSString *pausedState=[NSString stringWithFormat:@"paused%@",gameMode];
+        // NSArray *resumeMazes = [Maze getMazeByState:@"paused" inManagedObjectContext:self.document.managedObjectContext];
+         NSArray *resumeMazes = [Maze getMazeByState:pausedState inManagedObjectContext:self.document.managedObjectContext];
         if ([resumeMazes count] > 0) {
             for (Maze *maz in resumeMazes) {
                 maz.state=@"normal";
@@ -532,7 +537,8 @@
         }
 
         NSLog(@"self.maze.state=%@",self.maze.state);
-        self.maze.state = @"paused";
+        //self.maze.state = @"paused";
+        self.maze.state = pausedState;
         self.maze.differencesMissed = [NSNumber numberWithInt:self.clickError];
         int score = self.score.tag;
         self.maze.personalscore = [NSNumber numberWithInt:score];
@@ -2128,7 +2134,9 @@
 }
 
 -(void)viewDidLoad {
-    [super viewDidLoad];     
+    [super viewDidLoad];
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    gameMode=[prefs stringForKey:@"gameMode"];
     
     [[MyDocumentHandler sharedDocumentHandler] performWithDocument:^(UIManagedDocument *document){
         _document = document;

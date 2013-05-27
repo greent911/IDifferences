@@ -123,7 +123,11 @@
     [self playInterfaceSound];
     [self setGameState:@"paused"];
     //[self performSegueWithIdentifier:@"resumeGame" sender:self];
-    NSArray *resumeMazes = [Maze getMazeByResumedGames:self.document.managedObjectContext];
+   // NSArray *resumeMazes = [Maze getMazeByResumedGames:self.document.managedObjectContext];
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    NSString *gameMode=[prefs stringForKey:@"gameMode"];
+    NSString *pausedState=[NSString stringWithFormat:@"paused%@",gameMode];
+    NSArray *resumeMazes=[Maze getMazeByState:pausedState inManagedObjectContext:self.document.managedObjectContext];
     if (resumeMazes) {
         Maze *resumeMaze=[resumeMazes objectAtIndex:0];
         _resumeName = resumeMaze.name;

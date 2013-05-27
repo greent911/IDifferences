@@ -142,6 +142,11 @@
 -(void) excitingButtonTapped:(UIButton*)sender
 {
     NSLog(@"excitingButtonTapped");
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    [prefs setObject:@"exciting" forKey:@"gameMode"];
+    [prefs synchronize];
+    //NSLog(@"%@",[prefs stringForKey:@"gameMode"]);
+    [self performSegueWithIdentifier:@"playStyle" sender:self];
 }
 
 -(void)gamecenterButtonTapped:(UIButton*)sender
@@ -182,7 +187,9 @@
 -(void)playGameButtonTapped:(UIButton*)sender
 {
     [self playInterfaceSound];
-   
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    [prefs setObject:@"Soft" forKey:@"gameMode"];
+    [prefs synchronize];
     
     [self performSegueWithIdentifier:@"playStyle" sender:self];
 }
