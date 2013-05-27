@@ -520,6 +520,18 @@
         time = 0;
     }
     if (![self.maze.state isEqualToString:@"finished"]) {
+         NSArray *resumeMazes = [Maze getMazeByState:@"paused" inManagedObjectContext:self.document.managedObjectContext];
+        if ([resumeMazes count] > 0) {
+            for (Maze *maz in resumeMazes) {
+                maz.state=@"normal";
+                maz.differencesMissed = [NSNumber numberWithInt:0];
+                maz.personalscore = [NSNumber numberWithInt:0];
+                maz.personalTime =  [NSNumber numberWithInt:0];
+                maz.timeRemaining = [NSNumber numberWithInt:0];
+            }
+        }
+
+        NSLog(@"self.maze.state=%@",self.maze.state);
         self.maze.state = @"paused";
         self.maze.differencesMissed = [NSNumber numberWithInt:self.clickError];
         int score = self.score.tag;
@@ -939,7 +951,9 @@
     NSString *gameFlow = [prefs objectForKey:@"gameFlow"];
     NSString *gameState = [prefs stringForKey:@"gameState"];
     if ([gameState isEqualToString:@"paused"]) {
-        [self backToResumeGames];
+        NSLog(@"%@",gameFlow);
+        [prefs setObject:@"normal" forKey:@"gameState"];
+        //[self backToResumeGames];
     }
     
     if ([gameFlow isEqualToString:@"main"]) {
@@ -1966,11 +1980,11 @@
     [_rightScrollView setMinimumZoomScale:minimumScale];
     [_rightScrollView setZoomScale:initialZoomScale];
 
-    
-    for (int c=0; c < [_mazeHelper.mazeDifferences count]; c++) {
-        Differences *difference = [_mazeHelper.mazeDifferences objectAtIndex:c];
-        [CGMarkerHelper drawMarker:difference inView:_rightImageView insecundView:_leftImageView inBounds:[_mazeHelper viewSize]];
-    }
+    //Cheat!!!
+     for (int c=0; c < [_mazeHelper.mazeDifferences count]; c++) {
+         Differences *difference = [_mazeHelper.mazeDifferences objectAtIndex:c];
+         [CGMarkerHelper drawMarker:difference inView:_rightImageView insecundView:_leftImageView inBounds:[_mazeHelper viewSize]];
+     }
 }
 
 

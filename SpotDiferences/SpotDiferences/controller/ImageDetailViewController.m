@@ -18,6 +18,10 @@
 #import "Pack+manage.h"
 
 @interface ImageDetailViewController ()<updateHighScores>
+{
+    NSString *resumeName;
+}
+
 @property (nonatomic,weak) IBOutlet UIImageView *imageview;
 @property (weak, nonatomic) IBOutlet UILabel *besttime;
 @property (weak, nonatomic) IBOutlet UILabel *expectedtime;
@@ -70,7 +74,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.imageview.image = [UIImage imageNamed:@"background_clear"]; 
+    NSLog(@"_foto:%@",_foto);
+    resumeName=_foto;
+    NSLog(@"resumeName:%@",resumeName);
+    self.imageview.image = [UIImage imageNamed:@"background_clear"];
     _maze = [Maze getMazeByName:self.foto inManagedObjectContext:self.document.managedObjectContext];
     NSString *themeName = [_maze.theme.name uppercaseString];
     
@@ -78,7 +85,6 @@
     if (!labelToShow) {
         labelToShow = _maze.name;
     }
-    
     NSString *lvlName = [labelToShow uppercaseString];
     lvlName = [lvlName stringByReplacingOccurrencesOfString:@"_" withString:@" "];
     self.mazeDetail.text = [NSString stringWithFormat:@"%@ -  %@",themeName ,lvlName];
@@ -295,13 +301,25 @@
 {
     [self playInterfaceSound];
     [[SoundManager sharedSoundManager] stopIntro];
+    //NSLog(@"maze.name:%@",self.maze.name);
+    /*
+    NSLog(@"_foto:%@",_foto);
+    _maze = [Maze getMazeByName:self.foto inManagedObjectContext:self.document.managedObjectContext];
+     */
+    
+    NSLog(@"resumeName:%@",resumeName);
+    _maze = [Maze getMazeByName:resumeName inManagedObjectContext:self.document.managedObjectContext];
+
+    NSLog(@"_maze.name:%@",_maze.name);
     [self performSegueWithIdentifier:@"start game" sender:self];
 }
 
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     GameViewController *gvc = (GameViewController*)segue.destinationViewController;
-    [gvc setupWith:_maze andContext: [_document managedObjectContext]];
+   // NSLog(@"_maze.name:%@",_foto);
+   [gvc setupWith:_maze andContext: [_document managedObjectContext]];
+
     
 }
 

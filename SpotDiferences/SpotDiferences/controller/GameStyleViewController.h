@@ -13,6 +13,7 @@
 
 @property (nonatomic,weak) Maze *maze;
 @property (nonatomic, weak)IBOutlet UIManagedDocument *document;
+@property (nonatomic,weak) NSString *resumeName;
 
 
 @end

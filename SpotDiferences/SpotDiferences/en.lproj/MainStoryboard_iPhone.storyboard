@@ -710,6 +710,7 @@
                         <segue destination="5dN-WS-LgN" kind="push" identifier="go to dificulty" id="7mc-H8-KA6"/>
                         <segue destination="Wo0-Gw-0is" kind="push" identifier="resumeGame" id="pPG-9h-kvb"/>
                         <segue destination="2" kind="push" identifier="SoftExciting" id="Hdv-v7-0l6"/>
+                        <segue destination="eOX-OG-IEl" kind="push" identifier="resume" id="Ogb-jq-ZE9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wpe-Se-Ps1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -877,7 +878,7 @@
         <segue reference="4U8-DB-7ZD"/>
         <segue reference="vFs-a5-tsi"/>
         <segue reference="Hdv-v7-0l6"/>
+        <segue reference="Ogb-jq-ZE9"/>
         <segue reference="tfg-LN-F6T"/>
-        <segue reference="eOd-Q1-YDH"/>
     </inferredMetricsTieBreakers>
 </document>

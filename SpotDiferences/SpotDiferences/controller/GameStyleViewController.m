@@ -13,6 +13,8 @@
 #import "GameViewController.h"
 #import "Maze+Manage.h"
 #import "MyDocumentHandler.h"
+#import "ImageDetailViewController.h"
+
 
 
 @interface GameStyleViewController ()
@@ -22,6 +24,7 @@
 @implementation GameStyleViewController
 @synthesize imageview = _imageview;
 @synthesize document = _document;
+@synthesize resumeName= _resumeName;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -113,7 +116,17 @@
 {
     [self playInterfaceSound];
     [self setGameState:@"paused"];
-    [self performSegueWithIdentifier:@"resumeGame" sender:self];
+    //[self performSegueWithIdentifier:@"resumeGame" sender:self];
+    NSArray *resumeMazes = [Maze getMazeByResumedGames:self.document.managedObjectContext];
+    if (resumeMazes) {
+        Maze *resumeMaze=[resumeMazes objectAtIndex:0];
+        _resumeName = resumeMaze.name;
+        NSLog(@"_resumeName:%@",_resumeName);
+        [self performSegueWithIdentifier:@"resume" sender:self];
+
+    } else {
+        NSLog(@"No Resume Game!!!");
+    }
 }
 
 -(void)setGameState:(NSString*)state
@@ -179,6 +192,17 @@
     Maze *maze = [allMAzes objectAtIndex:number];
     GameViewController *gvc = (GameViewController*)segue.destinationViewController;
     [gvc setupWith:maze andContext: [_document managedObjectContext]];
+    }else if([segue.identifier isEqualToString:@"resume"]){
+        ImageDetailViewController* idc = segue.destinationViewController;
+        /*
+        NSArray *resumeMazes = [Maze getMazeByResumedGames:self.document.managedObjectContext];
+        Maze *resumeMaze=[resumeMazes objectAtIndex:0];
+                NSString *name=resumeMaze.name;
+        idc.foto = name;
+        NSLog(@"name:%@",name);
+         */
+        idc.foto=_resumeName;
+        [idc setDocument:self.document];
     }
     
 }
