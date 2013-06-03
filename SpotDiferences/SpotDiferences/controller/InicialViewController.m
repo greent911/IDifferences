@@ -137,11 +137,13 @@
 -(void) challengeButtonTapped:(UIButton*)sender
 {
     NSLog(@"challengeButtonTapped");
+    [self playInterfaceSound];
 }
 
 -(void) excitingButtonTapped:(UIButton*)sender
 {
     NSLog(@"excitingButtonTapped");
+    [self playInterfaceSound];
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     [prefs setObject:@"exciting" forKey:@"gameMode"];
     [prefs synchronize];
