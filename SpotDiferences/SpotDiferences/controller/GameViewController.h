@@ -9,13 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "MazeHelper.h"
 #import "UikitFramework.h"
+#import "ImageMaskView.h"
 
 /**
  *
  * Game Controller
  *
  */
-@interface GameViewController : UIViewController
+@interface GameViewController : UIViewController<ImageMaskFilledDelegate>
 
 @property (nonatomic) MazeHelper *mazeHelper;
 @property (nonatomic, weak) IBOutlet UIManagedDocument *document;

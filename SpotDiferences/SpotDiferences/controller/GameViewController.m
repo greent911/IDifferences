@@ -52,6 +52,7 @@
 @interface GameViewController () <UIScrollViewDelegate,FBLoginViewDelegate>
 {
     NSString *gameMode;
+    ImageMaskView *imageMaskView;
 }
 
 // ScrollViews
@@ -524,6 +525,8 @@
     }
     if (![self.maze.state isEqualToString:@"finished"]) {
         NSString *pausedState=[NSString stringWithFormat:@"paused%@",gameMode];
+//        NSLog(@"gameMode:%@",gameMode);
+//          NSLog(@"pausedState:%@",pausedState);
         // NSArray *resumeMazes = [Maze getMazeByState:@"paused" inManagedObjectContext:self.document.managedObjectContext];
          NSArray *resumeMazes = [Maze getMazeByState:pausedState inManagedObjectContext:self.document.managedObjectContext];
         if ([resumeMazes count] > 0) {
@@ -610,15 +613,13 @@
     UITapGestureRecognizer *tapGestureForLeftImage = 
     [[UITapGestureRecognizer alloc] 
      initWithTarget:self action:@selector(tapGestureHandlerForLeftView:)];
+    
+    if(![gameMode isEqual: @"exciting"]){
     UITapGestureRecognizer *tapGestureForRightImage = 
     [[UITapGestureRecognizer alloc] 
      initWithTarget:self action:@selector(tapGestureHandlerForRightView:)];
-    
-    /*
-    [_rightScrollView addGestureRecognizer:tapGestureForRightImage];
-    [_leftScrollView addGestureRecognizer:tapGestureForLeftImage];
-     */
     [_rightImageView addGestureRecognizer:tapGestureForRightImage];
+    }
     [_leftImageView addGestureRecognizer:tapGestureForLeftImage];
 }
 
@@ -630,8 +631,10 @@
  **/ 
 -(void)tapGestureHandlerForLeftView:(UITapGestureRecognizer*)gesture  {
     
+        
+    
     CGPoint touchPosition = [gesture locationInView:_leftImageView];
-    //NSLog(@"Left Touch %f - %f", touchPosition.x, touchPosition.y);
+    NSLog(@"Left Touch %f - %f", touchPosition.x, touchPosition.y);
     [self checkDiffMatchs:touchPosition inView:_leftImageView];
 }
 
@@ -652,7 +655,9 @@
         self.step_for_testing++;
     }
     
-    //NSLog(@"Right Touch %f - %f", touchPosition.x/[_mazeHelper viewSize].width*100, touchPosition.y/[_mazeHelper viewSize].height*100);
+//    NSLog(@"Right Touch %f - %f", touchPosition.x/[_mazeHelper viewSize].width*100, touchPosition.y/[_mazeHelper viewSize].height*100);
+    NSLog(@"Right Touch %f - %f", touchPosition.x, touchPosition.y);
+
     [self checkDiffMatchs:touchPosition inView:_rightImageView];
 }
 
@@ -670,7 +675,7 @@
 -(void)errorImageAnimation:(CGPoint)position {
     
     //NSLog(@" Error in %f - %f", position.x, position.y);
-    //float ratio = (_rightScrollView.frame.size.width / [_mazeHelper viewSize].width); 
+    //float ratio = (_rightScrollView.frame.size.width / [_mazeHelper viewSize].width);
     float positionX =  (position.x *[_rightScrollView zoomScale]) - _rightScrollView.contentOffset.x;
     float positionY = (position.y *[_rightScrollView zoomScale]) - _rightScrollView.contentOffset.y;
     float rightOriginX = _rightScrollView.frame.origin.x;
@@ -1970,6 +1975,9 @@
         _leftImageView.frame = CGRectMake(0, 0, leftImage.size.width, leftImage.size.height);
 
     }
+    
+        NSLog(@"(%f,%f) (%f,%f)",rightImage.size.width, rightImage.size.height,_rightImageView.frame.size.width,_rightImageView.frame.size.height);
+
         
     self.timerForReal = 0;
     float initialZoomScale = [_mazeHelper initialZoomScale];
@@ -1977,6 +1985,17 @@
     
     NSLog(@"inicial zoomscale = %f max zoomscale = %f",initialZoomScale,maximumZoomScale);
     
+    if([gameMode isEqual: @"exciting"]){
+
+    UIImage * maskImage = [UIImage imageNamed:@"lighthouse.jpg"];
+    imageMaskView = [[ImageMaskView alloc] initWithFrame: CGRectMake(0, 0, rightImage.size.width, rightImage.size.height) image:maskImage];
+//    NSLog(@"(%f,%f) (%f,%f)",imageMaskView.frame.size.width,imageMaskView.frame.size.height,_rightImageView.frame.size.width,_rightImageView.frame.size.height);
+    
+    imageMaskView.imageMaskFilledDelegate=self;
+    
+    [_rightImageView addSubview:imageMaskView];
+    }
+  
     
     [_leftScrollView setMaximumZoomScale:maximumZoomScale];
     [_leftScrollView setMinimumZoomScale: minimumScale];
@@ -1985,6 +2004,10 @@
     [_rightScrollView setMaximumZoomScale:maximumZoomScale];
     [_rightScrollView setMinimumZoomScale:minimumScale];
     [_rightScrollView setZoomScale:initialZoomScale];
+  
+//    NSLog(@"(%f,%f) (%f,%f)",imageMaskView.frame.size.width,imageMaskView.frame.size.height,_rightImageView.frame.size.width,_rightImageView.frame.size.height);
+
+
 
     //Cheat!!!
      for (int c=0; c < [_mazeHelper.mazeDifferences count]; c++) {
@@ -2085,6 +2108,9 @@
         self.clickError = errors;
         self.timerForReal = [self.maze.personalTime intValue];
         NSLog(@"timer is %d",self.timerForReal);
+        if ([self.maze.state isEqualToString:@"pausedexciting"]) {
+            
+        }
     }
     [self startTimer];
 }
@@ -2199,6 +2225,17 @@
 
 -(BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation == UIInterfaceOrientationLandscapeLeft) || (interfaceOrientation == UIInterfaceOrientationLandscapeRight);
+}
+-(void) imageMaskView:(ImageMaskView *)maskView touchMaskEvent:(BOOL)ellipseHasDrawed touchPosition:(CGPoint)touchPosition
+{
+    if (ellipseHasDrawed) {
+//        NSLog(@"ya Touch %f - %f", touchPosition.x, touchPosition.y);
+       [self checkDiffMatchs:touchPosition inView:_rightImageView];
+        
+    } else {
+        NSLog(@"ellipseHasNotDrawed");
+    }
+
 }
 
 @end
