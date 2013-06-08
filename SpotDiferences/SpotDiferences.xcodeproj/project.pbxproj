@@ -474,6 +474,17 @@
 		10FD1D60162C647100F4A366 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10FD1D5F162C647100F4A366 /* GameKit.framework */; };
 		10FD1D6C162C761300F4A366 /* PlayerModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 10FD1D6B162C761300F4A366 /* PlayerModel.m */; };
 		10FFDACA15EE513B00226A8A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10FFDAC915EE513B00226A8A /* SystemConfiguration.framework */; };
+		984A5323176326C5007A867D /* Bean.png in Resources */ = {isa = PBXBuildFile; fileRef = 984A5320176326C5007A867D /* Bean.png */; };
+		984A5324176326C5007A867D /* ChengYuan.png in Resources */ = {isa = PBXBuildFile; fileRef = 984A5321176326C5007A867D /* ChengYuan.png */; };
+		984A5325176326C5007A867D /* Rice.png in Resources */ = {isa = PBXBuildFile; fileRef = 984A5322176326C5007A867D /* Rice.png */; };
+		984A532717632774007A867D /* blackboard.png in Resources */ = {isa = PBXBuildFile; fileRef = 984A532617632774007A867D /* blackboard.png */; };
+		984A532B17632789007A867D /* beginning.png in Resources */ = {isa = PBXBuildFile; fileRef = 984A532817632789007A867D /* beginning.png */; };
+		984A532C17632789007A867D /* challenging.png in Resources */ = {isa = PBXBuildFile; fileRef = 984A532917632789007A867D /* challenging.png */; };
+		984A532D17632789007A867D /* exciting.png in Resources */ = {isa = PBXBuildFile; fileRef = 984A532A17632789007A867D /* exciting.png */; };
+		986D00C517630967003A508B /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 986D00C417630967003A508B /* FacebookSDK.framework */; };
+		986D00C71763099E003A508B /* FacebookSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 986D00C61763099E003A508B /* FacebookSDKResources.bundle */; };
+		986D00C917630D81003A508B /* background_with_title.png in Resources */ = {isa = PBXBuildFile; fileRef = 986D00C817630D81003A508B /* background_with_title.png */; };
+		986D00CB17630E33003A508B /* ModeSelection.png in Resources */ = {isa = PBXBuildFile; fileRef = 986D00CA17630E33003A508B /* ModeSelection.png */; };
 		C07DD983174B53A4002BB522 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C07DD981174B53A4002BB522 /* libsqlite3.dylib */; };
 		C07DD984174B53A4002BB522 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C07DD982174B53A4002BB522 /* Security.framework */; };
 		C0FC34F9175F9EC30070CDE7 /* ImageMaskView.mm in Sources */ = {isa = PBXBuildFile; fileRef = C0FC34F4175F9EC30070CDE7 /* ImageMaskView.mm */; };
@@ -1008,6 +1019,17 @@
 		10FD1D6A162C761300F4A366 /* PlayerModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerModel.h; sourceTree = "<group>"; };
 		10FD1D6B162C761300F4A366 /* PlayerModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerModel.m; sourceTree = "<group>"; };
 		10FFDAC915EE513B00226A8A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		984A5320176326C5007A867D /* Bean.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Bean.png; sourceTree = "<group>"; };
+		984A5321176326C5007A867D /* ChengYuan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ChengYuan.png; sourceTree = "<group>"; };
+		984A5322176326C5007A867D /* Rice.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Rice.png; sourceTree = "<group>"; };
+		984A532617632774007A867D /* blackboard.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = blackboard.png; sourceTree = "<group>"; };
+		984A532817632789007A867D /* beginning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = beginning.png; sourceTree = "<group>"; };
+		984A532917632789007A867D /* challenging.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = challenging.png; sourceTree = "<group>"; };
+		984A532A17632789007A867D /* exciting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = exciting.png; sourceTree = "<group>"; };
+		986D00C417630967003A508B /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
+		986D00C61763099E003A508B /* FacebookSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = FacebookSDKResources.bundle; sourceTree = "<group>"; };
+		986D00C817630D81003A508B /* background_with_title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = background_with_title.png; sourceTree = "<group>"; };
+		986D00CA17630E33003A508B /* ModeSelection.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ModeSelection.png; sourceTree = "<group>"; };
 		C07DD981174B53A4002BB522 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		C07DD982174B53A4002BB522 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		C0FC34F3175F9EC30070CDE7 /* ImageMaskView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageMaskView.h; sourceTree = "<group>"; };
@@ -1160,14 +1182,14 @@
 		105683C91578DC7A0030A2ED /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				986D00C61763099E003A508B /* FacebookSDKResources.bundle */,
+				986D00C417630967003A508B /* FacebookSDK.framework */,
 				C07DD982174B53A4002BB522 /* Security.framework */,
 				C07DD981174B53A4002BB522 /* libsqlite3.dylib */,
 				10FD1D5F162C647100F4A366 /* GameKit.framework */,
 				10B3EAE11625ADD4003ED046 /* Social.framework */,
 				10B3EADD1625ADCC003ED046 /* Accounts.framework */,
 				10B3EADE1625ADCC003ED046 /* AdSupport.framework */,
-				07E2CB62175F3048002B2F5D /* FacebookSDKResources.bundle */,
-				07E2CB60175F302C002B2F5D /* FacebookSDK.framework */,
 				10848CA9161B1E630086BE88 /* libz.1.2.5.dylib */,
 				108AFCFC1614B75B009D29BE /* StoreKit.framework */,
 				1084DD4415F0C37E00CF72F1 /* MediaPlayer.framework */,
@@ -1694,6 +1716,15 @@
 				07D820A717620FAE0032A79D /* level_yellow.png */,
 				07D820B4176336CD0032A79D /* level_pink.png */,
 				07D820B2176335620032A79D /* sky.png */,
+				984A532817632789007A867D /* beginning.png */,
+				984A532917632789007A867D /* challenging.png */,
+				984A532A17632789007A867D /* exciting.png */,
+				984A532617632774007A867D /* blackboard.png */,
+				984A5320176326C5007A867D /* Bean.png */,
+				984A5321176326C5007A867D /* ChengYuan.png */,
+				984A5322176326C5007A867D /* Rice.png */,
+				986D00CA17630E33003A508B /* ModeSelection.png */,
+				986D00C817630D81003A508B /* background_with_title.png */,
 				1008E209162F107000DD064E /* Game_Center_logo@2x.png */,
 				07D820A31761D3AE0032A79D /* Background.png */,
 				10B3EBDE1625B058003ED046 /* 37x-Checkmark.png */,
@@ -2340,6 +2371,16 @@
 				07D820A817620FB00032A79D /* level_yellow.png in Resources */,
 				07D820B3176335630032A79D /* sky.png in Resources */,
 				07D820B5176336D20032A79D /* level_pink.png in Resources */,
+				986D00C71763099E003A508B /* FacebookSDKResources.bundle in Resources */,
+				986D00C917630D81003A508B /* background_with_title.png in Resources */,
+				986D00CB17630E33003A508B /* ModeSelection.png in Resources */,
+				984A5323176326C5007A867D /* Bean.png in Resources */,
+				984A5324176326C5007A867D /* ChengYuan.png in Resources */,
+				984A5325176326C5007A867D /* Rice.png in Resources */,
+				984A532717632774007A867D /* blackboard.png in Resources */,
+				984A532B17632789007A867D /* beginning.png in Resources */,
+				984A532C17632789007A867D /* challenging.png in Resources */,
+				984A532D17632789007A867D /* exciting.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

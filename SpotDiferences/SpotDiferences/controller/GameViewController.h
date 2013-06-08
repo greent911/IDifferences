@@ -20,6 +20,9 @@
 
 @property (nonatomic) MazeHelper *mazeHelper;
 @property (nonatomic, weak) IBOutlet UIManagedDocument *document;
+@property (nonatomic,retain) IBOutlet UIProgressView *myTimer;
+
 - (void) setupWith:(Maze*)maze andContext:(NSManagedObjectContext *)context;
+
 
 @end

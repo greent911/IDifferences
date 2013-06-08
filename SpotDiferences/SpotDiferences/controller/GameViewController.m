@@ -1947,13 +1947,38 @@
 }
 
 
+-(void) myAnimating{
+    
+    if (self.myTimer.progress <1 ){
+        [self.myTimer setProgress:self.myTimer.progress+0.1 animated:YES];
+        [self performSelector:@selector(myAnimating) withObject:nil afterDelay:0.1f];
+    }
+    else{
+        [self.myTimer setHidden:YES];
+    }
+    
+}
+
 
 -(void)addTimerUnitsToScreen {
-    for (int c =0; c<timeUnitNumber; c++) {
-        UIImageView *timerimageview = [UikitFramework createImageViewWithImage:@"time_unit_white" positionX:30+offset*c positionY:10];
-        [self.view addSubview:timerimageview];
-        [self.timerUnits addObject:timerimageview];
-    } 
+    
+    int offset2 = 30;
+    int halfViewSize = [self view].frame.size.width / 2;
+//    [super viewDidAppear:animated];
+    self.myTimer = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
+    //    [self.myIndicator setProgress:0.4 animated:YES];
+    self.myTimer.transform = CGAffineTransformMakeRotation( M_PI * 0.5 );
+    
+    self.myTimer.frame = CGRectMake(halfViewSize + 3.5*offset2, 285, 200, 70);
+    [self.view addSubview:self.myTimer];
+    [self performSelector:@selector(myAnimating) withObject:nil afterDelay:1.0f];
+    
+    
+//    for (int c =0; c<timeUnitNumber; c++) {
+//        UIImageView *timerimageview = [UikitFramework createImageViewWithImage:@"time_unit_white" positionX:30+offset*c positionY:10];
+//        [self.view addSubview:timerimageview];
+//        [self.timerUnits addObject:timerimageview];
+//    } 
 }
 
 

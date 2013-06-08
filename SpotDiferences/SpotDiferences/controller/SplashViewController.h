@@ -11,4 +11,6 @@
 @interface SplashViewController : UIViewController
 @property (nonatomic,weak) IBOutlet UIImageView *imageview;
 @property (nonatomic,weak) UIManagedDocument *document;
+@property (nonatomic,retain) IBOutlet UIProgressView *myIndicator;
+
 @end
