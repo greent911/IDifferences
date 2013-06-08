@@ -34,7 +34,7 @@
 
 @end
 
-@interface ImageMaskView : UIImageView {
+@interface ImageMaskView : UIImageView <NSCoding>{
 	size_t tilesX;
 	size_t tilesY;
 }
@@ -43,5 +43,6 @@
 @property (nonatomic, weak) id<ImageMaskFilledDelegate> imageMaskFilledDelegate;
 
 - (id)initWithFrame:(CGRect)frame image:(UIImage *)img;
-
+- (void)reset :(CGRect)frame image:(UIImage *)img;
+-(void) showmaskedmtxC;
 @end

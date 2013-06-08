@@ -458,6 +458,8 @@
 		10FFDACA15EE513B00226A8A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10FFDAC915EE513B00226A8A /* SystemConfiguration.framework */; };
 		C07DD983174B53A4002BB522 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = C07DD981174B53A4002BB522 /* libsqlite3.dylib */; };
 		C07DD984174B53A4002BB522 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C07DD982174B53A4002BB522 /* Security.framework */; };
+		C0FC34F9175F9EC30070CDE7 /* ImageMaskView.mm in Sources */ = {isa = PBXBuildFile; fileRef = C0FC34F4175F9EC30070CDE7 /* ImageMaskView.mm */; };
+		C0FC34FA175F9EC30070CDE7 /* Matrix.m in Sources */ = {isa = PBXBuildFile; fileRef = C0FC34F7175F9EC30070CDE7 /* Matrix.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -971,6 +973,11 @@
 		10FFDAC915EE513B00226A8A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		C07DD981174B53A4002BB522 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		C07DD982174B53A4002BB522 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		C0FC34F3175F9EC30070CDE7 /* ImageMaskView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageMaskView.h; sourceTree = "<group>"; };
+		C0FC34F4175F9EC30070CDE7 /* ImageMaskView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ImageMaskView.mm; sourceTree = "<group>"; };
+		C0FC34F6175F9EC30070CDE7 /* Matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix.h; sourceTree = "<group>"; };
+		C0FC34F7175F9EC30070CDE7 /* Matrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Matrix.m; sourceTree = "<group>"; };
+		C0FC34F8175F9EC30070CDE7 /* PointTransforms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointTransforms.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1254,6 +1261,9 @@
 		10B3E9451625AAF6003ED046 /* view */ = {
 			isa = PBXGroup;
 			children = (
+				C0FC34F3175F9EC30070CDE7 /* ImageMaskView.h */,
+				C0FC34F4175F9EC30070CDE7 /* ImageMaskView.mm */,
+				C0FC34F5175F9EC30070CDE7 /* Utils */,
 				10B3E9461625AAF6003ED046 /* iCarousel */,
 				10B3E9491625AAF6003ED046 /* MazeView.h */,
 				10B3E94A1625AAF6003ED046 /* MazeView.m */,
@@ -1806,6 +1816,16 @@
 			path = videos;
 			sourceTree = "<group>";
 		};
+		C0FC34F5175F9EC30070CDE7 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				C0FC34F6175F9EC30070CDE7 /* Matrix.h */,
+				C0FC34F7175F9EC30070CDE7 /* Matrix.m */,
+				C0FC34F8175F9EC30070CDE7 /* PointTransforms.h */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2299,6 +2319,8 @@
 				1008E200162EEA0A00DD064E /* RecoverPasswordTableViewController.m in Sources */,
 				1008E205162EFAE600DD064E /* SignUpViewController.m in Sources */,
 				1008E208162EFC5C00DD064E /* SignUpTableViewController.m in Sources */,
+				C0FC34F9175F9EC30070CDE7 /* ImageMaskView.mm in Sources */,
+				C0FC34FA175F9EC30070CDE7 /* Matrix.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2352,7 +2374,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				SDKROOT = iphoneos;
 				SERVER_URL = "https://sandbox.idifferences.com/";
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -2372,7 +2394,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				SERVER_URL = "https://store.idifferences.com/";
@@ -2388,7 +2410,7 @@
 					"$(ARCHS_STANDARD_32_BIT)",
 					armv6,
 				);
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rui Cordeiro (SLC7429AXU)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../../../Documents/FacebookSDK\"",
@@ -2405,7 +2427,7 @@
 				);
 				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = iDifferences;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "15704E05-4277-470C-AE5D-780A38A95756";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
@@ -2419,7 +2441,7 @@
 					"$(ARCHS_STANDARD_32_BIT)",
 					armv6,
 				);
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Rui Cordeiro (SLC7429AXU)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../../../../../Documents/FacebookSDK\"",
@@ -2436,7 +2458,7 @@
 				);
 				OTHER_LDFLAGS = "-lsqlite3.0";
 				PRODUCT_NAME = iDifferences;
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "15704E05-4277-470C-AE5D-780A38A95756";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;

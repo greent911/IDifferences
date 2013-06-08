@@ -38,8 +38,9 @@ MySize MySizeMake(size_t x,size_t y){
 	MySize r = {x,y};
 	return r;
 }
-@interface Matrix : NSObject {
-	char * data;
+@interface Matrix : NSObject <NSCoding>{
+	//char * data;
+    NSData *ndata;
 }
 
 -(id)initWithMaxX:(size_t)x MaxY:(size_t)y;
@@ -47,6 +48,11 @@ MySize MySizeMake(size_t x,size_t y){
 -(char)valueForCoordinates:(size_t)x y:(size_t)y;
 -(void)setValue:(char)value forCoordinates:(size_t)x y:(size_t)y;
 -(void)fillWithValue:(char)value;
+
+-(void) resetWithMaxX:(size_t)x MaxY:(size_t)y ;
+-(void) showAllValue;
+
+
 
 @property (readonly) MySize max;
 @end

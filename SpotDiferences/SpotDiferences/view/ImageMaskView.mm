@@ -36,6 +36,7 @@ typedef void  (*FillTileWithTwoPointsFunc)(id, SEL, CGPoint, CGPoint);
 
 @interface ImageMaskView()
 
+
 - (UIImage *)addTouches:(NSSet *)touches;
 - (void)fillTileWithPoint:(CGPoint) point;
 - (void)fillTileWithTwoPoints:(CGPoint)begin end:(CGPoint)end;
@@ -52,6 +53,59 @@ typedef void  (*FillTileWithTwoPointsFunc)(id, SEL, CGPoint, CGPoint);
 @synthesize tilesFilled;
 @synthesize maskedMatrix;
 @synthesize imageContext,colorSpace;
+-(void) showmaskedmtxC
+{
+    [self.maskedMatrix showAllValue];
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super init]) {
+        
+        self.frame =[aDecoder decodeCGRectForKey:@"frame"];
+        self.image=[UIImage imageWithData:[aDecoder decodeDataObject]];
+        
+        [self setTilesFilled:[aDecoder decodeIntForKey:@"tilesFilled"]];
+        [self setMaskedMatrix:[aDecoder decodeObjectForKey:@"maskedMatrix"]];
+        // Initialization code
+		self.userInteractionEnabled = YES;
+		self.backgroundColor = [UIColor clearColor];
+        
+        CGSize size = self.image.size;
+        
+        
+        // initalize bitmap context
+		self.colorSpace = CGColorSpaceCreateDeviceRGB();
+		self.imageContext = CGBitmapContextCreate(0,size.width,
+												  size.height,
+												  8,
+												  size.width*4,
+												  colorSpace,
+												  kCGImageAlphaPremultipliedLast	);
+		CGContextDrawImage(self.imageContext, CGRectMake(0, 0, size.width, size.height), self.image.CGImage);
+		
+		int blendMode = kCGBlendModeClear;
+		CGContextSetBlendMode(self.imageContext, (CGBlendMode) blendMode);
+		
+		tilesX = size.width / (2 * radius);
+		tilesY = size.height / (2 * radius);
+        
+        
+//        [maskedMatrix showAllValue];
+        
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+    [aCoder encodeInt:tilesFilled forKey:@"tilesFilled"];
+    [aCoder encodeObject:maskedMatrix forKey:@"maskedMatrix"];
+    NSData* imageData = UIImagePNGRepresentation(self.image);
+    [aCoder encodeDataObject:imageData];
+    [aCoder encodeCGRect:self.frame forKey:@"frame"];
+    //NSLog(@"%f",self.frame.size.height);    
+    
+}
+
 
 #pragma mark - memory management
 
@@ -61,6 +115,34 @@ typedef void  (*FillTileWithTwoPointsFunc)(id, SEL, CGPoint, CGPoint);
 }
 
 #pragma mark -
+- (void)reset :(CGRect)frame image:(UIImage *)img{
+    self.frame=frame;
+    self.image=img;
+    self.userInteractionEnabled = YES;
+    self.backgroundColor = [UIColor clearColor];
+    self.imageMaskFilledDelegate = nil;
+    CGSize size = self.image.size;
+    
+    // initalize bitmap context
+    self.colorSpace = CGColorSpaceCreateDeviceRGB();
+    self.imageContext = CGBitmapContextCreate(0,size.width,
+                                              size.height,
+                                              8,
+                                              size.width*4,
+                                              colorSpace,
+                                              kCGImageAlphaPremultipliedLast	);
+    CGContextDrawImage(self.imageContext, CGRectMake(0, 0, size.width, size.height), self.image.CGImage);
+    
+    int blendMode = kCGBlendModeClear;
+    CGContextSetBlendMode(self.imageContext, (CGBlendMode) blendMode);
+    
+    tilesX = size.width / (2 * radius);
+    tilesY = size.height / (2 * radius);
+    [self.maskedMatrix resetWithMaxX:tilesX MaxY:tilesY];
+    self.tilesFilled = 0;
+
+
+}
 
 - (id)initWithFrame:(CGRect)frame image:(UIImage *)img {
     if (self = [super initWithFrame:frame]) {
@@ -103,6 +185,7 @@ typedef void  (*FillTileWithTwoPointsFunc)(id, SEL, CGPoint, CGPoint);
 #pragma mark - UIResponder
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+//    [maskedMatrix fillWithValueOne];
 	self.image = [self addTouches:touches];
 }
 
@@ -118,7 +201,6 @@ typedef void  (*FillTileWithTwoPointsFunc)(id, SEL, CGPoint, CGPoint);
 	
 	CGContextSetFillColorWithColor(ctx,[UIColor clearColor].CGColor);
 	CGContextSetStrokeColorWithColor(ctx,[UIColor colorWithRed:0 green:0 blue:0 alpha:0].CGColor);
-	int tempFilled = self.tilesFilled;
 	
 	// process touches
 	for (UITouch *touch in touches) {
@@ -149,6 +231,8 @@ typedef void  (*FillTileWithTwoPointsFunc)(id, SEL, CGPoint, CGPoint);
             x = rect.origin.x * self.maskedMatrix.max.x / self.image.size.width;
             y = rect.origin.y * self.maskedMatrix.max.y / self.image.size.height;
             char value = [self.maskedMatrix valueForCoordinates:x y:y];
+//            [self.maskedMatrix showAllValue];
+//            NSLog(@"char:%c",value);
             BOOL ellipseDrawed;
             if(value){
                 ellipseDrawed=YES;

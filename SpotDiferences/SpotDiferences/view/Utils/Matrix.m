@@ -30,11 +30,51 @@
 @implementation Matrix
 @synthesize max;
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super init]) {
+        	max = MySizeMake((size_t)[aDecoder decodeIntForKey:@"maxX"], (size_t)[aDecoder decodeIntForKey:@"maxY"]);
+        ndata=[aDecoder decodeDataObject];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder {
+
+    NSData *ddata=[NSData dataWithData:ndata];
+    [aCoder encodeDataObject:ddata];
+    [aCoder encodeInt:max.x forKey:@"maxX"];
+    [aCoder encodeInt:max.y forKey:@"maxY"];
+}
+-(void) resetWithMaxX:(size_t)x MaxY:(size_t)y {
+
+    char * ldata = (char *) malloc(x * y);
+    max = MySizeMake(x, y);
+    size_t last = self.max.x * self.max.y;
+	char *temp = ldata;
+	for(size_t i = 0; i < last; ++i){
+		*temp =(char) 0;
+		++temp;
+	}
+    
+    ndata=[NSData dataWithBytes:ldata length:self.max.x * self.max.y];
+    free(ldata);
+
+}
+
+
 - (id)initWithMaxX:(size_t)x MaxY:(size_t)y {
 	if (self = [super init]) {
-		data = (char *) malloc(x * y);
+         char * ldata = (char *) malloc(x * y);
 		max = MySizeMake(x, y);
-		[self fillWithValue:0];
+        size_t last = self.max.x * self.max.y;
+        char *temp = ldata;
+        for(size_t i = 0; i < last; ++i){
+            *temp =(char) 0;
+            ++temp;
+        }
+        ndata=[NSData dataWithBytes:ldata length:self.max.x * self.max.y];
+        free(ldata);
+
 	}
 	return self;
 }
@@ -46,28 +86,49 @@
 #pragma mark -
 
 - (char)valueForCoordinates:(size_t)x y:(size_t)y {
-	return data[x + self.max.x * y];
+//	return data[x + self.max.x * y];
+    const char *ddata=[ndata bytes];
+     return ddata[x + self.max.x * y];
 }
 
 - (void)setValue:(char)value forCoordinates:(size_t)x y:(size_t)y{
-	data[x+ self.max.x*y] = value;
+    char *ddata=[ndata bytes];
+	ddata[x+ self.max.x*y] = value;
+    
+    ndata=[NSData dataWithBytes:ddata length:self.max.x * self.max.y];
+    free(ddata);
 }
 
 - (void)fillWithValue:(char)value {
 	size_t last = self.max.x * self.max.y;
-	char *temp = data;
+	char *temp = [ndata bytes];
 	for(size_t i = 0; i < last; ++i){
 		*temp = value;
 		++temp;
 	}
+    ndata=[NSData dataWithBytes:temp length:self.max.x * self.max.y];
+    free(temp);
+
 }
+
+-(void) showAllValue{
+    size_t last = self.max.x * self.max.y;
+	const char *temp = [ndata bytes];
+	for(size_t i = 0; i < last; ++i){
+		NSLog(@"all:%c",temp[i]);
+	}
+}
+
+
+
+
 
 #pragma mark -
 
-- (void)dealloc {
-	if(data){
-		free(data);
-	}
-}
+//- (void)dealloc {
+//	if(data){
+//		free(data);
+//	}
+//}
 
 @end

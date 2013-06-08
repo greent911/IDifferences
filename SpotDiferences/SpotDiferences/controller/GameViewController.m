@@ -538,6 +538,15 @@
                 maz.timeRemaining = [NSNumber numberWithInt:0];
             }
         }
+        
+        //Save current MaskView to local data!!!
+        if ([gameMode isEqualToString:@"exciting"]) {
+            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString *documentsDirectory = [paths objectAtIndex:0];
+            NSString *filePath = [documentsDirectory stringByAppendingPathComponent: @"lastmaskview"];
+            NSDictionary *dict = [NSDictionary dictionaryWithObject:imageMaskView forKey:@"imageMaskView"];
+            [NSKeyedArchiver archiveRootObject:dict toFile:filePath];
+        }
 
         NSLog(@"self.maze.state=%@",self.maze.state);
         //self.maze.state = @"paused";
@@ -615,6 +624,7 @@
      initWithTarget:self action:@selector(tapGestureHandlerForLeftView:)];
     
     if(![gameMode isEqual: @"exciting"]){
+        NSLog(@"no mask!!!!!");
     UITapGestureRecognizer *tapGestureForRightImage = 
     [[UITapGestureRecognizer alloc] 
      initWithTarget:self action:@selector(tapGestureHandlerForRightView:)];
@@ -1987,8 +1997,22 @@
     
     if([gameMode isEqual: @"exciting"]){
 
-    UIImage * maskImage = [UIImage imageNamed:@"lighthouse.jpg"];
-    imageMaskView = [[ImageMaskView alloc] initWithFrame: CGRectMake(0, 0, rightImage.size.width, rightImage.size.height) image:maskImage];
+        if ([self.maze.state isEqualToString:@"pausedexciting"]) {
+            NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString *documentsDirectory = [paths objectAtIndex:0];
+            NSString *filePath = [documentsDirectory stringByAppendingPathComponent: @"lastmaskview"];
+            NSDictionary *dict=[NSKeyedUnarchiver unarchiveObjectWithFile:filePath];
+            imageMaskView=[dict objectForKey:@"imageMaskView"];
+//            [imageMaskView showmaskedmtxC];
+            
+        }else{
+            UIImage * maskImage = [UIImage imageNamed:@"lighthouse.jpg"];
+            if (self.followUp == 0) {
+       imageMaskView = [[ImageMaskView alloc] initWithFrame: CGRectMake(0, 0, rightImage.size.width, rightImage.size.height) image:maskImage];
+            }else{
+                [imageMaskView reset:CGRectMake(0, 0, rightImage.size.width, rightImage.size.height) image:maskImage];
+            }
+        }
 //    NSLog(@"(%f,%f) (%f,%f)",imageMaskView.frame.size.width,imageMaskView.frame.size.height,_rightImageView.frame.size.width,_rightImageView.frame.size.height);
     
     imageMaskView.imageMaskFilledDelegate=self;
@@ -2108,9 +2132,7 @@
         self.clickError = errors;
         self.timerForReal = [self.maze.personalTime intValue];
         NSLog(@"timer is %d",self.timerForReal);
-        if ([self.maze.state isEqualToString:@"pausedexciting"]) {
-            
-        }
+        
     }
     [self startTimer];
 }
@@ -2229,7 +2251,7 @@
 -(void) imageMaskView:(ImageMaskView *)maskView touchMaskEvent:(BOOL)ellipseHasDrawed touchPosition:(CGPoint)touchPosition
 {
     if (ellipseHasDrawed) {
-//        NSLog(@"ya Touch %f - %f", touchPosition.x, touchPosition.y);
+        NSLog(@"ya Touch %f - %f", touchPosition.x, touchPosition.y);
        [self checkDiffMatchs:touchPosition inView:_rightImageView];
         
     } else {
