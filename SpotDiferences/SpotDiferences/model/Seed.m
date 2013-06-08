@@ -29,15 +29,21 @@
 +(void)populateDatabase:(NSManagedObjectContext *)context
 {
     NSString *normalState = @"normal";
+    NSString *challengeState = @"challenge";
     NSString *avalable = @"YES";
     //NSString *NewFotosAvalable = @"YES";
     NSString *NewThemeAvalable = @"YES";
+    //關卡限制
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    [prefs setInteger:1 forKey:@"level"];
     
     Theme * natureza = [Theme createTheme:@"NATURE" foto:@"theme_box_nature" inManagedObjectContext:context]; natureza.available = NewThemeAvalable;
     Theme * comida =[Theme createTheme:@"FOOD" foto:@"theme_box_food" inManagedObjectContext:context]; comida.available = NewThemeAvalable;
     Theme * animal =[Theme createTheme:@"ANIMAL" foto:@"theme_box_animals" inManagedObjectContext:context]; animal.available = NewThemeAvalable;
     Theme * desporto =[Theme createTheme:@"SPORTS" foto:@"theme_box_sports" inManagedObjectContext:context]; desporto.available = NewThemeAvalable;
     Theme * cidade =[Theme createTheme:@"CITY" foto:@"theme_box_cities" inManagedObjectContext:context]; cidade.available = NewThemeAvalable;
+    Theme * normal =[Theme createTheme:@"NORMAL" foto:@"theme_box_cities" inManagedObjectContext:context]; normal.available = NewThemeAvalable;
+    Theme * challenge =[Theme createTheme:@"CHALLENGE" foto:@"theme_box_cities" inManagedObjectContext:context]; challenge.available = NewThemeAvalable;
     
     Difficulty *beginner = [Difficulty createDifficulty:@"beginner" inManagedObjectContext:context];
     Difficulty *intermediate = [Difficulty createDifficulty:@"intermediate" inManagedObjectContext:context];
@@ -865,9 +871,69 @@
     [Seed insertDiffs:63.247864 topY:10.698446 downX:82.051285 downY:24.502893  diffFotos:vegetablesA inContext:context];
     [Seed insertDiffs:26.923079 topY:20.361559 downX:42.735039 downY:31.405115  diffFotos:vegetablesA inContext:context];
     [Seed insertDiffs:22.222221 topY:32.440449 downX:35.470085 downY:41.758450  diffFotos:vegetablesA inContext:context];
-    [Seed insertDiffs:3.418803 topY:45.209564 downX:17.094017 downY:54.527561  diffFotos:vegetablesA inContext:context];}
+    [Seed insertDiffs:3.418803 topY:45.209564 downX:17.094017 downY:54.527561  diffFotos:vegetablesA inContext:context];
+    
+    
+    /***********************************************************************************************************************************************************************
+     *
+     *
+     *                                               THEME - SOFT&EXCITING
+     *
+     *
+     **********************************************************************************************************************************************************************/
+    
+    Maze *T01 =[Maze createMaze:@"T01" forTheme:normal inManagedObjectContext:context];
+    T01.dificulty = detective;
+    T01.state = challengeState;
+    T01.uniqueID = @"T-0003.M-0010";
+    T01.available = avalable;
+    DifferenceSet *T01A = [DifferenceSet createDifferenceFoto:@"T01A" forMaze:vegetables inManagedObjectContext:context];
+    
+    [Seed insertDiffs:4.811966 topY:15.413342 downX:28.478630 downY:38.492229  diffFotos:T01A inContext:context];
+    [Seed insertDiffs:55.341879 topY:15.049343 downX:59.299141 downY:40.712456  diffFotos:T01A inContext:context];
+    [Seed insertDiffs:40.965813 topY:48.766674 downX:49.923073 downY:56.190674  diffFotos:T01A inContext:context];
+    [Seed insertDiffs:80.871796 topY:42.024672 downX:99.247864 downY:52.244896  diffFotos:T01A inContext:context];
+    [Seed insertDiffs:44.965813 topY:58.766674 downX:52.923073 downY:63.190674  diffFotos:T01A inContext:context];
+    
+    /***********************************************************************************************************************************************************************
+     *
+     *
+     *                                               THEME - CHALLENGE
+     *
+     *
+     **********************************************************************************************************************************************************************/
+    
+    Maze *C01 =[Maze createMaze:@"C01" forTheme:normal inManagedObjectContext:context];
+    C01.dificulty = detective;
+    C01.state = challengeState;
+    C01.uniqueID = @"T-0003.M-0010";
+    C01.available = avalable;
+    DifferenceSet *C01A = [DifferenceSet createDifferenceFoto:@"C01A" forMaze:vegetables inManagedObjectContext:context];
+    
+    [Seed insertDiffs:47.811966 topY:8.413342 downX:57.478630 downY:18.492229  diffFotos:C01A inContext:context];
+    [Seed insertDiffs:65.341879 topY:38.049343 downX:79.299141 downY:48.712456  diffFotos:C01A inContext:context];
+    [Seed insertDiffs:25.965813 topY:58.766674 downX:40.923073 downY:75.190674  diffFotos:C01A inContext:context];
+    [Seed insertDiffs:80.871796 topY:70.024672 downX:95.247864 downY:82.244896  diffFotos:C01A inContext:context];
+    [Seed insertDiffs:47.965813 topY:82.766674 downX:65.923073 downY:92.190674  diffFotos:C01A inContext:context];
+    
+    Maze *C02 =[Maze createMaze:@"C02" forTheme:normal inManagedObjectContext:context];
+    C02.dificulty = detective;
+    C02.state = challengeState;
+    C02.uniqueID = @"T-0003.M-0011";
+    C02.available = avalable;
+    DifferenceSet *C02A = [DifferenceSet createDifferenceFoto:@"C02A" forMaze:vegetables inManagedObjectContext:context];
+    
+    [Seed insertDiffs:45.811966 topY:8.413342 downX:57.478630 downY:16.492229  diffFotos:C02A inContext:context];
+    [Seed insertDiffs:80.341879 topY:2.549343 downX:91.299141 downY:12.712456  diffFotos:C02A inContext:context];
+    [Seed insertDiffs:9.765813 topY:37.766674 downX:23.923073 downY:45.190674  diffFotos:C02A inContext:context];
+    [Seed insertDiffs:35.871796 topY:14.024672 downX:43.247864 downY:20.244896  diffFotos:C02A inContext:context];
+    [Seed insertDiffs:53.965813 topY:70.766674 downX:65.923073 downY:81.190674  diffFotos:C02A inContext:context];
 
+    
 
+}
+
+    
 
 
 @end

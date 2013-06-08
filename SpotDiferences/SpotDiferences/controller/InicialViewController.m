@@ -76,10 +76,11 @@
     int offset = 40;
     int halfViewSize = [self view].frame.size.width / 2;
     UIImage *image = [UIImage imageNamed:@"btn_wine"];
-
+    //image.frame = CGRectMake(1, 1, 3 , 3);
+    
     if (!self.NewGameButton) {
         //self.NewGameButton = [UikitFramework createButtonWithBackgroudImage:@"btn_wine" title:@"PLAY" positionX:halfViewSize - image.size.width -offset positionY:150];
-        self.NewGameButton = [UikitFramework createButtonWithBackgroudImage:@"btn_wine" title:@"Soft" positionX:halfViewSize - image.size.width/2 positionY:150];
+        self.NewGameButton = [UikitFramework createButtonWithBackgroudImage:@"btn_wine" title:@"Soft" positionX:halfViewSize - image.size.width/2 positionY:70];
         
         [self.NewGameButton addTarget:self action:@selector(playGameButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         self.NewGameButton.titleLabel.font = [UIFont fontWithName:fontName size: fontSize];
@@ -138,6 +139,11 @@
 {
     NSLog(@"challengeButtonTapped");
     [self playInterfaceSound];
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    [prefs setObject:@"challenge" forKey:@"gameMode"];
+    [prefs synchronize];
+    //NSLog(@"%@",[prefs stringForKey:@"gameMode"]);
+    [self performSegueWithIdentifier:@"challenge" sender:self];
 }
 
 -(void) excitingButtonTapped:(UIButton*)sender

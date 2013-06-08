@@ -956,6 +956,9 @@
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     NSString *gameFlow = [prefs objectForKey:@"gameFlow"];
     NSString *gameState = [prefs stringForKey:@"gameState"];
+    //NSString *number = [prefs stringForKey:@"number"];
+    int number = [prefs integerForKey:@"number"];
+    
     if ([gameState isEqualToString:@"paused"]) {
         NSLog(@"%@",gameFlow);
         [prefs setObject:@"normal" forKey:@"gameState"];
@@ -1028,11 +1031,29 @@
         if ([allMAzes count] == 0) {
             [self backToMazeView];
         }else {
-            int number = (arc4random()%[allMAzes count]);
-            Maze *maze = [allMAzes objectAtIndex:number];
-            [self setupWith:maze andContext:self.document.managedObjectContext];
-            [self setupWithHelper:self.maze andContext:self.context];
-            [self resetAndChangeImage];
+            //soft&exciting
+            if([gameState isEqualToString:@"normal"]){
+                int number = (arc4random()%[allMAzes count]);
+                Maze *maze = [allMAzes objectAtIndex:number];
+                [self setupWith:maze andContext:self.document.managedObjectContext];
+                [self setupWithHelper:self.maze andContext:self.context];
+                [self resetAndChangeImage];
+            }
+            //challenge
+            else{
+                number = number+1;
+                [prefs setInteger:number forKey:@"number"];
+                [prefs setInteger:number forKey:@"level"];
+                //限制過關才能下一關
+                [prefs setInteger:number forKey:@"level"];
+                NSString *numberstring = [prefs stringForKey:@"number"];
+                NSString *PhotoName = [NSString stringWithFormat:@"C0%@", numberstring];
+                //Maze *maze = [allMAzes objectAtIndex:number];
+                Maze *maze=[Maze getMazeByName:PhotoName inManagedObjectContext:self.document.managedObjectContext];
+                [self setupWith:maze andContext:self.document.managedObjectContext];
+                [self setupWithHelper:self.maze andContext:self.context];
+                [self resetAndChangeImage];
+            }
 
         }
         
@@ -1987,10 +2008,10 @@
     [_rightScrollView setZoomScale:initialZoomScale];
 
     //Cheat!!!
-     for (int c=0; c < [_mazeHelper.mazeDifferences count]; c++) {
-         Differences *difference = [_mazeHelper.mazeDifferences objectAtIndex:c];
-         [CGMarkerHelper drawMarker:difference inView:_rightImageView insecundView:_leftImageView inBounds:[_mazeHelper viewSize]];
-     }
+//     for (int c=0; c < [_mazeHelper.mazeDifferences count]; c++) {
+//         Differences *difference = [_mazeHelper.mazeDifferences objectAtIndex:c];
+//         [CGMarkerHelper drawMarker:difference inView:_rightImageView insecundView:_leftImageView inBounds:[_mazeHelper viewSize]];
+//     }
 }
 
 
