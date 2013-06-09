@@ -10,6 +10,7 @@
 #import "MazeHelper.h"
 #import "UikitFramework.h"
 #import "ImageMaskView.h"
+#import "MoveImageView.h"
 
 /**
  *

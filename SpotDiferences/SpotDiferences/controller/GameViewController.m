@@ -160,6 +160,20 @@
         [[SoundManager sharedSoundManager] playErro];
 }
 
+-(void)setMoveImage:(int) count
+{
+    NSMutableArray *moveImageViewArray=[[NSMutableArray alloc] init];
+    for (int i=0; i< count; i++) {
+        [moveImageViewArray addObject:[[MoveImageView alloc] initWithRandomPointImage:[UIImage imageNamed:@"60px-SurprisedSmiley.svg.png"] andTouchedImage:[UIImage imageNamed:@"60px-718smiley_608EC2.svg.png"]]];
+//        [moveImageViewArray addObject:[[MoveImageView alloc] initWitPoint:CGPointMake([ UIScreen mainScreen].bounds.size.height-60, [ UIScreen mainScreen].bounds.size.width-60) Image:[UIImage imageNamed:@"60px-SurprisedSmiley.svg.png"] andTouchedImage:[UIImage imageNamed:@"60px-718smiley_608EC2.svg.png"]]];
+
+    }
+    for (MoveImageView *mview in moveImageViewArray) {
+        [self.view addSubview:mview];
+        [mview startAppear];
+    }
+}
+
 -(void)checkDiffMatchs:(CGPoint)position inView:(MazeView*)view {
     
     //NSLog(@"checkDiffMatchs %f - %f", position.x, position.y);
@@ -2080,10 +2094,13 @@
 
 
     //Cheat!!!
-//     for (int c=0; c < [_mazeHelper.mazeDifferences count]; c++) {
-//         Differences *difference = [_mazeHelper.mazeDifferences objectAtIndex:c];
-//         [CGMarkerHelper drawMarker:difference inView:_rightImageView insecundView:_leftImageView inBounds:[_mazeHelper viewSize]];
-//     }
+     for (int c=0; c < [_mazeHelper.mazeDifferences count]; c++) {
+         Differences *difference = [_mazeHelper.mazeDifferences objectAtIndex:c];
+         [CGMarkerHelper drawMarker:difference inView:_rightImageView insecundView:_leftImageView inBounds:[_mazeHelper viewSize]];
+     }
+    
+    
+    [self setMoveImage:8];
 }
 
 
