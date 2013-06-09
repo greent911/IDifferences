@@ -17,7 +17,7 @@
         self.userInteractionEnabled = YES;
 		self.backgroundColor = [UIColor clearColor];
         self.image = img;
-        NSLog(@"%f,%f",img.size.width, img.size.height);
+//        NSLog(@"%f,%f",img.size.width, img.size.height);
         [self setFrame:CGRectMake(200, 200, img.size.width, img.size.height)];
         
     }
@@ -32,8 +32,8 @@
         iImg=img;
         self.image = img;
         touchedImg=timg;
-        NSLog(@"%f,%f",img.size.width, img.size.height);
-        NSLog(@"%fx%f",[ UIScreen mainScreen].bounds.size.width,[ UIScreen mainScreen].bounds.size.height);
+//        NSLog(@"%f,%f",img.size.width, img.size.height);
+//        NSLog(@"%fx%f",[ UIScreen mainScreen].bounds.size.width,[ UIScreen mainScreen].bounds.size.height);
         int x=arc4random()%(int)([ UIScreen mainScreen].bounds.size.height-img.size.width);
         int y=arc4random()%(int)([ UIScreen mainScreen].bounds.size.width-img.size.height);
         location=CGPointMake(x, y);
@@ -54,7 +54,7 @@
         iImg=img;
         self.image = img;
         touchedImg=timg;
-        NSLog(@"%f,%f",img.size.width, img.size.height);
+//        NSLog(@"%f,%f",img.size.width, img.size.height);
         location=CGPointMake(point.x, point.y);
         endlocation=CGPointMake(0, 0);
 
@@ -70,7 +70,7 @@
     loc.x=0-self.image.size.width;
     loc.y=0-self.image.size.height;
     int randomDirect=(arc4random()%8);
-    NSLog(@"randomDirect:%d",randomDirect);
+//    NSLog(@"randomDirect:%d",randomDirect);
     switch (randomDirect) {
         case 0:
             loc.x=0-self.image.size.width;
@@ -127,9 +127,13 @@
 //    }
 }
 
--(void) resetPoint:(CGPoint) point{
-    NSLog(@"%f == %f",location.x,self.frame.origin.x);
-    [self setCenter:point];
+-(void) resetPoint{
+    [self setImage:iImg];
+    CGPoint randomLoc=[self randomGo];
+
+    [self setFrame:CGRectMake(randomLoc.x, randomLoc.y, self.image.size.width, self.image.size.height)];
+    endlocation.x=0;
+    endlocation.y=0;
 }
 
 -(void) startAppear

@@ -42,7 +42,7 @@
 #define intervalTimer 30
 #define errorImage @"erro"
 
-
+#define MoveImageViewNumber 8
 
 /**
  * Esta classe é Controlador principal do jogo
@@ -79,6 +79,8 @@
 @property (nonatomic,strong) NSMutableArray *redstars;
 @property (nonatomic,strong) NSMutableArray *numberOfErrors;
 @property (nonatomic,strong) NSMutableArray *numberOfErrorsRed;
+@property (strong, nonatomic) NSMutableArray *moveImageViewArray;
+
 @property (nonatomic) int numberOfExtendedTimes;
 
 @property (nonatomic,weak) UILabel *score;
@@ -98,6 +100,7 @@
 
 @property (nonatomic) int followUp;
 @property (nonatomic) int timerForReal;
+@property (nonatomic) int countFormoveImageViewStart;
 @property (strong, nonatomic) id<FBGraphUser> loggedInUser;
 
 @property (nonatomic,weak) NSString *facebookShare;
@@ -144,6 +147,9 @@
 @synthesize followUp = _followUp;
 @synthesize timerForReal = _timerForReal;
 @synthesize loggedInUser = _loggedInUser;
+
+@synthesize countFormoveImageViewStart=_countFormoveImageViewStart;
+@synthesize moveImageViewArray;
 #pragma mark - Setup
 
 
@@ -162,15 +168,23 @@
 
 -(void)setMoveImage:(int) count
 {
-    NSMutableArray *moveImageViewArray=[[NSMutableArray alloc] init];
+    moveImageViewArray=[[NSMutableArray alloc] init];
     for (int i=0; i< count; i++) {
         [moveImageViewArray addObject:[[MoveImageView alloc] initWithRandomPointImage:[UIImage imageNamed:@"60px-SurprisedSmiley.svg.png"] andTouchedImage:[UIImage imageNamed:@"60px-718smiley_608EC2.svg.png"]]];
 //        [moveImageViewArray addObject:[[MoveImageView alloc] initWitPoint:CGPointMake([ UIScreen mainScreen].bounds.size.height-60, [ UIScreen mainScreen].bounds.size.width-60) Image:[UIImage imageNamed:@"60px-SurprisedSmiley.svg.png"] andTouchedImage:[UIImage imageNamed:@"60px-718smiley_608EC2.svg.png"]]];
 
     }
-    for (MoveImageView *mview in moveImageViewArray) {
+    self.countFormoveImageViewStart=0;
+    
+}
+
+-(void) startAppearMoveImageView
+{
+    if(self.countFormoveImageViewStart < MoveImageViewNumber){
+    MoveImageView *mview=[moveImageViewArray objectAtIndex:self.countFormoveImageViewStart];
         [self.view addSubview:mview];
         [mview startAppear];
+    self.countFormoveImageViewStart++;
     }
 }
 
@@ -524,6 +538,13 @@
 }
 
 -(void)onlyQuit:(UIButton*)sender{
+    if ([gameMode isEqualToString:@"exciting"]) {
+        for (MoveImageView *mview in moveImageViewArray) {
+        
+        [mview resetPoint];
+        }
+        self.countFormoveImageViewStart=0;
+    }
     self.facebookShare = @"NO";
     self.twitterShare = @"NO";
     [self decideWhereToGo];
@@ -1537,7 +1558,7 @@
  *  timer actions
  *
  */
--(void)timerCall:(NSTimer *)timer 
+-(void)timerCall:(NSTimer *)timer
 {
     [self updateTimerUnits];
 }
@@ -1918,6 +1939,10 @@
 -(void)timerCallForReal:(NSTimer *)timer 
 {
     self.timerForReal ++;
+//    NSLog(@"timerForReal:%d",self.timerForReal);
+    if ([gameMode isEqualToString:@"exciting"] && self.timerForReal % 4 == 0) {
+        [self startAppearMoveImageView];
+    }
 }
 
 -(void)startTimer {
@@ -1988,11 +2013,11 @@
     [self performSelector:@selector(myAnimating) withObject:nil afterDelay:1.0f];
     
     
-//    for (int c =0; c<timeUnitNumber; c++) {
-//        UIImageView *timerimageview = [UikitFramework createImageViewWithImage:@"time_unit_white" positionX:30+offset*c positionY:10];
-//        [self.view addSubview:timerimageview];
-//        [self.timerUnits addObject:timerimageview];
-//    } 
+    for (int c =0; c<timeUnitNumber; c++) {
+        UIImageView *timerimageview = [UikitFramework createImageViewWithImage:@"time_unit_white" positionX:30+offset*c positionY:10];
+        [self.view addSubview:timerimageview];
+        [self.timerUnits addObject:timerimageview];
+    } 
 }
 
 
@@ -2099,8 +2124,10 @@
          [CGMarkerHelper drawMarker:difference inView:_rightImageView insecundView:_leftImageView inBounds:[_mazeHelper viewSize]];
      }
     
-    
+    if([gameMode isEqual: @"exciting"]){
+
     [self setMoveImage:8];
+    }
 }
 
 

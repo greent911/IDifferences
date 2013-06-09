@@ -21,9 +21,8 @@
 - (id)initWithImage:(UIImage *)img;
 - (id)initWithRandomPointImage:(UIImage *)img andTouchedImage:(UIImage *)timg;
 - (id)initWitPoint:(CGPoint)point Image:(UIImage *)img andTouchedImage:(UIImage *)timg;
--(void) resetPoint:(CGPoint) point;
 -(void) startAppear;
 -(void) restartRandomAppear;
 -(void) restartAppear:(CGPoint) point;
-
+-(void) resetPoint;
 @end
