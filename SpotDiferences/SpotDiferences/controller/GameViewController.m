@@ -1961,6 +1961,13 @@
             [self.navigationController popToViewController:obj animated:YES];    
     }
 }
+-(void) allShowMoveViewToBack
+{
+    for (MoveImageView *mview in moveImageViewArray) {
+        
+        [mview showViewMoveToBack];
+    }
+}
 
 
 #pragma mark - Timer 
@@ -1972,6 +1979,11 @@
 //    if (self.timerForReal %4    == 0) {
 //        [self findOneDiff];
 //    }
+//    if (self.timerForReal %10    == 0) {
+//    [self allShowMoveViewToBack];
+//    }
+//
+    
     
     if ([gameMode isEqualToString:@"exciting"] && self.timerForReal % 4 == 0) {
         [self startAppearMoveImageView];

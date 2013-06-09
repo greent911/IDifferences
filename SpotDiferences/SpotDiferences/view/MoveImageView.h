@@ -14,7 +14,7 @@
     UIImage *iImg;
     UIImage *touchedImg;
     CGPoint endlocation;
-
+    BOOL isShow;
 }
 
 
@@ -22,7 +22,8 @@
 - (id)initWithRandomPointImage:(UIImage *)img andTouchedImage:(UIImage *)timg;
 - (id)initWitPoint:(CGPoint)point Image:(UIImage *)img andTouchedImage:(UIImage *)timg;
 -(void) startAppear;
--(void) restartRandomAppear;
--(void) restartAppear:(CGPoint) point;
+//-(void) restartRandomAppear;
+//-(void) restartAppear:(CGPoint) point;
 -(void) resetPoint;
+-(void) showViewMoveToBack;
 @end

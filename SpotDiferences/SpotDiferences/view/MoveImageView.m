@@ -38,10 +38,10 @@
         int y=arc4random()%(int)([ UIScreen mainScreen].bounds.size.width-img.size.height);
         location=CGPointMake(x, y);
         endlocation=CGPointMake(0, 0);
-
+        isShow=NO;
 
 //        [self setFrame:CGRectMake(x, y, img.size.width, img.size.height)];
-        
+//        NSLog(@"initloc:%f %f",self.frame.origin.x,self.frame.origin.y);
     }
     return self;
 }
@@ -123,8 +123,19 @@
     [UIView animateWithDuration:1.0f animations:^{
             self.frame = CGRectOffset(self.frame, endlocation.x-self.frame.origin.x, endlocation.y-self.frame.origin.y);
     }];
-
+    isShow=NO;
 //    }
+}
+-(void) showViewMoveToBack
+{
+    if (isShow) {
+        [self setImage:touchedImg];
+        endlocation=[self randomGo];
+        [UIView animateWithDuration:1.0f animations:^{
+            self.frame = CGRectOffset(self.frame, endlocation.x-self.frame.origin.x, endlocation.y-self.frame.origin.y);
+        }];
+        isShow=NO;
+    }
 }
 
 -(void) resetPoint{
@@ -134,6 +145,7 @@
     [self setFrame:CGRectMake(randomLoc.x, randomLoc.y, self.image.size.width, self.image.size.height)];
     endlocation.x=0;
     endlocation.y=0;
+    isShow=NO;
 }
 
 -(void) startAppear
@@ -144,37 +156,38 @@
     [UIView animateWithDuration:1.0f animations:^{
         self.frame = CGRectOffset(self.frame, location.x-randomLoc.x, location.y-randomLoc.y);
     }];
+    isShow=YES;
 }
 
--(void) restartRandomAppear
-{
-    if(endlocation.x !=0 && endlocation.y !=0){
-    [self setImage:iImg];
-    int x=arc4random()%(int)([ UIScreen mainScreen].bounds.size.width-iImg.size.width);
-    int y=arc4random()%(int)([ UIScreen mainScreen].bounds.size.height-iImg.size.height);
-    CGPoint randomNewLoc=CGPointMake(x, y);
-    [UIView animateWithDuration:1.0f animations:^{
-        self.frame = CGRectOffset(self.frame, randomNewLoc.x-endlocation.x, randomNewLoc.y-endlocation.y);
-    }];
-        endlocation.x=0;
-        endlocation.y=0;
-    }
-
-}
-
--(void) restartAppear:(CGPoint) point
-{
-    if(endlocation.x !=0 && endlocation.y !=0){
-        [self setImage:iImg];
-        CGPoint randomNewLoc=CGPointMake(point.x, point.y);
-        [UIView animateWithDuration:1.0f animations:^{
-            self.frame = CGRectOffset(self.frame, randomNewLoc.x-endlocation.x, randomNewLoc.y-endlocation.y);
-        }];
-        endlocation.x=0;
-        endlocation.y=0;
-    }
-    
-}
+//-(void) restartRandomAppear
+//{
+//    if(endlocation.x !=0 && endlocation.y !=0){
+//    [self setImage:iImg];
+//    int x=arc4random()%(int)([ UIScreen mainScreen].bounds.size.width-iImg.size.width);
+//    int y=arc4random()%(int)([ UIScreen mainScreen].bounds.size.height-iImg.size.height);
+//    CGPoint randomNewLoc=CGPointMake(x, y);
+//    [UIView animateWithDuration:1.0f animations:^{
+//        self.frame = CGRectOffset(self.frame, randomNewLoc.x-endlocation.x, randomNewLoc.y-endlocation.y);
+//    }];
+//        endlocation.x=0;
+//        endlocation.y=0;
+//    }
+//
+//}
+//
+//-(void) restartAppear:(CGPoint) point
+//{
+//    if(endlocation.x !=0 && endlocation.y !=0){
+//        [self setImage:iImg];
+//        CGPoint randomNewLoc=CGPointMake(point.x, point.y);
+//        [UIView animateWithDuration:1.0f animations:^{
+//            self.frame = CGRectOffset(self.frame, randomNewLoc.x-endlocation.x, randomNewLoc.y-endlocation.y);
+//        }];
+//        endlocation.x=0;
+//        endlocation.y=0;
+//    }
+//    
+//}
 
 //- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event {
 //    CGPoint point = [[touches anyObject] locationInView:self];
