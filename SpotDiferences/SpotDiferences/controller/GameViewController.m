@@ -187,6 +187,35 @@
     self.countFormoveImageViewStart++;
     }
 }
+-(void) findOneDiff
+{
+    int i=1;
+    Differences *difference = [_mazeHelper.mazeDifferences objectAtIndex:0];
+    while ([difference.discovered isEqualToString:@"YES"] && i<5) {
+        difference = [_mazeHelper.mazeDifferences objectAtIndex:i];
+        i++;
+    }
+    if(i<=5){
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    NSString *gameState = [prefs stringForKey:@"gameState"];
+    if (difference && !([difference.discovered isEqualToString:@"YES"] && [gameState isEqualToString:@"paused"])) {
+        [self playCheckSound];
+        
+        
+        [CGMarkerHelper drawMarker:difference
+                            inView:_leftImageView
+                      insecundView:_rightImageView
+                          inBounds:[_mazeHelper viewSize]];
+        
+        
+        [self updateScores];
+        [self updateStars];
+        self.clickOk++;
+        difference.discovered = @"YES";
+        [self saveContext];
+        }
+    }
+}
 
 -(void)checkDiffMatchs:(CGPoint)position inView:(MazeView*)view {
     
@@ -1940,6 +1969,10 @@
 {
     self.timerForReal ++;
 //    NSLog(@"timerForReal:%d",self.timerForReal);
+//    if (self.timerForReal %4    == 0) {
+//        [self findOneDiff];
+//    }
+    
     if ([gameMode isEqualToString:@"exciting"] && self.timerForReal % 4 == 0) {
         [self startAppearMoveImageView];
     }
@@ -2119,11 +2152,12 @@
 
 
     //Cheat!!!
-     for (int c=0; c < [_mazeHelper.mazeDifferences count]; c++) {
-         Differences *difference = [_mazeHelper.mazeDifferences objectAtIndex:c];
-         [CGMarkerHelper drawMarker:difference inView:_rightImageView insecundView:_leftImageView inBounds:[_mazeHelper viewSize]];
-     }
+//     for (int c=0; c < [_mazeHelper.mazeDifferences count]; c++) {
+//         Differences *difference = [_mazeHelper.mazeDifferences objectAtIndex:c];
+//         [CGMarkerHelper drawMarker:difference inView:_rightImageView insecundView:_leftImageView inBounds:[_mazeHelper viewSize]];
+//     }
     
+
     if([gameMode isEqual: @"exciting"]){
 
     [self setMoveImage:8];
