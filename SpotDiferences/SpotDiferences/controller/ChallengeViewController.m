@@ -23,6 +23,7 @@
 
 @property (strong, nonatomic) IBOutlet UIButton *CH1;
 @property (strong, nonatomic) IBOutlet UIButton *CH2;
+@property (strong, nonatomic) IBOutlet UIButton *CH3;
 
 
 @end
@@ -68,6 +69,7 @@
     [self setImageview:nil];
     [self setCH1:nil];
     [self setCH2:nil];
+    [self setCH3:nil];
     [super viewDidUnload];
 }
 
@@ -83,8 +85,10 @@
     
     switch (level) {
         case 3:
-            self.CH2.tag = 2;
-            [self.CH2 addTarget:self action:@selector(CH1ButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+            [self.CH3 setBackgroundImage:[UIImage imageNamed:@"level_pink.png"] forState:UIControlStateNormal];
+            [self.CH3 setTitle:@"3" forState:UIControlStateNormal];
+            self.CH2.tag = 3;
+            [self.CH3 addTarget:self action:@selector(CH1ButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         case 2:
             [self.CH2 setBackgroundImage:[UIImage imageNamed:@"level_pink.png"] forState:UIControlStateNormal];
             [self.CH2 setTitle:@"2" forState:UIControlStateNormal];
@@ -121,6 +125,9 @@
             break;
         case 2:
             number = 2;
+            break;
+        case 3:
+            number = 3;
             break;
     }
     //[self setGameState:@"normal"];

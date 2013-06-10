@@ -77,6 +77,8 @@
     int halfViewSize = [self view].frame.size.width / 2;
     UIImage *image = [UIImage imageNamed:@"beginning"];
 
+    //image.frame = CGRectMake(1, 1, 3 , 3);
+    
     if (!self.NewGameButton) {
         //self.NewGameButton = [UikitFramework createButtonWithBackgroudImage:@"btn_wine" title:@"PLAY" positionX:halfViewSize - image.size.width -offset positionY:150];
         self.NewGameButton = [UikitFramework createButtonWithBackgroudImage:@"beginning" title:@"" positionX:halfViewSize - 4*offset positionY:20];
@@ -115,27 +117,93 @@
         ChallengingIcon.frame = CGRectMake(halfViewSize - 5*offset, 190, 45, 100);
         [self.view addSubview:ChallengingIcon];
         
+   
 
-    
         /*
-        UIButton * visitUsButton = [UikitFramework createButtonWithBackgroudImage:@"icon_weblink" title:@"" positionX:self.view.frame.size.width - 70 positionY:30];
-        [visitUsButton addTarget:self action:@selector(visitUsButtonButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-        visitUsButton.titleLabel.font = [UIFont fontWithName:fontName size: fontSize];
-        [self.view addSubview:visitUsButton];
-
-        UILabel *label = [UikitFramework createLableWithText:@"VISIT US" positionX:visitUsButton.frame.origin.x - 45 positionY:visitUsButton.frame.origin.y + 15 width:100 height:100];
+         UIButton *SETTINGSGameButton = [UikitFramework createButtonWithBackgroudImage:@"btn_orange" title:@"SETTINGS" positionX:halfViewSize + offset positionY:240];
+         [SETTINGSGameButton addTarget:self action:@selector(settingsButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+         SETTINGSGameButton.titleLabel.font = [UIFont fontWithName:fontName size: fontSize];
+         [self.view addSubview:SETTINGSGameButton];
+         */
         
-        [self.view addSubview:label];
+        
+        
+        /*
+         UIButton * visitUsButton = [UikitFramework createButtonWithBackgroudImage:@"icon_weblink" title:@"" positionX:self.view.frame.size.width - 70 positionY:30];
+         [visitUsButton addTarget:self action:@selector(visitUsButtonButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+         visitUsButton.titleLabel.font = [UIFont fontWithName:fontName size: fontSize];
+         [self.view addSubview:visitUsButton];
+         
+         UILabel *label = [UikitFramework createLableWithText:@"VISIT US" positionX:visitUsButton.frame.origin.x - 45 positionY:visitUsButton.frame.origin.y + 15 width:100 height:100];
+         
+         [self.view addSubview:label];
          */
         /*
-        UIButton * gamecenterButton = [UikitFramework createButtonWithBackgroudImage:@"Game_Center_logo" title:@"" positionX:20 positionY:30];
-        [gamecenterButton addTarget:self action:@selector(gamecenterButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-        gamecenterButton.titleLabel.font = [UIFont fontWithName:fontName size: fontSize];
-        [self.view addSubview:gamecenterButton];
+         UIButton * gamecenterButton = [UikitFramework createButtonWithBackgroudImage:@"Game_Center_logo" title:@"" positionX:20 positionY:30];
+         [gamecenterButton addTarget:self action:@selector(gamecenterButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+         gamecenterButton.titleLabel.font = [UIFont fontWithName:fontName size: fontSize];
+         [self.view addSubview:gamecenterButton];
          */
     }
     
     [self submeteUnsubmetedScores];
+    
+//    if (!self.NewGameButton) {
+//        //self.NewGameButton = [UikitFramework createButtonWithBackgroudImage:@"btn_wine" title:@"PLAY" positionX:halfViewSize - image.size.width -offset positionY:150];
+//        self.NewGameButton = [UikitFramework createButtonWithBackgroudImage:@"btn_wine" title:@"Soft" positionX:halfViewSize - image.size.width/2 positionY:70];
+//        
+//        [self.NewGameButton addTarget:self action:@selector(playGameButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+//        self.NewGameButton.titleLabel.font = [UIFont fontWithName:fontName size: fontSize];
+//        [self.view addSubview:self.NewGameButton];
+//        /*
+//        UIButton *HIGHSCORESGameButton = [UikitFramework createButtonWithBackgroudImage:@"btn_orange3" title:@"HIGH SCORES" positionX:halfViewSize + offset positionY:150];
+//        
+//        [HIGHSCORESGameButton addTarget:self action:@selector(highscoresButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+//        HIGHSCORESGameButton.titleLabel.font = [UIFont fontWithName:fontName size: fontSize];
+//        [self.view addSubview:HIGHSCORESGameButton];
+//         */
+//        /*
+//        UIButton *BuyButton = [UikitFramework createButtonWithBackgroudImage:@"btn_palegreen" title:@"BUY" positionX:halfViewSize - image.size.width -offset positionY:240];
+//        [BuyButton addTarget:self action:@selector(buyButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+//        BuyButton.titleLabel.font = [UIFont fontWithName:fontName size: fontSize];
+//        [self.view addSubview:BuyButton];
+//        */
+//        UIButton *ChallengeButton = [UikitFramework createButtonWithBackgroudImage:@"btn_palegreen" title:@"Challenge" positionX:halfViewSize - image.size.width -offset positionY:240];
+//        [ChallengeButton addTarget:self action:@selector(challengeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+//        ChallengeButton.titleLabel.font = [UIFont fontWithName:fontName size: fontSize];
+//        [self.view addSubview:ChallengeButton];
+//        
+//        /*
+//        UIButton *SETTINGSGameButton = [UikitFramework createButtonWithBackgroudImage:@"btn_orange" title:@"SETTINGS" positionX:halfViewSize + offset positionY:240];
+//        [SETTINGSGameButton addTarget:self action:@selector(settingsButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+//        SETTINGSGameButton.titleLabel.font = [UIFont fontWithName:fontName size: fontSize];
+//        [self.view addSubview:SETTINGSGameButton];
+//         */
+//        UIButton *ExcitingButton = [UikitFramework createButtonWithBackgroudImage:@"btn_orange" title:@"Exciting" positionX:halfViewSize + offset positionY:240];
+//        [ExcitingButton addTarget:self action:@selector(excitingButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+//        ExcitingButton.titleLabel.font = [UIFont fontWithName:fontName size: fontSize];
+//        [self.view addSubview:ExcitingButton];
+//        
+//         
+//        /*
+//        UIButton * visitUsButton = [UikitFramework createButtonWithBackgroudImage:@"icon_weblink" title:@"" positionX:self.view.frame.size.width - 70 positionY:30];
+//        [visitUsButton addTarget:self action:@selector(visitUsButtonButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+//        visitUsButton.titleLabel.font = [UIFont fontWithName:fontName size: fontSize];
+//        [self.view addSubview:visitUsButton];
+//
+//        UILabel *label = [UikitFramework createLableWithText:@"VISIT US" positionX:visitUsButton.frame.origin.x - 45 positionY:visitUsButton.frame.origin.y + 15 width:100 height:100];
+//        
+//        [self.view addSubview:label];
+//         */
+//        /*
+//        UIButton * gamecenterButton = [UikitFramework createButtonWithBackgroudImage:@"Game_Center_logo" title:@"" positionX:20 positionY:30];
+//        [gamecenterButton addTarget:self action:@selector(gamecenterButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+//        gamecenterButton.titleLabel.font = [UIFont fontWithName:fontName size: fontSize];
+//        [self.view addSubview:gamecenterButton];
+//         */
+//    }
+//    
+//    [self submeteUnsubmetedScores];
 }
 -(void) challengeButtonTapped:(UIButton*)sender
 {

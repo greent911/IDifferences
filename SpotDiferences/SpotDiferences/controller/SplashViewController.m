@@ -140,7 +140,6 @@
     self.myIndicator.frame = CGRectMake(halfViewSize + 3.5*offset, 285, 120, 70);
     [self.view addSubview:self.myIndicator];
     [self performSelector:@selector(myAnimating) withObject:nil afterDelay:1.0f];
-
 }
 
 -(void)viewDidDisappear:(BOOL)animated

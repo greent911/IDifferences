@@ -36,7 +36,7 @@
 #define starOffset 10
 #define starToLeftOffset 30
 #define numberOfErrorsOffSet 30
-#define offset 7
+#define offset 5
 #define timeUnitNumber 15
 #define fontSize 15
 #define intervalTimer 30
