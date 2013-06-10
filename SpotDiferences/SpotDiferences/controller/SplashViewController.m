@@ -113,14 +113,42 @@
 {
     [super viewWillAppear:animated];
     
-    self.imageview.image = [UIImage imageNamed:@"splash_screen"];
+    self.imageview.image = [UIImage imageNamed:@"background_with_title"];
     
     //[self playmov];
 }
 
+-(void) myAnimating{
+    
+    if (self.myIndicator.progress <1 ){
+        [self.myIndicator setProgress:self.myIndicator.progress+0.1 animated:YES];
+        
+        
+        
+        [self performSelector:@selector(myAnimating) withObject:nil afterDelay:0.1f];
+        
+    }
+    else{
+        [self.myIndicator setHidden:YES];
+            }
+    
+}
+
 -(void)viewDidAppear:(BOOL)animated
 {
+    int offset = 30;
+    int halfViewSize = [self view].frame.size.width / 2;
     [super viewDidAppear:animated];
+    self.myIndicator = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
+    //    [self.myIndicator setProgress:0.4 animated:YES];
+    self.myIndicator.frame = CGRectMake(halfViewSize + 3.5*offset, 285, 120, 70);
+    [self.view addSubview:self.myIndicator];
+    [self performSelector:@selector(myAnimating) withObject:nil afterDelay:1.0f];
+
+    
+    
+    
+    
 }
 
 -(void)viewDidDisappear:(BOOL)animated

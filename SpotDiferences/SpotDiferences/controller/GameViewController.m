@@ -40,6 +40,7 @@
 #define timeUnitNumber 15
 #define fontSize 15
 #define intervalTimer 30
+#define timeForEachGame 60
 #define errorImage @"erro"
 
 
@@ -66,6 +67,7 @@
 // Timer and ProgressionView
 @property (weak, nonatomic) NSTimer *timer;
 @property (weak, nonatomic) NSTimer *timerForRealTime;
+@property (nonatomic) int numbersOfMyanimating;
 @property (nonatomic,weak) IBOutlet UIProgressView *slider;
 
 // Navigation Bar (?)
@@ -87,7 +89,8 @@
 
 @property (nonatomic) int clickError;
 @property (nonatomic) int clickOk;
-
+@property (nonatomic) int countOfMagnifier;
+@property (nonatomic) int countOfTimeIncrease;
 @property (nonatomic) Maze *maze;
 @property (nonatomic) NSManagedObjectContext *context;
 
@@ -102,6 +105,7 @@
 @property (nonatomic,weak) NSString *facebookShare;
 @property (nonatomic,weak) NSString *twitterShare;
 @property (nonatomic,weak) NSString *lastShare;
+@property (nonatomic) BOOL stopAnimation;
 @end
 
 @implementation GameViewController
@@ -143,6 +147,12 @@
 @synthesize followUp = _followUp;
 @synthesize timerForReal = _timerForReal;
 @synthesize loggedInUser = _loggedInUser;
+
+@synthesize numbersOfMyanimating = _numbersOfMyanimating;
+@synthesize countOfMagnifier = _countOfMagnifier;
+@synthesize countOfTimeIncrease = _countOfTimeIncrease;
+
+
 #pragma mark - Setup
 
 
@@ -188,10 +198,10 @@
         self.clickError++;
         self.maze.missedAtLeastOneTime = @"YES";
         [self updateNumberOfErrors];
-        if (self.clickError == 3) {
-            [self stopTimer];
-            [self gameLosed];
-        }
+//        if (self.clickError == 3) {
+//            [self stopTimer];
+//            [self gameLosed];
+//        }
     }
 }
 
@@ -250,8 +260,9 @@
 -(void)restartStar {
     [self removeAllStars];
     for (int c = 2; c > -3; c--) {
-        UIImage *starimage = [UIImage imageNamed:@"differences_white_star"];
-        UIImageView *starimageview = [UikitFramework createImageViewWithImage:@"differences_white_star" positionX:self.view.frame.size.width/2-starimage.size.width/2 + starOffset * c - starToLeftOffset positionY:15];
+        UIImage *starimage = [UIImage imageNamed:@"mouse_empty"];
+     //   starimage.frame.CGRectMake(self.view.frame.size.width/2-starimage.size.width/2 + starOffset * c - starToLeftOffset, 15, 17, 17);
+        UIImageView *starimageview = [UikitFramework createImageViewWithImage:@"mouse_empty" positionX:130 + starOffset * 2*c - starToLeftOffset positionY:5];
         [self.view addSubview:starimageview];
         [self.stars addObject:starimageview];
     }
@@ -372,7 +383,8 @@
     }else
     {
         NSString *dialog_box = [NSString stringWithFormat:@"dialog_box_%@",self.maze.name];
-        messagebox = [UIImage imageNamed:dialog_box];
+        messagebox = [UIImage imageNamed:@"dialogBox"];
+
     }
     
     
@@ -418,6 +430,36 @@
     [self.pauseViews addObject:pause_lable];
 }
 
+-(void)magnifierButtonTapped:(UIButton*)sender {
+    
+    //放大鏡功能
+    
+    
+    if(self.countOfMagnifier > 0){
+        self.countOfMagnifier --;
+    }else{
+        
+    }
+    
+    NSLog(@"x%d",self.countOfMagnifier);
+}
+
+-(void)timeIncreaseButtonTapped:(UIButton*)sender {
+    
+   // self.numbersOfMyanimating-=5;
+   // self.maze.timeRemaining = [NSNumber numberWithInt:self.numbersOfMyanimating];
+    NSLog(@"numbersOfMyanimating = %d",self.numbersOfMyanimating);
+    
+    if(self.countOfMagnifier > 0){
+        self.countOfTimeIncrease --;
+    }else{
+        self.countOfTimeIncrease = 0;
+    }
+    
+    NSLog(@"x%d",self.countOfTimeIncrease);
+    
+}
+
 -(void)continueButtonTapped:(UIButton*)sender {
     [self clearPauseWinLoseScreens];
     [self startTimer];
@@ -454,7 +496,7 @@
     }else
     {
         NSString *dialog_box = [NSString stringWithFormat:@"dialog_box_%@",self.maze.name];
-        messagebox = [UIImage imageNamed:dialog_box];
+        messagebox = [UIImage imageNamed:@"dialogBox"];
     }
     
     
@@ -483,7 +525,7 @@
     int halfViewSize = [self view].frame.size.width / 2;
     UIImage *image2 = [UIImage imageNamed:@"btn_green"];
     
-    UIButton *continueButton = [[UIButton alloc] initWithFrame:CGRectMake(halfViewSize - image2.size.width -15, self.view.frame.size.height/2+162/2, image2.size.width, image2.size.height)];
+    UIButton *continueButton = [[UIButton alloc] initWithFrame:CGRectMake(halfViewSize - image2.size.width -10, self.view.frame.size.height/2+162/2, image2.size.width, image2.size.height)];
     [continueButton setBackgroundImage:image2 forState:UIControlStateNormal];
     [continueButton setTitle:@"YES" forState:UIControlStateNormal];
     continueButton.titleLabel.font = [UIFont fontWithName:[UikitFramework getFontName] size: fontSize];
@@ -542,10 +584,11 @@
         self.maze.differencesMissed = [NSNumber numberWithInt:self.clickError];
         int score = self.score.tag;
         self.maze.personalscore = [NSNumber numberWithInt:score];
+       
 
         self.maze.personalTime =  [NSNumber numberWithInt:self.timerForReal];
         NSLog(@"inside wants to quit %d",self.timerForReal);
-        self.maze.timeRemaining = [NSNumber numberWithInt:time];
+        self.maze.timeRemaining = [NSNumber numberWithInt:self.numbersOfMyanimating];
         [self saveContext];
         [self backToMenu];
     }else {
@@ -678,7 +721,7 @@
     
     UIImage *errorImg = [UIImage imageNamed:errorImage]; 
     UIImageView *imageview = [[UIImageView alloc] 
-                              initWithFrame:CGRectMake(positionX+rightOriginX - errorImg.size.width/2, 
+                              initWithFrame:CGRectMake(positionX+rightOriginX - errorImg.size.width/2,
                                                        positionY+rightOriginY - errorImg.size.height/2, 
                                                        errorImg.size.width, 
                                                        errorImg.size.height)];
@@ -790,11 +833,34 @@
 -(void)updateNumberOfErrors{
     UIImageView *numberOfErrors = [self.numberOfErrors lastObject];
     //NSLog(@"%f - %f",numberOfErrors.frame.origin.x,numberOfErrors.frame.origin.y);
-    UIImageView *starimageview = [UikitFramework createImageViewWithImage:@"differences_red_cross" positionX:numberOfErrors.frame.origin.x positionY:numberOfErrors.frame.origin.y];
-    
-    [self.view addSubview:starimageview];
-    
-    [self.numberOfErrorsRed addObject:starimageview];
+//    UIImageView *starimageview = [UikitFramework createImageViewWithImage:@"differences_red_cross" positionX:numberOfErrors.frame.origin.x positionY:numberOfErrors.frame.origin.y];
+//    
+//    [self.view addSubview:starimageview];
+//    
+//    [self.numberOfErrorsRed addObject:starimageview];
+
+    self.numbersOfMyanimating+=2;
+    self.maze.timeRemaining = [NSNumber numberWithInt:self.numbersOfMyanimating];
+
+    if (self.sparkLine.frame.size.height > 7 ){
+        self.sparkLine.frame = CGRectMake(self.sparkLine.frame.origin.x,
+                                          self.sparkLine.frame.origin.y + 6*220/timeForEachGame,
+                                          self.sparkLine.frame.size.width,
+                                          self.sparkLine.frame.size.height - 6*220/timeForEachGame);
+        
+        self.spark.frame = CGRectMake(self.spark.frame.origin.x,
+                                      self.sparkLine.frame.origin.y-(self.spark.frame.size.height/2),
+                                      self.spark.frame.size.width,
+                                      self.spark.frame.size.height);
+        NSLog(@"sparkLine.frame.size.height = %f",self.sparkLine.frame.size.height);
+    }else{
+        self.spark.frame = CGRectMake(self.spark.frame.origin.x-(40),
+                                      self.spark.frame.origin.y+(220/timeForEachGame)-(30),
+                                      self.spark.frame.size.width*3,
+                                      self.spark.frame.size.height*3);
+        [self stopTimer];
+        [self gameLosedWithTimer];
+    }
     
     numberOfErrors.hidden = YES;
     [numberOfErrors removeFromSuperview];
@@ -804,7 +870,7 @@
 -(void)updateStars {
     UIImageView *star = [self.stars lastObject];
     
-    UIImageView *starimageview = [UikitFramework createImageViewWithImage:@"differences_red_star" positionX:star.frame.origin.x positionY:star.frame.origin.y];
+    UIImageView *starimageview = [UikitFramework createImageViewWithImage:@"mouse" positionX:star.frame.origin.x positionY:star.frame.origin.y];
     
     [self.view addSubview:starimageview];
     
@@ -847,101 +913,183 @@
     [self updateWinScore];
     self.maze.state = @"finished";
     self.maze.newColection = @"NO";
-    UIView *pauseView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
-    pauseView.backgroundColor = [UIColor blackColor];
-    pauseView.alpha = 0.5;
-    [self.view addSubview:pauseView];
-    
-    NSMutableArray *gameWonViews = [[NSMutableArray alloc]init];
-    
-    UIImage *messagebox;
-    UIImageView *imageView;
-    /*
-     NSString *dialog_box = [NSString stringWithFormat:@"dialog_box_%@",self.maze.name];
-     NSLog(@"%@",dialog_box);*/
-    
-    if (self.maze.pack) {
-        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *path = [paths objectAtIndex:0];
-        NSString *unzipPath = [path stringByAppendingPathComponent:@"unzip"];
-        //NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:unzipPath error:NULL];
-        NSString *package = [unzipPath stringByAppendingPathComponent:self.maze.pack.name];
-        NSString *images = [package stringByAppendingPathComponent:@"box"];
-        NSString *mazeName = [images stringByAppendingPathComponent:[NSString stringWithFormat:@"dialog_box_%@@2x.png",self.maze.name]];
-        NSLog(@"%@",mazeName);
-        
-        NSData *imageData = [NSData dataWithContentsOfFile:mazeName options:0 error:nil];
-        messagebox = [UIImage imageWithData:imageData];
-        
-    }else
-    {
-        NSString *dialog_box = [NSString stringWithFormat:@"dialog_box_%@",self.maze.name];
-        messagebox = [UIImage imageNamed:dialog_box];
-    }
-
-    imageView = [[UIImageView alloc]initWithImage:messagebox];
-    imageView.frame = CGRectMake(self.view.frame.size.width/2-311/2 , self.view.frame.size.height/2-162/2, 311, 162);
-    [self.view addSubview:imageView];
-    
+//    UIView *pauseView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
+//    pauseView.backgroundColor = [UIColor blackColor];
+//    pauseView.alpha = 0.5;
+//    [self.view addSubview:pauseView];
+//    
+//    NSMutableArray *gameWonViews = [[NSMutableArray alloc]init];
+//    
+//    UIImage *messagebox;
+//    UIImageView *imageView;
+//    /*
+//     NSString *dialog_box = [NSString stringWithFormat:@"dialog_box_%@",self.maze.name];
+//     NSLog(@"%@",dialog_box);*/
+//    
+//    if (self.maze.pack) {
+//        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//        NSString *path = [paths objectAtIndex:0];
+//        NSString *unzipPath = [path stringByAppendingPathComponent:@"unzip"];
+//        //NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:unzipPath error:NULL];
+//        NSString *package = [unzipPath stringByAppendingPathComponent:self.maze.pack.name];
+//        NSString *images = [package stringByAppendingPathComponent:@"box"];
+//        NSString *mazeName = [images stringByAppendingPathComponent:[NSString stringWithFormat:@"dialog_box_%@@2x.png",self.maze.name]];
+//        NSLog(@"%@",mazeName);
+//        
+//        NSData *imageData = [NSData dataWithContentsOfFile:mazeName options:0 error:nil];
+//        messagebox = [UIImage imageWithData:imageData];
+//        
+//    }else
+//    {
+//        NSString *dialog_box = [NSString stringWithFormat:@"dialog_box_%@",self.maze.name];
+//        messagebox = [UIImage imageNamed:dialog_box];
+//    }
+//
+//    imageView = [[UIImageView alloc]initWithImage:messagebox];
+//    imageView.frame = CGRectMake(self.view.frame.size.width/2-311/2 , self.view.frame.size.height/2-162/2, 311, 162);
+//    [self.view addSubview:imageView];
+//    
     //NSString *dialog_box = [NSString stringWithFormat:@"dialog_box_%@",self.maze.name];
     //UIImage *messagebox = [UIImage imageNamed:dialog_box];
     //UIImageView *imageView = [UikitFramework createImageViewWithImage:dialog_box positionX:self.view.frame.size.width/2-messagebox.size.width/2 positionY:self.view.frame.size.height/2-messagebox.size.height/2];
     //[self.view addSubview:imageView];
     
-    UILabel *pause_lable = [UikitFramework createLableWithText:[NSString stringWithFormat:@"YOU SCORED\n%d POINTS",self.score.tag] 
-                                                     positionX:self.view.frame.size.width/2-messagebox.size.width/2 + 50 
-                                                     positionY:self.view.frame.size.height/2-messagebox.size.height/2 
-                                                         width:messagebox.size.width 
-                                                        height:messagebox.size.height];
+    //UILabel *pause_lable = [UikitFramework createLableWithText:[NSString stringWithFormat:@"YOU SCORED\n%d POINTS",self.score.tag]
+//    UILabel *pause_lable = [UikitFramework createLableWithText:[NSString stringWithFormat:@"Congratulation!!"]
+//                                                     positionX:self.view.frame.size.width/2-messagebox.size.width/2 + 50 
+//                                                     positionY:self.view.frame.size.height/2-messagebox.size.height/2 
+//                                                         width:messagebox.size.width 
+//                                                        height:messagebox.size.height];
+//
+//    pause_lable.numberOfLines = 0;
+//    pause_lable.textAlignment = UITextAlignmentCenter;
+//    [self.view addSubview:pause_lable];
+//
+//    
+//    
+//    
+//    [gameWonViews addObject:pauseView];
+//    [gameWonViews addObject:imageView];
+//    [gameWonViews addObject:pause_lable];
+//    
+//    for (int c = 0; c < [gameWonViews count]; c++) {
+//        id obj = [gameWonViews objectAtIndex:c];
+//        [obj setAlpha:0];
+//        [self.pauseViews addObject:obj];
+//    }
+//    
+//    [UIView animateWithDuration:1.5 
+//                          delay:0.0 
+//                        options:UIViewAnimationOptionBeginFromCurrentState 
+//                     animations:^{
+//                         /*for (int c = 0; c < [gameWonViews count]; c++) {
+//                             id obj = [gameWonViews objectAtIndex:c];
+//                             [obj setAlpha:1];
+//                         }*/
+//                         pauseView.alpha = 0.9;
+//                         imageView.alpha = 1;
+//                         pause_lable.alpha = 1;
+//                     } 
+//                     completion:^(BOOL fin){
+//                     }];
+//    
+//    [UIView animateWithDuration:1.5 
+//                          delay:3.0 
+//                        options:UIViewAnimationOptionBeginFromCurrentState 
+//                     animations:^{
+//                         for (int c = 0; c < [gameWonViews count]; c++) {
+//                             id obj = [gameWonViews objectAtIndex:c];
+//                             [obj setAlpha:0];
+//                         }
+//                     } 
+//                     completion:^(BOOL fin){
+//                         for(int c = 0; c < [self.pauseViews count] ; c++){
+//                             id obj = [self.pauseViews lastObject];
+//                             [obj removeFromSuperview];
+//                             [self.pauseViews removeLastObject];
+//                         }
+//                       //  [self sharingView];
+//                     }];
+    
+  //  [self stopTimer];
+    
+    
+    UIView *pauseView = [self makeAPauseView];
+    UIImage *messagebox;
+    /*
+        NSString *dialog_box = [NSString stringWithFormat:@"dialog_box_%@",self.maze.name];
+         NSLog(@"%@",dialog_box);*/
+        
+    if (self.maze.pack) {
+        NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString *path = [paths objectAtIndex:0];
+        NSString *unzipPath = [path stringByAppendingPathComponent:@"unzip"];
+        //NSArray *directoryContent = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:unzipPath error:NULL];
+        NSString *package = [unzipPath stringByAppendingPathComponent:self.maze.pack.name];
+        NSString *images = [package stringByAppendingPathComponent:@"box"];
+        NSString *mazeName = [images stringByAppendingPathComponent:[NSString stringWithFormat:@"dialog_box_%@@2x.png",self.maze.name]];
+        
+            
+//        NSData *imageData = [NSData dataWithContentsOfFile:mazeName options:0 error:nil];
+//            messagebox = [UIImage imageWithData:imageData];
 
-    pause_lable.numberOfLines = 0;
+        messagebox = [UIImage imageNamed:@"Rice"];
+    }else
+    {
+        
+      //
+        NSString *dialog_box = [NSString stringWithFormat:@"dialog_box_%@",self.maze.name];
+        //    messagebox = [UIImage imageNamed:dialog_box];
+          messagebox = [UIImage imageNamed:@"dialogBox"];
+
+    }
+    NSLog(@"self.maze.name %@",self.maze.name);    
+    
+    UIImageView *imageView = [[UIImageView alloc]initWithImage:messagebox];
+    imageView.frame = CGRectMake(self.view.frame.size.width/2-311/2 , self.view.frame.size.height/2-162/2, 311, 162);
+        
+    //[UikitFramework createImageViewWithImage:dialog_box positionX:self.view.frame.size.width/2-messagebox.size.width/2 positionY:self.view.frame.size.height/2-messagebox.size.height/2];
+    [self.view addSubview:imageView];
+        
+    UILabel *pause_lable = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2-messagebox.size.width/2 + 50, self.view.frame.size.height/2-messagebox.size.height/2, messagebox.size.width, messagebox.size.height)];
+    pause_lable.text = @"Congratulations!!!";
+    pause_lable.backgroundColor = [UIColor clearColor];
+    pause_lable.font = [UIFont fontWithName:[UikitFramework getFontName] size: 15];
+    pause_lable.textColor = [UIColor whiteColor];
     pause_lable.textAlignment = UITextAlignmentCenter;
     [self.view addSubview:pause_lable];
+        
+    int halfViewSize = [self view].frame.size.width / 2;
+    UIImage *image2 = [UIImage imageNamed:@"btn_green"];
     
-    [gameWonViews addObject:pauseView];
-    [gameWonViews addObject:imageView];
-    [gameWonViews addObject:pause_lable];
-    
-    for (int c = 0; c < [gameWonViews count]; c++) {
-        id obj = [gameWonViews objectAtIndex:c];
-        [obj setAlpha:0];
-        [self.pauseViews addObject:obj];
-    }
-    
-    [UIView animateWithDuration:1.5 
-                          delay:0.0 
-                        options:UIViewAnimationOptionBeginFromCurrentState 
-                     animations:^{
-                         /*for (int c = 0; c < [gameWonViews count]; c++) {
-                             id obj = [gameWonViews objectAtIndex:c];
-                             [obj setAlpha:1];
-                         }*/
-                         pauseView.alpha = 0.9;
-                         imageView.alpha = 1;
-                         pause_lable.alpha = 1;
-                     } 
-                     completion:^(BOOL fin){
-                     }];
-    
-    [UIView animateWithDuration:1.5 
-                          delay:3.0 
-                        options:UIViewAnimationOptionBeginFromCurrentState 
-                     animations:^{
-                         for (int c = 0; c < [gameWonViews count]; c++) {
-                             id obj = [gameWonViews objectAtIndex:c];
-                             [obj setAlpha:0];
-                         }
-                     } 
-                     completion:^(BOOL fin){
-                         for(int c = 0; c < [self.pauseViews count] ; c++){
-                             id obj = [self.pauseViews lastObject];
-                             [obj removeFromSuperview];
-                             [self.pauseViews removeLastObject];
-                         }
-                         [self sharingView];
-                     }];
+    UIButton *continueButton = [[UIButton alloc] initWithFrame:CGRectMake(halfViewSize +15, self.view.frame.size.height/2+162/2, image2.size.width, image2.size.height)];
+    [continueButton setBackgroundImage:image2 forState:UIControlStateNormal];
+    [continueButton setTitle:@"Go to next" forState:UIControlStateNormal];
+    continueButton.titleLabel.font = [UIFont fontWithName:[UikitFramework getFontName] size: fontSize];
+    continueButton.titleLabel.textColor = [UIColor whiteColor];
+    [continueButton addTarget:self action:@selector(onlyQuit:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:continueButton];
+        
+    UIImage *image = [UIImage imageNamed:@"btn_red"];
+        
+    UIButton *quitButton = [[UIButton alloc] initWithFrame:CGRectMake(halfViewSize - image2.size.width -10, self.view.frame.size.height/2+162/2, image2.size.width, image2.size.height)];
+    [quitButton setBackgroundImage:image forState:UIControlStateNormal];
+    [quitButton setTitle:@"Back to menu" forState:UIControlStateNormal];
+    quitButton.titleLabel.font = [UIFont fontWithName:[UikitFramework getFontName] size: fontSize];
+    quitButton.titleLabel.textColor = [UIColor whiteColor];
+    [quitButton addTarget:self action:@selector(quitButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:quitButton];
+        
+        [self.pauseViews addObject:pauseView];
+        [self.pauseViews addObject:imageView];
+        [self.pauseViews addObject:continueButton];
+        [self.pauseViews addObject:quitButton];
+        [self.pauseViews addObject:pause_lable];
 
+//
 }
+
+
 
 -(void)resetAndChangeImage
 {
@@ -1487,9 +1635,10 @@
  *  timer actions
  *
  */
--(void)timerCall:(NSTimer *)timer 
+-(void)timerCall:(NSTimer *)timer
 {
     [self updateTimerUnits];
+    
 }
 
 -(void)updateTimerUnits
@@ -1630,14 +1779,14 @@
 
     int halfViewSize = [self view].frame.size.width / 2;
     UILabel *pause_lable = [UikitFramework createLableWithText:@"YOUR TIME TO COMPLETE\nTHE IMAGE HAS ENDED.\n\nDO YOU WANT TO EXTEND IT?" positionX:self.view.frame.size.width/2-311/2 - 40 positionY:self.view.frame.size.height/2-162/2 + 20  width:311 height:162/2];
-    pause_lable.font = [UIFont fontWithName:[UikitFramework getFontName] size:10];
+    pause_lable.font = [UIFont fontWithName:[UikitFramework getFontName] size:15];
     pause_lable.numberOfLines = 0;
     [self.view addSubview:pause_lable];
     UIButton * continueButton = [UikitFramework createButtonWithBackgroudImage:@"btn_short_green" title:@"YES" positionX:halfViewSize - image2.size.width -15 positionY:self.view.frame.size.height/2+162/2];
     [continueButton addTarget:self action:@selector(wantToExtendTimeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:continueButton];
     
-    UIButton *quitButton = [UikitFramework createButtonWithBackgroudImage:@"btn_short_red" title:@"NO" positionX:halfViewSize +15 positionY:self.view.frame.size.height/2+162/2];
+    UIButton *quitButton = [UikitFramework createButtonWithBackgroudImage:@"btn_short_red" title:@"NO" positionX:halfViewSize positionY:self.view.frame.size.height/2+162/2];
     [quitButton addTarget:self action:@selector(wantToQuitButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:quitButton];
 
@@ -1694,13 +1843,23 @@
     [self.view addSubview:imageView];
 
     int halfViewSize = [self view].frame.size.width / 2;
-    UILabel *pause_lable = [UikitFramework createLableWithText:@"YOUR TIME TO COMPLETE\nTHE IMAGE HAS ENDED.\n\nRETURN TO MENU." positionX:self.view.frame.size.width/2-311/2 - 40 positionY:self.view.frame.size.height/2-162/2 + 20  width:311 height:162/2];
+    UILabel *pause_lable = [UikitFramework createLableWithText:@"Time's up!!.\n\nRETURN TO MENU." positionX:self.view.frame.size.width/2-311/2 - 40 positionY:self.view.frame.size.height/2-162/2 + 20  width:311 height:162/2];
     pause_lable.numberOfLines = 0;
-    pause_lable.font = [UIFont fontWithName:[UikitFramework getFontName] size:10];
+    pause_lable.font = [UIFont fontWithName:[UikitFramework getFontName] size:15];
     [self.view addSubview:pause_lable];
-    UIButton *quitButton = [UikitFramework createButtonWithBackgroudImage:@"btn_short_green" title:@"GO TO MENU" positionX:halfViewSize +15 positionY:self.view.frame.size.height/2+162/2];
-    quitButton.titleLabel.font = [UIFont fontWithName:[UikitFramework getFontName] size: 10];
+    
+    UIButton *reTryButton = [UikitFramework createButtonWithBackgroudImage:@"btn_green" title:@"Try again" positionX:halfViewSize -150 positionY:self.view.frame.size.height/2+162/2];
+  //  [reTryButton setBackgroundImage:image2 forState:UIControlStateNormal];
+  //  [reTryButton setTitle:@"Go to next" forState:UIControlStateNormal];
+    reTryButton.titleLabel.font = [UIFont fontWithName:[UikitFramework getFontName] size: fontSize];
+    reTryButton.titleLabel.textColor = [UIColor whiteColor];
+   // [reTryButton addTarget:self action:@selector(backButtonTapped::) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:reTryButton];
+
+    UIButton *quitButton = [UikitFramework createButtonWithBackgroudImage:@"btn_red" title:@"Back TO MENU" positionX:halfViewSize+13 positionY:self.view.frame.size.height/2+162/2];
+    quitButton.titleLabel.font = [UIFont fontWithName:[UikitFramework getFontName] size: 15];
     [quitButton addTarget:self action:@selector(wantToQuitButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    
     [self.view addSubview:quitButton];
 
     [self.pauseViews addObject:pauseView];
@@ -1778,7 +1937,7 @@
         pause_lable.font = [UIFont fontWithName:[UikitFramework getFontName] size: 15];
         [self.view addSubview:pause_lable];
 
-        continueButton = [UikitFramework createButtonWithBackgroudImage:@"btn_green" title:@"YES" positionX:halfViewSize - image2.size.width -15 positionY:self.view.frame.size.height/2+162/2];
+        continueButton = [UikitFramework createButtonWithBackgroudImage:@"btn_green" title:@"YES" positionX:halfViewSize - image2.size.width -10 positionY:self.view.frame.size.height/2+162/2];
         [continueButton addTarget:self action:@selector(gameLostResumeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:continueButton];
 
@@ -1868,6 +2027,7 @@
 -(void)timerCallForReal:(NSTimer *)timer 
 {
     self.timerForReal ++;
+    [self performSelector:@selector(myAnimating) withObject:nil afterDelay:0.0f];
 }
 
 -(void)startTimer {
@@ -1911,13 +2071,120 @@
 }
 
 
+-(void) myAnimating{
+    
+    
+    self.numbersOfMyanimating++;
+    NSLog(@"numbersOfMyanimating = %d",self.numbersOfMyanimating);
+    
+        if (self.sparkLine.frame.size.height > 7 ){
+            //[self.myTimer setProgress:self.myTimer.progress+0.005 animated:YES];
+            
+            self.sparkLine.frame = CGRectMake(self.sparkLine.frame.origin.x,
+                                              self.sparkLine.frame.origin.y + 220/timeForEachGame,
+                                              self.sparkLine.frame.size.width,
+                                              self.sparkLine.frame.size.height - 220/timeForEachGame);
+            
+            self.spark.frame = CGRectMake(self.spark.frame.origin.x,
+                                          self.sparkLine.frame.origin.y-(self.spark.frame.size.height/2),
+                                          self.spark.frame.size.width,
+                                          self.spark.frame.size.height);
+            NSLog(@"sparkLine.frame.size.height = %f",self.sparkLine.frame.size.height);
+            //self.spark.transform = CGAffineTransformMakeRotation( M_PI * self.myIndicator.progress);
+//            if (!_stopAnimation)
+//                [self performSelector:@selector(myAnimating) withObject:nil afterDelay:1.0f];
+        }
+        else{
+            self.spark.frame = CGRectMake(self.spark.frame.origin.x-(40),
+                                          self.spark.frame.origin.y+(220/timeForEachGame)-(30),
+                                          self.spark.frame.size.width*3,
+                                          self.spark.frame.size.height*3);
+          
+//            self.maze.extendedAtLeastOneTime = @"YES";
+//            [self updateScoresExtendedTime];
+//            if(self.numberOfExtendedTimes < 3){
+//                NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+//                NSString *remainingTime = [prefs stringForKey:@"autoExtendsTime"];
+//                if ([remainingTime isEqualToString:@"YES"]) {
+//                    self.numberOfExtendedTimes++;
+//                    [self stopTimer];
+//                    [self addTimerUnitsToScreen];
+//                    [self timeExtendedView];
+//                }else {
+//                    [self stopTimer];
+//                    [self askForExtendTime];
+//
+//                    //[self gameLosed];
+//                }
+//            }else {
+//                [self gameLosedWithTimer];
+//            }
+            [self stopTimer];
+            [self gameLosedWithTimer];
+        }
+            //  [self.myTimer setHidden:YES];
+}
+    
 
+
+
+-(void)createDynamite{
+    
+    int halfViewSize = 240;
+    int halfViewSizeH = 160;
+
+   // NSLog(@" %f %f",[self view].frame.size.width / 2,[self view].frame.size.height / 2);
+    [self.sparkLine removeFromSuperview];
+    [self.spark removeFromSuperview];
+    [self.dynamite removeFromSuperview];
+
+    
+    self.sparkLine = [UikitFramework createImageViewWithImage:@"spark_line" positionX:halfViewSize- (220-(220/timeForEachGame)*self.maze.timeRemaining.intValue)/2 positionY:halfViewSizeH+10+(220/timeForEachGame)*self.maze.timeRemaining.intValue];
+    self.sparkLine.frame = CGRectMake(halfViewSize - (220-(220/timeForEachGame)*self.maze.timeRemaining.intValue)/2, halfViewSizeH+10+(220/timeForEachGame)*self.maze.timeRemaining.intValue, 220-(220/timeForEachGame)*self.maze.timeRemaining.intValue, 6);
+    
+    self.sparkLine.transform = CGAffineTransformMakeRotation( M_PI * 0.5); //M_PI*0.5
+    
+    [self.view addSubview:self.sparkLine];
+    
+    self.dynamite = [UikitFramework createImageViewWithImage:@"dynamite" positionX:self.view.frame.size.width/2 positionY:self.view.frame.size.height/2];
+    self.dynamite.frame = CGRectMake(halfViewSize-12.5, halfViewSizeH + halfViewSizeH/2 + 40, 25, 38);
+    //self.sparkLine.transform = CGAffineTransformMakeRotation( M_PI * 90 / 180.0  ); //M_PI*0.5
+    [self.view addSubview:self.dynamite];
+    
+    
+    self.spark= [UikitFramework createImageViewWithImage:@"spark"
+                                               positionX:self.view.frame.size.width/2
+                                               positionY:40+(220/timeForEachGame)*self.maze.timeRemaining.intValue];
+    
+    //40+(220/timeForEachGame)*self.maze.timeRemaining.intValue
+    //self.view.frame.size.height/2
+    
+    self.spark.frame = CGRectMake(halfViewSize-20,40+(220/timeForEachGame)*self.maze.timeRemaining.intValue,40,40);
+    
+    [self.view addSubview:self.spark];
+    
+}
 -(void)addTimerUnitsToScreen {
-    for (int c =0; c<timeUnitNumber; c++) {
-        UIImageView *timerimageview = [UikitFramework createImageViewWithImage:@"time_unit_white" positionX:30+offset*c positionY:10];
-        [self.view addSubview:timerimageview];
-        [self.timerUnits addObject:timerimageview];
-    } 
+
+    [self createDynamite];
+    
+    
+//    [super viewDidAppear:animated];
+    self.myTimer = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
+    //    [self.myIndicator setProgress:0.4 animated:YES];
+    
+    //self.myTimer.frame = CGRectMake(halfViewSize - 3.28*offset2, 180, 200, 20);
+    //[self.view addSubview:self.myTimer];
+    //self.myTimer.transform = CGAffineTransformMakeRotation( M_PI * 90 / 180.0  ); //M_PI*0.5
+    
+   
+    
+    
+//    for (int c =0; c<timeUnitNumber; c++) {
+//        UIImageView *timerimageview = [UikitFramework createImageViewWithImage:@"time_unit_white" positionX:30+offset*c positionY:10];
+//        [self.view addSubview:timerimageview];
+//        [self.timerUnits addObject:timerimageview];
+//    } 
 }
 
 
@@ -1972,6 +2239,7 @@
     }
         
     self.timerForReal = 0;
+    self.numbersOfMyanimating = self.maze.timeRemaining.intValue;
     float initialZoomScale = [_mazeHelper initialZoomScale];
     float maximumZoomScale = (initialZoomScale * [_mazeHelper getMazeZoomFactor]);
     
@@ -2014,6 +2282,8 @@
     self.positionX_For_Testing = 0;
     self.positionY_For_Testing = 0;
     self.numberOfExtendedTimes = 0;
+    self.countOfMagnifier = 3;
+    self.countOfTimeIncrease =3;
     
     [self.slider setProgress:1.0];
     
@@ -2022,27 +2292,55 @@
     self.clickOk = 0;
     self.clickError = 0;
     
-    UIImageView *imageview = [UikitFramework createImageViewWithImage:@"topbar_game_new" positionX:0 positionY:0];
-    [self.view addSubview:imageview];
-    
-    
+    self.view.backgroundColor = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"black"]];
+  //    [self.view addSubview:imageview];
+    //self.view.backgroundColor = [UIImage imageNamed:@"selectGameStatus"];
+
     [self addTimerUnitsToScreen];
+    
+        int halfViewSize = [self view].frame.size.width / 2;
+    
+    UIButton *magnifierbutton = [UikitFramework createButtonWithBackgroudImage:@"magnifier_big" title:@"" positionX:halfViewSize + 80 positionY:0];
+    [magnifierbutton addTarget:self action:@selector(magnifierButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:magnifierbutton];
+
+    //UILabel *NumberOfMagnifier = [UikitFramework createLableWithText:@"x%d",self.countOfMagnifier positionX:halfViewSize + 80 positionY:-3 width:50 height:50];
+   // NumberOfMagnifier.font = [UIFont fontWithName:[UikitFramework getFontName] size: 14];
+    //NumberOfMagnifier.textColor = [UIColor redColor];
+    //[self.view addSubview:NumberOfMagnifier];
+    
+    UIButton *timeIncrease = [UikitFramework createButtonWithBackgroudImage:@"clock_brown" title:@"" positionX:halfViewSize + 140 positionY:0];
+    [timeIncrease addTarget:self action:@selector(timeIncreaseButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:timeIncrease];
+    
+//    UILabel *NumberOfTimeIncrease = [UikitFramework createLableWithText:(@"x%d",self.countOfTimeIncrease) positionX:halfViewSize + 140 positionY:-3 width:50 height:50];
+//    //NumberOfTimeIncrease.font = [UIFont fontWithName:[UikitFramework getFontName] size: 14];
+    //NumberOfTimeIncrease.textColor = [UIColor redColor];
+    //[self.view addSubview:NumberOfTimeIncrease];
+    
+    UIButton *menu = [UikitFramework createButtonWithBackgroudImage:@"menu_small" title:@"" positionX:halfViewSize + 200 positionY:0];
+    //[magnifierbutton addTarget:self action:@selector(magnifierButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+   // [self.view addSubview:menu];
+
 
     
-    UIButton *pausebutton = [UIButton buttonWithType:UIButtonTypeCustom];
-    pausebutton.frame = CGRectMake(self.view.frame.size.width - 50,0 , 50, 32);
+    
+    UIButton *pausebutton = [UikitFramework createButtonWithBackgroudImage:@"pause_greenChalk" title:@"" positionX:halfViewSize - 23 positionY:2];
+    
+   // UIButton *pausebutton = [UikitFramework createButtonWithBackgroudImage:@"" title:@"" positionX:halfViewSize - 5*offset positionY:190];
+   // pausebutton.frame = CGRectMake(self.view.frame.size.width - 50,0 , 50, 32);
     [pausebutton addTarget:self action:@selector(pauseButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    [pausebutton setTitle:@"PAUSE" forState:UIControlStateNormal];
-    pausebutton.backgroundColor = [UIColor clearColor];
-    pausebutton.titleLabel.font = [UIFont fontWithName:[UikitFramework getFontName] size: 10];
-    pausebutton.titleLabel.textColor = [UIColor whiteColor];
+   // [pausebutton setTitle:@"" forState:UIControlStateNormal];
+   // pausebutton.backgroundColor = [UIColor clearColor];
+   // pausebutton.titleLabel.font = [UIFont fontWithName:[UikitFramework getFontName] size: 10];
+   // pausebutton.titleLabel.textColor = [UIColor whiteColor];
     [self.view addSubview:pausebutton];
 
     
     
     UILabel *SCORE_lable = [UikitFramework createLableWithText:@"SCORE" positionX:self.view.frame.size.width/2 + 55 positionY:0 width:50 height:30];
     SCORE_lable.font = [UIFont fontWithName:[UikitFramework getFontName] size: 10];
-    [self.view addSubview:SCORE_lable];
+    //[self.view addSubview:SCORE_lable];
        
     UILabel *score_lable = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2 + 120, 0, 50, 30)];
     score_lable.text = @"000000";
@@ -2051,7 +2349,7 @@
     score_lable.font = [UIFont fontWithName:[UikitFramework getFontName] size: 10];
     score_lable.textColor = [UIColor whiteColor];
     score_lable.tag = 0;
-    [self.view addSubview:score_lable];
+   // [self.view addSubview:score_lable];
     self.score = score_lable;
     [self restartStar];
     [self restartNumberOfErrors];
@@ -2104,12 +2402,12 @@
 
 -(void)restartNumberOfErrors{
     [self removeAllNumberOfErrors];
-    for (int c = 1; c > -2; c--) {
-        UIImage *starimage = [UIImage imageNamed:@"differences_white_cross"];
-        UIImageView *starimageview = [UikitFramework createImageViewWithImage:@"differences_white_cross" positionX:self.view.frame.size.width/2 + 10 -starimage.size.width/2 + starOffset * c + numberOfErrorsOffSet positionY:15];
-        [self.view addSubview:starimageview];
-        [self.numberOfErrors addObject:starimageview];
-    }
+//    for (int c = 1; c > -2; c--) {
+//        UIImage *starimage = [UIImage imageNamed:@"differences_white_cross"];
+//        UIImageView *starimageview = [UikitFramework createImageViewWithImage:@"differences_white_cross" positionX:self.view.frame.size.width/2 + 10 -starimage.size.width/2 + starOffset * c + numberOfErrorsOffSet positionY:15];
+//        [self.view addSubview:starimageview];
+//        [self.numberOfErrors addObject:starimageview];
+//    }
 
 }
 
@@ -2150,6 +2448,7 @@
     [_rightScrollView setScrollEnabled:YES];
     [_leftScrollView setScrollEnabled:YES];
     [self addGestures];
+
     //[self registerFacebookNotification];
     
 }
