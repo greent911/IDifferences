@@ -500,18 +500,29 @@
 }
 
 -(void)timeIncreaseButtonTapped:(UIButton*)sender {
+    self.numbersOfMyanimating-=2;
+    self.maze.timeRemaining = [NSNumber numberWithInt:self.numbersOfMyanimating];
     
-    
-    if((self.sparkLine.frame.origin.y-6*220/timeForEachGame) < 170){
+    if((self.sparkLine.frame.origin.y-6*220/timeForEachGame) >= 63){
     self.sparkLine.frame = CGRectMake(self.sparkLine.frame.origin.x,
                                       self.sparkLine.frame.origin.y - 6*220/timeForEachGame,
                                       self.sparkLine.frame.size.width,
                                       self.sparkLine.frame.size.height + 6*220/timeForEachGame);
     
     self.spark.frame = CGRectMake(self.spark.frame.origin.x,
-                                  self.sparkLine.frame.origin.y+(6*self.spark.frame.size.height/2),
+                                  self.sparkLine.frame.origin.y-(self.spark.frame.size.height/2),
                                   self.spark.frame.size.width,
                                   self.spark.frame.size.height);
+    }else{
+        self.sparkLine.frame = CGRectMake(self.sparkLine.frame.origin.x,
+                                          63,
+                                          self.sparkLine.frame.size.width,
+                                          self.sparkLine.frame.size.height + 6*220/timeForEachGame);
+        
+        self.spark.frame = CGRectMake(self.spark.frame.origin.x,
+                                      self.sparkLine.frame.origin.y-(self.spark.frame.size.height/2),
+                                      self.spark.frame.size.width,
+                                      self.spark.frame.size.height);
     }
     
    // self.numbersOfMyanimating-=5;
@@ -2212,7 +2223,8 @@
         
     self.numbersOfMyanimating++;
     NSLog(@"numbersOfMyanimating = %d",self.numbersOfMyanimating);
-    
+    NSLog(@"sparkLine.frame.size.y = %f",self.sparkLine.frame.origin.y);
+
         if (self.sparkLine.frame.size.height > 7 ){
             //[self.myTimer setProgress:self.myTimer.progress+0.005 animated:YES];
             
@@ -2226,6 +2238,8 @@
                                           self.spark.frame.size.width,
                                           self.spark.frame.size.height);
             NSLog(@"sparkLine.frame.size.height = %f",self.sparkLine.frame.size.height);
+//            NSLog(@"sparkLine.frame.size.y = %f",self.sparkLine.frame.origin.y);
+
             //self.spark.transform = CGAffineTransformMakeRotation( M_PI * self.myIndicator.progress);
 //            if (!_stopAnimation)
 //                [self performSelector:@selector(myAnimating) withObject:nil afterDelay:1.0f];
@@ -2395,7 +2409,7 @@
 //            [imageMaskView showmaskedmtxC];
             
         }else{
-            UIImage * maskImage = [UIImage imageNamed:@"lighthouse.jpg"];
+            UIImage * maskImage = [UIImage imageNamed:@"erase2.png"];
             if (self.followUp == 0) {
        imageMaskView = [[ImageMaskView alloc] initWithFrame: CGRectMake(0, 0, rightImage.size.width, rightImage.size.height) image:maskImage];
             }else{
@@ -2473,6 +2487,7 @@
     [self addTimerUnitsToScreen];
     
         int halfViewSize = [self view].frame.size.width / 2;
+    if([gameMode isEqual: @"exciting"]){
     
     UIButton *magnifierbutton = [UikitFramework createButtonWithBackgroudImage:@"magnifier_big_new" title:@"" positionX:halfViewSize + 50 positionY:4];
     [magnifierbutton addTarget:self action:@selector(magnifierButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
@@ -2501,7 +2516,7 @@
     [magicButton addTarget:self action:@selector(allShowMoveViewToBack:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:magicButton];
 
-    
+    }
     UIButton *menu = [UikitFramework createButtonWithBackgroudImage:@"menu_small" title:@"" positionX:halfViewSize + 200 positionY:0];
     //[magnifierbutton addTarget:self action:@selector(magnifierButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
    // [self.view addSubview:menu];
