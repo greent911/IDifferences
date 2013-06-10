@@ -80,6 +80,10 @@
     
     [self.CH1 addTarget:self action:@selector(CH1ButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     
+    UIButton *bbutton = [UikitFramework createButtonWithBackgroudImage:@"backButton" title:@"" positionX:10 positionY:10];
+    bbutton.frame = CGRectMake(0, 205, 60, 40);
+    [bbutton addTarget:self action:@selector(backButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:bbutton];
     
     int level = [prefs integerForKey:@"level"];
     
@@ -102,6 +106,12 @@
     
     //[self.view addSubview:ChallengeButton];
 
+}
+
+-(void)backButtonTapped:(UIButton*)sender
+{
+    [self playInterfaceSound];
+    [[self navigationController]popViewControllerAnimated:YES];
 }
 
 -(void) CH1ButtonTapped:(UIButton*)sender

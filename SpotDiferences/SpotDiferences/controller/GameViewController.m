@@ -177,8 +177,8 @@
 {
     moveImageViewArray=[[NSMutableArray alloc] init];
     for (int i=0; i< count; i++) {
-        [moveImageViewArray addObject:[[MoveImageView alloc] initWithRandomPointImage:[UIImage imageNamed:@"60px-SurprisedSmiley.svg.png"] andTouchedImage:[UIImage imageNamed:@"60px-718smiley_608EC2.svg.png"]]];
-//        [moveImageViewArray addObject:[[MoveImageView alloc] initWitPoint:CGPointMake([ UIScreen mainScreen].bounds.size.height-60, [ UIScreen mainScreen].bounds.size.width-60) Image:[UIImage imageNamed:@"60px-SurprisedSmiley.svg.png"] andTouchedImage:[UIImage imageNamed:@"60px-718smiley_608EC2.svg.png"]]];
+        [moveImageViewArray addObject:[[MoveImageView alloc] initWithRandomPointImage:[UIImage imageNamed:@"bean3.png"] andTouchedImage:[UIImage imageNamed:@"bean4.png"]]];
+//       [moveImageViewArray addObject:[[MoveImageView alloc] initWitPoint:CGPointMake([ UIScreen mainScreen].bounds.size.height-60, [ UIScreen mainScreen].bounds.size.width-60) Image:[UIImage imageNamed:@"60px-SurprisedSmiley.svg.png"] andTouchedImage:[UIImage imageNamed:@"60px-718smiley_608EC2.svg.png"]]];
 
     }
     self.countFormoveImageViewStart=0;
