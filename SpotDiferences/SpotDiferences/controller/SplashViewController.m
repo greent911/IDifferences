@@ -113,7 +113,7 @@
 {
     [super viewWillAppear:animated];
     
-    self.imageview.image = [UIImage imageNamed:@"splash_screen"];
+    self.imageview.image = [UIImage imageNamed:@"background_with_title"];
     
     //[self playmov];
 }
@@ -121,6 +121,7 @@
 -(void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
 }
 
 -(void)viewDidDisappear:(BOOL)animated

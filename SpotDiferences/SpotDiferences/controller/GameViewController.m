@@ -36,7 +36,7 @@
 #define starOffset 10
 #define starToLeftOffset 30
 #define numberOfErrorsOffSet 30
-#define offset 7
+#define offset 5
 #define timeUnitNumber 15
 #define fontSize 15
 #define intervalTimer 30
@@ -956,6 +956,9 @@
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     NSString *gameFlow = [prefs objectForKey:@"gameFlow"];
     NSString *gameState = [prefs stringForKey:@"gameState"];
+    //NSString *number = [prefs stringForKey:@"number"];
+    int number = [prefs integerForKey:@"number"];
+    
     if ([gameState isEqualToString:@"paused"]) {
         NSLog(@"%@",gameFlow);
         [prefs setObject:@"normal" forKey:@"gameState"];
@@ -1028,11 +1031,29 @@
         if ([allMAzes count] == 0) {
             [self backToMazeView];
         }else {
-            int number = (arc4random()%[allMAzes count]);
-            Maze *maze = [allMAzes objectAtIndex:number];
-            [self setupWith:maze andContext:self.document.managedObjectContext];
-            [self setupWithHelper:self.maze andContext:self.context];
-            [self resetAndChangeImage];
+            //soft&exciting
+            if([gameState isEqualToString:@"normal"]){
+                int number = (arc4random()%[allMAzes count]);
+                Maze *maze = [allMAzes objectAtIndex:number];
+                [self setupWith:maze andContext:self.document.managedObjectContext];
+                [self setupWithHelper:self.maze andContext:self.context];
+                [self resetAndChangeImage];
+            }
+            //challenge
+            else{
+                number = number+1;
+                [prefs setInteger:number forKey:@"number"];
+                [prefs setInteger:number forKey:@"level"];
+                //限制過關才能下一關
+                [prefs setInteger:number forKey:@"level"];
+                NSString *numberstring = [prefs stringForKey:@"number"];
+                NSString *PhotoName = [NSString stringWithFormat:@"C0%@", numberstring];
+                //Maze *maze = [allMAzes objectAtIndex:number];
+                Maze *maze=[Maze getMazeByName:PhotoName inManagedObjectContext:self.document.managedObjectContext];
+                [self setupWith:maze andContext:self.document.managedObjectContext];
+                [self setupWithHelper:self.maze andContext:self.context];
+                [self resetAndChangeImage];
+            }
 
         }
         
