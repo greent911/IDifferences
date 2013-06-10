@@ -569,7 +569,7 @@
     //[self.view addSubview:imageView];
     
     UILabel *quit_lable = [[UILabel alloc] initWithFrame:CGRectMake(self.view.frame.size.width/2-messagebox.size.width/2 + 50, self.view.frame.size.height/2-messagebox.size.height/2, messagebox.size.width, messagebox.size.height)];
-    quit_lable.text = @"DO YOU REALLY WANT TO\n QUIT THIS GAME?";
+    quit_lable.text = @"DO YOU REALLY WANT\n TO QUIT THIS GAME?";
     quit_lable.backgroundColor = [UIColor clearColor];
     quit_lable.numberOfLines = 0;
     quit_lable.font = [UIFont fontWithName:[UikitFramework getFontName] size: 15];
@@ -1930,7 +1930,7 @@
         
     }else
     {
-        NSString *dialog_box = [NSString stringWithFormat:@"dialog_box_%@",self.maze.name];
+        NSString *dialog_box = [NSString stringWithFormat:@"dialogBox"];
         messagebox = [UIImage imageNamed:dialog_box];
     }
     
@@ -2015,7 +2015,7 @@
         
     }else
     {
-        NSString *dialog_box = [NSString stringWithFormat:@"dialog_box_%@",self.maze.name];
+        NSString *dialog_box = [NSString stringWithFormat:@"dialogBox"];
         messagebox = [UIImage imageNamed:dialog_box];
     }
     
@@ -2117,14 +2117,14 @@
             [self.navigationController popToViewController:obj animated:YES];    
     }
 }
--(void) allShowMoveViewToBack
+-(void) allShowMoveViewToBack:(UIButton*)sender
 {
     for (MoveImageView *mview in moveImageViewArray) {
         
         [mview showViewMoveToBack];
     }
 }
--(void) clearImageMask
+-(void) clearImageMask:(UIButton*)sender
 {
     [imageMaskView clearMaskView];
 }
@@ -2461,16 +2461,16 @@
     
         int halfViewSize = [self view].frame.size.width / 2;
     
-    UIButton *magnifierbutton = [UikitFramework createButtonWithBackgroudImage:@"magnifier_big" title:@"" positionX:halfViewSize + 80 positionY:0];
+    UIButton *magnifierbutton = [UikitFramework createButtonWithBackgroudImage:@"magnifier_big_new" title:@"" positionX:halfViewSize + 50 positionY:4];
     [magnifierbutton addTarget:self action:@selector(magnifierButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:magnifierbutton];
 
-    //UILabel *NumberOfMagnifier = [UikitFramework createLableWithText:@"x%d",self.countOfMagnifier positionX:halfViewSize + 80 positionY:-3 width:50 height:50];
+   // UILabel *NumberOfMagnifier = [UikitFramework createLableWithText:@"x%d",self.countOfMagnifier positionX:halfViewSize + 80 positionY:-3 width:50 height:50];
    // NumberOfMagnifier.font = [UIFont fontWithName:[UikitFramework getFontName] size: 14];
     //NumberOfMagnifier.textColor = [UIColor redColor];
     //[self.view addSubview:NumberOfMagnifier];
     
-    UIButton *timeIncrease = [UikitFramework createButtonWithBackgroudImage:@"clock_brown" title:@"" positionX:halfViewSize + 140 positionY:0];
+    UIButton *timeIncrease = [UikitFramework createButtonWithBackgroudImage:@"clock_brown" title:@"" positionX:halfViewSize + 100 positionY:2];
     [timeIncrease addTarget:self action:@selector(timeIncreaseButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:timeIncrease];
     
@@ -2478,6 +2478,16 @@
 //    //NumberOfTimeIncrease.font = [UIFont fontWithName:[UikitFramework getFontName] size: 14];
     //NumberOfTimeIncrease.textColor = [UIColor redColor];
     //[self.view addSubview:NumberOfTimeIncrease];
+    
+    UIButton *fingerbutton = [UikitFramework createButtonWithBackgroudImage:@"finger" title:@"" positionX:halfViewSize + 150 positionY:2];
+    [fingerbutton addTarget:self action:@selector(clearImageMask:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:fingerbutton];
+
+    
+    UIButton *magicButton = [UikitFramework createButtonWithBackgroudImage:@"magic" title:@"" positionX:halfViewSize + 200 positionY:4];
+    [magicButton addTarget:self action:@selector(allShowMoveViewToBack:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:magicButton];
+
     
     UIButton *menu = [UikitFramework createButtonWithBackgroudImage:@"menu_small" title:@"" positionX:halfViewSize + 200 positionY:0];
     //[magnifierbutton addTarget:self action:@selector(magnifierButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
