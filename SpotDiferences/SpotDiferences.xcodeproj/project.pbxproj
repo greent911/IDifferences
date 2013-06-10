@@ -580,7 +580,7 @@
 		1032C0CC162DC8F0005AAC51 /* IMAGENS-FLOW-1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "IMAGENS-FLOW-1@2x.png"; sourceTree = "<group>"; };
 		105398DF1594A322007B5155 /* Twitter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Twitter.framework; path = System/Library/Frameworks/Twitter.framework; sourceTree = SDKROOT; };
 		1053E657158B3ADF0042E6A0 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		105683C61578DC7A0030A2ED /* iDifferences.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iDifferences.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		105683C61578DC7A0030A2ED /* CSdifferences.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CSdifferences.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		105683CA1578DC7B0030A2ED /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		105683CC1578DC7B0030A2ED /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		105683CE1578DC7B0030A2ED /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -1257,7 +1257,7 @@
 		105683C71578DC7A0030A2ED /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				105683C61578DC7A0030A2ED /* iDifferences.app */,
+				105683C61578DC7A0030A2ED /* CSdifferences.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -2062,7 +2062,7 @@
 			);
 			name = SpotDiferences;
 			productName = SpotDiferences;
-			productReference = 105683C61578DC7A0030A2ED /* iDifferences.app */;
+			productReference = 105683C61578DC7A0030A2ED /* CSdifferences.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -2710,7 +2710,7 @@
 					"\"$(SRCROOT)/../../FacebookSDK.framework/Versions/A\"",
 				);
 				OTHER_LDFLAGS = "-lsqlite3.0";
-				PRODUCT_NAME = iDifferences;
+				PRODUCT_NAME = CSdifferences;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
@@ -2743,7 +2743,7 @@
 					"\"$(SRCROOT)/../../FacebookSDK.framework/Versions/A\"",
 				);
 				OTHER_LDFLAGS = "-lsqlite3.0";
-				PRODUCT_NAME = iDifferences;
+				PRODUCT_NAME = CSdifferences;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				VALID_ARCHS = armv7;
