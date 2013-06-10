@@ -142,7 +142,7 @@
     [prefs synchronize];
     //NSArray *allMAzes = [Maze getMazeByState:@"normal" inManagedObjectContext:self.document.managedObjectContext];
     
-    NSArray *allMAzes = [Maze getMazeByState:@"normal" inManagedObjectContext:self.document.managedObjectContext];
+    NSArray *allMAzes = [Maze getMazeByState:@"challenge" inManagedObjectContext:self.document.managedObjectContext];
     
 //    Maze *maze=[Maze getMazeByName:@"birds" inManagedObjectContext:self.document.managedObjectContext];
 //    NSLog(maze.name);

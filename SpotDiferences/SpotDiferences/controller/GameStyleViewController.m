@@ -135,7 +135,9 @@
         Maze *resumeMaze=[resumeMazes objectAtIndex:0];
         _resumeName = resumeMaze.name;
         NSLog(@"_resumeName:%@",_resumeName);
-        [self performSegueWithIdentifier:@"resume" sender:self];
+//        [self performSegueWithIdentifier:@"resume" sender:self];
+        [self performSegueWithIdentifier:@"SoftExciting" sender:self];
+
 
     } else {
         NSLog(@"No Resume Game!!!");
@@ -154,6 +156,7 @@
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     [prefs setObject:state forKey:@"gameState"];
     [prefs synchronize];
+    tapState=state;
     
 }
 
@@ -203,6 +206,7 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"SoftExciting"]) {
+    if ([tapState isEqualToString:@"normal"]) {
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     //NSString *gameFlow = [prefs objectForKey:@"gameFlow"];
     NSString *gameState = [prefs stringForKey:@"gameState"];
@@ -212,18 +216,23 @@
     Maze *maze = [allMAzes objectAtIndex:number];
     GameViewController *gvc = (GameViewController*)segue.destinationViewController;
     [gvc setupWith:maze andContext: [_document managedObjectContext]];
-    }else if([segue.identifier isEqualToString:@"resume"]){
-        ImageDetailViewController* idc = segue.destinationViewController;
-        /*
-        NSArray *resumeMazes = [Maze getMazeByResumedGames:self.document.managedObjectContext];
-        Maze *resumeMaze=[resumeMazes objectAtIndex:0];
-                NSString *name=resumeMaze.name;
-        idc.foto = name;
-        NSLog(@"name:%@",name);
-         */
-        idc.foto=_resumeName;
-        [idc setDocument:self.document];
+//    }else if([segue.identifier isEqualToString:@"resume"]){
+    }else if([tapState isEqualToString:@"paused"]){
+//        ImageDetailViewController* idc = segue.destinationViewController;
+//        /*
+//        NSArray *resumeMazes = [Maze getMazeByResumedGames:self.document.managedObjectContext];
+//        Maze *resumeMaze=[resumeMazes objectAtIndex:0];
+//                NSString *name=resumeMaze.name;
+//        idc.foto = name;
+//        NSLog(@"name:%@",name);
+//         */
+//        idc.foto=_resumeName;
+//        [idc setDocument:self.document];
+        Maze *resumeMaze=[Maze getMazeByName:_resumeName inManagedObjectContext:self.document.managedObjectContext];
+        GameViewController *gvc = (GameViewController*)segue.destinationViewController;
+        [gvc setupWith:resumeMaze andContext: [_document managedObjectContext]];
+        
     }
-    
+    }
 }
 @end

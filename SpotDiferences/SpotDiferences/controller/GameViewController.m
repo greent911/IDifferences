@@ -437,7 +437,7 @@
 
     }else
     {
-        NSString *dialog_box = [NSString stringWithFormat:@"dialog_box_%@",self.maze.name];
+//        NSString *dialog_box = [NSString stringWithFormat:@"dialog_box_%@",self.maze.name];
         messagebox = [UIImage imageNamed:@"dialogBox"];
 
     }
@@ -501,17 +501,30 @@
 
 -(void)timeIncreaseButtonTapped:(UIButton*)sender {
     
-   // self.numbersOfMyanimating-=5;
-   // self.maze.timeRemaining = [NSNumber numberWithInt:self.numbersOfMyanimating];
-    NSLog(@"numbersOfMyanimating = %d",self.numbersOfMyanimating);
     
-    if(self.countOfMagnifier > 0){
-        self.countOfTimeIncrease --;
-    }else{
-        self.countOfTimeIncrease = 0;
+    if((self.sparkLine.frame.origin.y-6*220/timeForEachGame) < 170){
+    self.sparkLine.frame = CGRectMake(self.sparkLine.frame.origin.x,
+                                      self.sparkLine.frame.origin.y - 6*220/timeForEachGame,
+                                      self.sparkLine.frame.size.width,
+                                      self.sparkLine.frame.size.height + 6*220/timeForEachGame);
+    
+    self.spark.frame = CGRectMake(self.spark.frame.origin.x,
+                                  self.sparkLine.frame.origin.y+(6*self.spark.frame.size.height/2),
+                                  self.spark.frame.size.width,
+                                  self.spark.frame.size.height);
     }
     
-    NSLog(@"x%d",self.countOfTimeIncrease);
+   // self.numbersOfMyanimating-=5;
+   // self.maze.timeRemaining = [NSNumber numberWithInt:self.numbersOfMyanimating];
+//    NSLog(@"numbersOfMyanimating = %d",self.numbersOfMyanimating);
+//    
+//    if(self.countOfMagnifier > 0){
+//        self.countOfTimeIncrease --;
+//    }else{
+//        self.countOfTimeIncrease = 0;
+//    }
+//    
+//    NSLog(@"x%d",self.countOfTimeIncrease);
     
 }
 
@@ -1930,7 +1943,7 @@
         
     }else
     {
-        NSString *dialog_box = [NSString stringWithFormat:@"dialog_box_%@",self.maze.name];
+        NSString *dialog_box = [NSString stringWithFormat:@"dialogBox"];
         messagebox = [UIImage imageNamed:dialog_box];
     }
     
@@ -2144,7 +2157,7 @@
 //    }
 //
 //    if (self.timerForReal == 4) {
-//        [imageMaskView clearMaskView];
+//        [self clearImageMask];
 //    }
 
     
@@ -2410,10 +2423,10 @@
 
 
     //Cheat!!!
-//     for (int c=0; c < [_mazeHelper.mazeDifferences count]; c++) {
-//         Differences *difference = [_mazeHelper.mazeDifferences objectAtIndex:c];
-//         [CGMarkerHelper drawMarker:difference inView:_rightImageView insecundView:_leftImageView inBounds:[_mazeHelper viewSize]];
-//     }
+     for (int c=0; c < [_mazeHelper.mazeDifferences count]; c++) {
+         Differences *difference = [_mazeHelper.mazeDifferences objectAtIndex:c];
+         [CGMarkerHelper drawMarker:difference inView:_rightImageView insecundView:_leftImageView inBounds:[_mazeHelper viewSize]];
+     }
     
 
     if([gameMode isEqual: @"exciting"]){

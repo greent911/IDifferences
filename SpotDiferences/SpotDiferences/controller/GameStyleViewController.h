@@ -10,6 +10,9 @@
 #import "Maze.h"
 
 @interface GameStyleViewController : UIViewController
+{
+    NSString *tapState;
+}
 
 @property (nonatomic,weak) Maze *maze;
 @property (nonatomic, weak)IBOutlet UIManagedDocument *document;
