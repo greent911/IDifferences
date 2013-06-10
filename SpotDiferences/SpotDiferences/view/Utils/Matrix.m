@@ -103,8 +103,7 @@
 	size_t last = self.max.x * self.max.y;
 	char *temp = [ndata bytes];
 	for(size_t i = 0; i < last; ++i){
-		*temp = value;
-		++temp;
+		temp[i]=value;
 	}
     ndata=[NSData dataWithBytes:temp length:self.max.x * self.max.y];
     free(temp);

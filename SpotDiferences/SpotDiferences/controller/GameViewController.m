@@ -1968,6 +1968,10 @@
         [mview showViewMoveToBack];
     }
 }
+-(void) clearImageMask
+{
+    [imageMaskView clearMaskView];
+}
 
 
 #pragma mark - Timer 
@@ -1975,7 +1979,7 @@
 -(void)timerCallForReal:(NSTimer *)timer 
 {
     self.timerForReal ++;
-//    NSLog(@"timerForReal:%d",self.timerForReal);
+    NSLog(@"timerForReal:%d",self.timerForReal);
 //    if (self.timerForReal %4    == 0) {
 //        [self findOneDiff];
 //    }
@@ -1983,7 +1987,10 @@
 //    [self allShowMoveViewToBack];
 //    }
 //
-    
+//    if (self.timerForReal == 4) {
+//        [imageMaskView clearMaskView];
+//    }
+
     
     if ([gameMode isEqualToString:@"exciting"] && self.timerForReal % 4 == 0) {
         [self startAppearMoveImageView];
@@ -1992,7 +1999,7 @@
 
 -(void)startTimer {
     float interval = [_mazeHelper getMazeAvailableTime] / timeUnitNumber;
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:interval 
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:interval
                                                   target:self 
                                                 selector:@selector(timerCall:) 
                                                 userInfo:nil 

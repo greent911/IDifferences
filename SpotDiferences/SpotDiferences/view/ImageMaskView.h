@@ -45,4 +45,5 @@
 - (id)initWithFrame:(CGRect)frame image:(UIImage *)img;
 - (void)reset :(CGRect)frame image:(UIImage *)img;
 -(void) showmaskedmtxC;
+-(void) clearMaskView;
 @end

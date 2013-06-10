@@ -313,4 +313,36 @@ typedef void  (*FillTileWithTwoPointsFunc)(id, SEL, CGPoint, CGPoint);
 	}
 	(*fillTileFunc)(self,@selector(fillTileWithPoint:),end);
 }
+
+-(void) clearMaskView
+{
+    CGSize size = self.image.size;
+	CGContextRef ctx = self.imageContext;
+	
+	CGContextSetFillColorWithColor(ctx,[UIColor clearColor].CGColor);
+	CGContextSetStrokeColorWithColor(ctx,[UIColor colorWithRed:0 green:0 blue:0 alpha:0].CGColor);
+
+    
+    CGContextBeginPath(ctx);
+    CGRect rect = CGRectMake(0, size.height, size.width*2, size.height*2);
+    rect.origin = fromUItoQuartz(rect.origin, self.bounds.size);
+    
+    rect.origin.y -= size.height/2;
+    rect.origin.x -= size.width/2;
+    rect.origin = scalePoint(rect.origin, self.bounds.size, size);
+    
+    CGContextAddEllipseInRect(ctx, rect);
+    CGContextFillPath(ctx);
+    
+    [self.maskedMatrix fillWithValue:1];
+    
+    
+    CGImageRef cgImage = CGBitmapContextCreateImage(ctx);
+	UIImage *image = [UIImage imageWithCGImage:cgImage];
+	CGImageRelease(cgImage);
+    
+    
+    self.image=image;
+
+}
 @end
