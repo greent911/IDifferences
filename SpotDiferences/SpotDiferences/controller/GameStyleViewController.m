@@ -44,7 +44,7 @@
     }];
 
 	// Do any additional setup after loading the view.
-    self.imageview.image = [UIImage imageNamed:@"background_clear"];
+    self.imageview.image = [UIImage imageNamed:@"selectGameStatus"];
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -57,20 +57,23 @@
     
     UIImage *bimage = [UIImage imageNamed:@"btn_back"];
     
-    UIButton *bbutton = [UikitFramework createButtonWithBackgroudImage:@"btn_back" title:@"" positionX:10 positionY:10]; 
+    UIButton *bbutton = [UikitFramework createButtonWithBackgroudImage:@"backButton" title:@"" positionX:5 positionY:220];
+    bbutton.frame = CGRectMake(20, 250, 60, 40);
     [bbutton addTarget:self action:@selector(backButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:bbutton];
     
-    UIButton *homeButton = [UikitFramework createButtonWithBackgroudImage:@"btn_home" title:@"" positionX:self.view.frame.size.width - 10 - bimage.size.width positionY:10]; 
-    [homeButton addTarget:self action:@selector(homeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:homeButton];
+//    UIButton *homeButton = [UikitFramework createButtonWithBackgroudImage:@"btn_home" title:@"" positionX:self.view.frame.size.width - 10 - bimage.size.width positionY:10]; 
+//    [homeButton addTarget:self action:@selector(homeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+//    [self.view addSubview:homeButton];
 
 //    UIButton *resumeGameButton = [UikitFramework createButtonWithBackgroudImage:@"btn_darkpink" title:@"RESUME" positionX:halfViewSize - image.size.width / 2 positionY:150];
-    UIButton *resumeGameButton = [UikitFramework createButtonWithBackgroudImage:@"btn_darkpink" title:@"RESUME" positionX:halfViewSize +image.size.width * 0.5+ offset positionY:150];
+    UIButton *resumeGameButton = [UikitFramework createButtonWithBackgroudImage:@"ResumeButton" title:@"" positionX:halfViewSize +image.size.width * 0.5+ offset positionY:150];
+    resumeGameButton.frame = CGRectMake(halfViewSize - 5*offset, 140, 283, 65);
     [resumeGameButton addTarget:self action:@selector(resumeGameButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:resumeGameButton];
     
-    UIButton *newGameButton = [UikitFramework createButtonWithBackgroudImage:@"btn_wine" title:@"NEW" positionX:halfViewSize - image.size.width * 1.5 - offset  positionY:150];
+    UIButton *newGameButton = [UikitFramework createButtonWithBackgroudImage:@"NewGameButton" title:@"" positionX:halfViewSize - image.size.width * 1.5 - offset  positionY:150];
+    newGameButton.frame = CGRectMake(halfViewSize - 5*offset, 200, 283, 65);
     [newGameButton addTarget:self action:@selector(newGameButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:newGameButton];
     /*
@@ -78,10 +81,10 @@
     [finishedGameButton addTarget:self action:@selector(finishedGameButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:finishedGameButton];
     */
-    UILabel *label = [UikitFramework createLableWithText:@"SELECT GAME STATUS" positionX:0 positionY:0 width:self.view.frame.size.width height:100];
-    label.textAlignment = UITextAlignmentCenter;
-    label.font = [UIFont fontWithName:[UikitFramework getFontName] size: 25];
-    [self.view addSubview:label];
+//    UILabel *label = [UikitFramework createLableWithText:@"SELECT GAME STATUS" positionX:0 positionY:0 width:self.view.frame.size.width height:100];
+//    label.textAlignment = UITextAlignmentCenter;
+//    label.font = [UIFont fontWithName:[UikitFramework getFontName] size: 25];
+//    [self.view addSubview:label];
 }
 
 -(void)newGameButtonTapped:(UIButton *)sender
