@@ -57,7 +57,7 @@
 	}
     
     ndata=[NSData dataWithBytes:ldata length:self.max.x * self.max.y];
-    free(ldata);
+//    free(ldata);
 
 }
 
@@ -73,7 +73,7 @@
             ++temp;
         }
         ndata=[NSData dataWithBytes:ldata length:self.max.x * self.max.y];
-        free(ldata);
+//        free(ldata);
 
 	}
 	return self;
@@ -92,21 +92,36 @@
 }
 
 - (void)setValue:(char)value forCoordinates:(size_t)x y:(size_t)y{
-    char *ddata=[ndata bytes];
-	ddata[x+ self.max.x*y] = value;
+    	if(data){
+    		free(data);
+    	}
+    data=[ndata bytes];
+	data[x+ self.max.x*y] = value;
     
-    ndata=[NSData dataWithBytes:ddata length:self.max.x * self.max.y];
-    free(ddata);
+    ndata=[NSData dataWithBytes:data length:self.max.x * self.max.y];
+//    char *ddata=[ndata bytes];
+//	ddata[x+ self.max.x*y] = value;
+//    
+//    ndata=[NSData dataWithBytes:ddata length:self.max.x * self.max.y];
+//    free(ddata);
 }
 
 - (void)fillWithValue:(char)value {
+    	if(data){
+    		free(data);
+    	}
 	size_t last = self.max.x * self.max.y;
-	char *temp = [ndata bytes];
+    data = [ndata bytes];
 	for(size_t i = 0; i < last; ++i){
-		temp[i]=value;
+		data[i]=value;
 	}
-    ndata=[NSData dataWithBytes:temp length:self.max.x * self.max.y];
-    free(temp);
+    ndata=[NSData dataWithBytes:data length:self.max.x * self.max.y];
+//	char *temp = [ndata bytes];
+//	for(size_t i = 0; i < last; ++i){
+//		temp[i]=value;
+//	}
+//    ndata=[NSData dataWithBytes:temp length:self.max.x * self.max.y];
+    //free(temp);
 
 }
 
@@ -124,10 +139,10 @@
 
 #pragma mark -
 
-//- (void)dealloc {
-//	if(data){
-//		free(data);
-//	}
-//}
+- (void)dealloc {
+	if(data){
+		free(data);
+	}
+}
 
 @end

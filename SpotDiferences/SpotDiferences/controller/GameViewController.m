@@ -2487,7 +2487,7 @@
     [self addTimerUnitsToScreen];
     
         int halfViewSize = [self view].frame.size.width / 2;
-    if([gameMode isEqual: @"exciting"]){
+    
     
     UIButton *magnifierbutton = [UikitFramework createButtonWithBackgroudImage:@"magnifier_big_new" title:@"" positionX:halfViewSize + 50 positionY:4];
     [magnifierbutton addTarget:self action:@selector(magnifierButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
@@ -2506,7 +2506,7 @@
 //    //NumberOfTimeIncrease.font = [UIFont fontWithName:[UikitFramework getFontName] size: 14];
     //NumberOfTimeIncrease.textColor = [UIColor redColor];
     //[self.view addSubview:NumberOfTimeIncrease];
-    
+   if([gameMode isEqual: @"exciting"]){ 
     UIButton *fingerbutton = [UikitFramework createButtonWithBackgroudImage:@"finger" title:@"" positionX:halfViewSize + 150 positionY:2];
     [fingerbutton addTarget:self action:@selector(clearImageMask:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:fingerbutton];
