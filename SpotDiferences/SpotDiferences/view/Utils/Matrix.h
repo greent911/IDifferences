@@ -39,7 +39,7 @@ MySize MySizeMake(size_t x,size_t y){
 	return r;
 }
 @interface Matrix : NSObject <NSCoding>{
-	//char * data;
+	char * data;
     NSData *ndata;
 }
 
