@@ -45,6 +45,8 @@ typedef void  (*FillTileWithTwoPointsFunc)(id, SEL, CGPoint, CGPoint);
 @property (nonatomic,strong) Matrix *maskedMatrix;
 @property (nonatomic) CGContextRef imageContext;
 @property (nonatomic) CGColorSpaceRef colorSpace;
+@property (nonatomic) BOOL touchHasMoved;
+
 
 @end
 
@@ -53,6 +55,7 @@ typedef void  (*FillTileWithTwoPointsFunc)(id, SEL, CGPoint, CGPoint);
 @synthesize tilesFilled;
 @synthesize maskedMatrix;
 @synthesize imageContext,colorSpace;
+@synthesize touchHasMoved;
 -(void) showmaskedmtxC
 {
     [self.maskedMatrix showAllValue];
@@ -186,12 +189,82 @@ typedef void  (*FillTileWithTwoPointsFunc)(id, SEL, CGPoint, CGPoint);
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
 //    [maskedMatrix fillWithValueOne];
+//    NSLog(@"touches begin count:%d",[touches count]);
+
 	self.image = [self addTouches:touches];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event{
+//    NSLog(@"touches move count:%d",[touches count]);
+    touchHasMoved = YES;
 	self.image = [self addTouches:touches];
 }
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
+    if (touchHasMoved == YES) {
+        touchHasMoved =NO;
+    }else{
+        CGSize size = self.image.size;
+        CGContextRef ctx = self.imageContext;
+        
+        CGContextSetFillColorWithColor(ctx,[UIColor clearColor].CGColor);
+        CGContextSetStrokeColorWithColor(ctx,[UIColor colorWithRed:0 green:0 blue:0 alpha:0].CGColor);
+        
+        // process touches
+        NSLog(@"touches count:%d",[touches count]);
+        for (UITouch *touch in touches) {
+            CGContextBeginPath(ctx);
+            CGRect rect = {[touch locationInView:self], {2*radius, 2*radius}};
+            rect.origin = fromUItoQuartz(rect.origin, self.bounds.size);
+            
+            if(UITouchPhaseEnded == touch.phase){
+                /*
+                 // on begin, we just draw ellipse
+                 rect.origin.y -= radius;
+                 rect.origin.x -= radius;
+                 rect.origin = scalePoint(rect.origin, self.bounds.size, size);
+                 
+                 CGContextAddEllipseInRect(ctx, rect);
+                 CGContextFillPath(ctx);
+                 
+                 static const FillTileWithPointFunc fillTileFunc = (FillTileWithPointFunc) [self methodForSelector:@selector(fillTileWithPoint:)];
+                 (*fillTileFunc)(self,@selector(fillTileWithPoint:),rect.origin);
+                 */
+                // rect.origin.y -= radius;
+                //	rect.origin.x -= radius;
+                
+                
+                CGPoint touchPosition = [touch locationInView:self];
+                NSLog(@"Touch %f - %f", touchPosition.x, touchPosition.y);
+                rect.origin = scalePoint(rect.origin, self.bounds.size, size);
+                
+                size_t x,y;
+                x = rect.origin.x * self.maskedMatrix.max.x / self.image.size.width;
+                y = rect.origin.y * self.maskedMatrix.max.y / self.image.size.height;
+                char value = [self.maskedMatrix valueForCoordinates:x y:y];
+                //            [self.maskedMatrix showAllValue];
+                //            NSLog(@"char:%c",value);
+                BOOL ellipseDrawed;
+                if(value){
+                    ellipseDrawed=YES;
+                }else{
+                    ellipseDrawed=NO;
+                }
+                [self.imageMaskFilledDelegate imageMaskView:self touchMaskEvent:ellipseDrawed touchPosition:touchPosition];
+                
+            }
+        }
+        CGImageRef cgImage = CGBitmapContextCreateImage(ctx);
+        UIImage *image = [UIImage imageWithCGImage:cgImage];
+        CGImageRelease(cgImage);
+        self.image=image;
+
+    }
+    	//self.image = [self addTouchBegin:touches];
+//    NSLog(@"touches end count:%d",[touches count]);
+
+}
+
 
 #pragma mark -
 
@@ -203,6 +276,7 @@ typedef void  (*FillTileWithTwoPointsFunc)(id, SEL, CGPoint, CGPoint);
 	CGContextSetStrokeColorWithColor(ctx,[UIColor colorWithRed:0 green:0 blue:0 alpha:0].CGColor);
 	
 	// process touches
+    NSLog(@"touches count:%d",[touches count]);
 	for (UITouch *touch in touches) {
 		CGContextBeginPath(ctx);
 		CGRect rect = {[touch locationInView:self], {2*radius, 2*radius}};
@@ -223,23 +297,25 @@ typedef void  (*FillTileWithTwoPointsFunc)(id, SEL, CGPoint, CGPoint);
              */
            // rect.origin.y -= radius;
 		//	rect.origin.x -= radius;
-            CGPoint touchPosition = [touch locationInView:self];
-            NSLog(@"Touch %f - %f", touchPosition.x, touchPosition.y);
-			rect.origin = scalePoint(rect.origin, self.bounds.size, size);
-
-            size_t x,y;
-            x = rect.origin.x * self.maskedMatrix.max.x / self.image.size.width;
-            y = rect.origin.y * self.maskedMatrix.max.y / self.image.size.height;
-            char value = [self.maskedMatrix valueForCoordinates:x y:y];
-//            [self.maskedMatrix showAllValue];
-//            NSLog(@"char:%c",value);
-            BOOL ellipseDrawed;
-            if(value){
-                ellipseDrawed=YES;
-            }else{
-                ellipseDrawed=NO;
-            }
-            [self.imageMaskFilledDelegate imageMaskView:self touchMaskEvent:ellipseDrawed touchPosition:touchPosition];
+            
+            
+//            CGPoint touchPosition = [touch locationInView:self];
+//            NSLog(@"Touch %f - %f", touchPosition.x, touchPosition.y);
+//			rect.origin = scalePoint(rect.origin, self.bounds.size, size);
+//
+//            size_t x,y;
+//            x = rect.origin.x * self.maskedMatrix.max.x / self.image.size.width;
+//            y = rect.origin.y * self.maskedMatrix.max.y / self.image.size.height;
+//            char value = [self.maskedMatrix valueForCoordinates:x y:y];
+////            [self.maskedMatrix showAllValue];
+////            NSLog(@"char:%c",value);
+//            BOOL ellipseDrawed;
+//            if(value){
+//                ellipseDrawed=YES;
+//            }else{
+//                ellipseDrawed=NO;
+//            }
+//            [self.imageMaskFilledDelegate imageMaskView:self touchMaskEvent:ellipseDrawed touchPosition:touchPosition];
             
 		} else if(UITouchPhaseMoved == touch.phase) {
 			// then touch moved, we draw superior-width line
@@ -275,6 +351,7 @@ typedef void  (*FillTileWithTwoPointsFunc)(id, SEL, CGPoint, CGPoint);
 	
 	return image;
 }
+
 
 /* 
  * filling tile with one ellipse
