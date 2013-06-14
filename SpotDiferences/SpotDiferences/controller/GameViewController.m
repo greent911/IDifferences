@@ -195,13 +195,24 @@
     }
 }
 -(void) findOneDiff
-{
-    int i=1;
-    Differences *difference = [_mazeHelper.mazeDifferences objectAtIndex:0];
-    while ([difference.discovered isEqualToString:@"YES"] && i<5) {
-        difference = [_mazeHelper.mazeDifferences objectAtIndex:i];
+{// fix some bug in this function
+//    int i=1;
+//    Differences *difference = [_mazeHelper.mazeDifferences objectAtIndex:0];
+//    while ([difference.discovered isEqualToString:@"YES"] && i<5) {
+//        difference = [_mazeHelper.mazeDifferences objectAtIndex:i];
+//        i++;
+//    }
+    int i=0;
+    Differences *difference;
+    while (!difference && i<5) {
+        Differences *checkdifference = [_mazeHelper.mazeDifferences objectAtIndex:i];
+        NSLog(@"checkdifference.discovered:%@",checkdifference.discovered);//checkdifference.discovered=NULL;
+        if (![checkdifference.discovered isEqualToString:@"YES"]) {
+            difference=checkdifference;
+        }
         i++;
     }
+    
     if(i<=5){
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     NSString *gameState = [prefs stringForKey:@"gameState"];
@@ -216,10 +227,12 @@
         
         
         [self updateScores];
-        [self updateStars];
         self.clickOk++;
         difference.discovered = @"YES";
+        //[self saveContext];
+        [self updateStars];
         [self saveContext];
+        
         }
     }
 }
@@ -241,9 +254,10 @@
         
         
         [self updateScores];
-        [self updateStars];
+//        [self updateStars];
         self.clickOk++;
         difference.discovered = @"YES";
+        [self updateStars];
         [self saveContext];
         return;
     } else {
@@ -1187,6 +1201,10 @@
         [self.pauseViews addObject:pause_lable];
 
 //
+    //reset difference.discovered
+//    NSLog(@"must be 5:%d",[_mazeHelper.mazeDifferences count]);
+    for(Differences *difference in _mazeHelper.mazeDifferences)
+        difference.discovered=NULL;
 }
 
 
@@ -1277,7 +1295,14 @@
         
         NSArray *allMAzes = [Maze getMazeByState:gameState inManagedObjectContext:self.document.managedObjectContext];
         if ([allMAzes count] == 0) {
-            [self backToMazeView];
+            //may have problem with soft and challenge,the same finished state
+            NSArray *finishMAzes = [Maze getMazeByState:@"finished" inManagedObjectContext:self.document.managedObjectContext];
+
+            for (Maze *maze in finishMAzes) {
+                maze.state=gameState;
+            }
+            [self saveContext];
+            [self decideWhereToGo];
         }else {
             //soft&exciting
             if([gameState isEqualToString:@"normal"]){
