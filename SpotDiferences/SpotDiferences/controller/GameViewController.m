@@ -680,6 +680,10 @@
                 maz.personalscore = [NSNumber numberWithInt:0];
                 maz.personalTime =  [NSNumber numberWithInt:0];
                 maz.timeRemaining = [NSNumber numberWithInt:0];
+                NSMutableArray *mdifferences = [[[DifferenceSet getDiffs:[NSString stringWithFormat:@"%@A",maz.name]
+                                                 inManagedObjectContext:self.context] allObjects] mutableCopy];
+                for(Differences *difference in mdifferences)
+                    difference.discovered=NULL;
             }
         }
         
@@ -1234,6 +1238,8 @@
     if ([gameState isEqualToString:@"paused"]) {
         NSLog(@"%@",gameFlow);
         [prefs setObject:@"normal" forKey:@"gameState"];
+        [prefs synchronize];
+        gameState = [prefs stringForKey:@"gameState"];
         //[self backToResumeGames];
     }
     
