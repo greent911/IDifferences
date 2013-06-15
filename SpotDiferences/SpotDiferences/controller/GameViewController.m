@@ -1789,7 +1789,7 @@
  */
 -(void)timerCall:(NSTimer *)timer
 {
-    [self updateTimerUnits];
+    //[self updateTimerUnits];
     
 }
 
@@ -2322,28 +2322,46 @@
     [self.dynamite removeFromSuperview];
 //    NSLog(@"self.maze.timeRemaining.intValue:%d",self.maze.timeRemaining.intValue);
     
-    self.sparkLine = [UikitFramework createImageViewWithImage:@"spark_line" positionX:halfViewSize- (220-(220/timeForEachGame)*self.maze.timeRemaining.intValue)/2 positionY:halfViewSizeH+10+(220/timeForEachGame)*self.maze.timeRemaining.intValue];
-    self.sparkLine.frame = CGRectMake(halfViewSize - (220-(220/timeForEachGame)*self.maze.timeRemaining.intValue)/2, halfViewSizeH+10+(220/timeForEachGame)*self.maze.timeRemaining.intValue, 220-(220/timeForEachGame)*self.maze.timeRemaining.intValue, 6);
+//    self.sparkLine = [UikitFramework createImageViewWithImage:@"spark_line" positionX:halfViewSize- (220-(220/timeForEachGame)*self.maze.timeRemaining.intValue)/2 positionY:halfViewSizeH+10+(220/timeForEachGame)*self.maze.timeRemaining.intValue];
+    self.sparkLine = [UikitFramework createImageViewWithImage:@"spark_line" positionX:halfViewSize- 110 positionY:halfViewSizeH+10];
+//    self.sparkLine.frame = CGRectMake(halfViewSize - (220-(220/timeForEachGame)*self.maze.timeRemaining.intValue)/2, halfViewSizeH+10+(220/timeForEachGame)*self.maze.timeRemaining.intValue, 220-(220/timeForEachGame)*self.maze.timeRemaining.intValue, 6);
+    self.sparkLine.frame = CGRectMake(halfViewSize - 110, halfViewSizeH+10, 220, 6);
     
     self.sparkLine.transform = CGAffineTransformMakeRotation( M_PI * 0.5); //M_PI*0.5
     
-    [self.view addSubview:self.sparkLine];
     
     self.dynamite = [UikitFramework createImageViewWithImage:@"dynamite" positionX:self.view.frame.size.width/2 positionY:self.view.frame.size.height/2];
     self.dynamite.frame = CGRectMake(halfViewSize-12.5, halfViewSizeH + halfViewSizeH/2 + 40, 25, 38);
     //self.sparkLine.transform = CGAffineTransformMakeRotation( M_PI * 90 / 180.0  ); //M_PI*0.5
-    [self.view addSubview:self.dynamite];
     
     
+//    self.spark= [UikitFramework createImageViewWithImage:@"spark"
+//                                               positionX:self.view.frame.size.width/2
+//                                               positionY:40+(220/timeForEachGame)*self.maze.timeRemaining.intValue];
     self.spark= [UikitFramework createImageViewWithImage:@"spark"
                                                positionX:self.view.frame.size.width/2
-                                               positionY:40+(220/timeForEachGame)*self.maze.timeRemaining.intValue];
+                                               positionY:40];
     
     //40+(220/timeForEachGame)*self.maze.timeRemaining.intValue
     //self.view.frame.size.height/2
     
-    self.spark.frame = CGRectMake(halfViewSize-20,40+(220/timeForEachGame)*self.maze.timeRemaining.intValue,40,40);
+//    self.spark.frame = CGRectMake(halfViewSize-20,40+(220/timeForEachGame)*self.maze.timeRemaining.intValue,40,40);
+    self.spark.frame = CGRectMake(halfViewSize-20,40,40,40);
     
+    self.sparkLine.frame = CGRectMake(self.sparkLine.frame.origin.x,
+                                      self.sparkLine.frame.origin.y + self.maze.timeRemaining.intValue*(220/timeForEachGame),
+                                      self.sparkLine.frame.size.width,
+                                      self.sparkLine.frame.size.height - self.maze.timeRemaining.intValue*(220/timeForEachGame));
+    
+    self.spark.frame = CGRectMake(self.spark.frame.origin.x,
+                                  self.sparkLine.frame.origin.y-(self.spark.frame.size.height/2),
+                                  self.spark.frame.size.width,
+                                  self.spark.frame.size.height);
+    
+    [self.view addSubview:self.sparkLine];
+
+    [self.view addSubview:self.dynamite];
+
     [self.view addSubview:self.spark];
     
 }
@@ -2611,10 +2629,10 @@
         int score = [self.maze.personalscore intValue];
         self.score.text = [self getNewScore:score];
         self.score.tag = score;
-        int time = [self.maze.timeRemaining intValue];
-        for (int c=0; c<time; c++) {
-            [self updateTimerUnits];
-        }
+//        int time = [self.maze.timeRemaining intValue];
+//        for (int c=0; c<time; c++) {
+//            [self updateTimerUnits];
+//        }
         self.clickError = errors;
         self.timerForReal = [self.maze.personalTime intValue];
         NSLog(@"timer is %d",self.timerForReal);
