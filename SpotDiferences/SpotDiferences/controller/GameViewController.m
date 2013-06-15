@@ -514,10 +514,10 @@
 }
 
 -(void)timeIncreaseButtonTapped:(UIButton*)sender {
-    self.numbersOfMyanimating-=2;
-    self.maze.timeRemaining = [NSNumber numberWithInt:self.numbersOfMyanimating];
-    
-    if((self.sparkLine.frame.origin.y-6*220/timeForEachGame) >= 63){
+        
+    if((self.sparkLine.frame.size.height+6*220/timeForEachGame) < 220){
+        self.numbersOfMyanimating-=6;
+        self.maze.timeRemaining = [NSNumber numberWithInt:self.numbersOfMyanimating];
     self.sparkLine.frame = CGRectMake(self.sparkLine.frame.origin.x,
                                       self.sparkLine.frame.origin.y - 6*220/timeForEachGame,
                                       self.sparkLine.frame.size.width,
@@ -528,10 +528,13 @@
                                   self.spark.frame.size.width,
                                   self.spark.frame.size.height);
     }else{
+        self.numbersOfMyanimating=0;
+        self.maze.timeRemaining = [NSNumber numberWithInt:self.numbersOfMyanimating];
+
         self.sparkLine.frame = CGRectMake(self.sparkLine.frame.origin.x,
                                           63,
                                           self.sparkLine.frame.size.width,
-                                          self.sparkLine.frame.size.height + 6*220/timeForEachGame);
+                                          220);
         
         self.spark.frame = CGRectMake(self.spark.frame.origin.x,
                                       self.sparkLine.frame.origin.y-(self.spark.frame.size.height/2),
@@ -953,7 +956,7 @@
 //    
 //    [self.numberOfErrorsRed addObject:starimageview];
 
-    self.numbersOfMyanimating+=2;
+    self.numbersOfMyanimating+=6;
     self.maze.timeRemaining = [NSNumber numberWithInt:self.numbersOfMyanimating];
 
     if (self.sparkLine.frame.size.height > 7 ){
@@ -2251,7 +2254,9 @@
         
     self.numbersOfMyanimating++;
     NSLog(@"numbersOfMyanimating = %d",self.numbersOfMyanimating);
-    NSLog(@"sparkLine.frame.size.y = %f",self.sparkLine.frame.origin.y);
+    NSLog(@"o:sparkLine.frame.size.height = %f",self.sparkLine.frame.size.height);
+    NSLog(@"o:sparkLine.frame.size.y = %f",self.sparkLine.frame.origin.y);
+    NSLog(@"220/timeForEachGame:%d",220/timeForEachGame);
 
         if (self.sparkLine.frame.size.height > 7 ){
             //[self.myTimer setProgress:self.myTimer.progress+0.005 animated:YES];
@@ -2266,7 +2271,7 @@
                                           self.spark.frame.size.width,
                                           self.spark.frame.size.height);
             NSLog(@"sparkLine.frame.size.height = %f",self.sparkLine.frame.size.height);
-//            NSLog(@"sparkLine.frame.size.y = %f",self.sparkLine.frame.origin.y);
+           NSLog(@"sparkLine.frame.size.y = %f",self.sparkLine.frame.origin.y);
 
             //self.spark.transform = CGAffineTransformMakeRotation( M_PI * self.myIndicator.progress);
 //            if (!_stopAnimation)
