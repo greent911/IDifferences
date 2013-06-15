@@ -882,19 +882,19 @@
      *
      **********************************************************************************************************************************************************************/
     
-    Maze *T01 =[Maze createMaze:@"T01" forTheme:normal inManagedObjectContext:context];
-    T01.dificulty = detective;
-    T01.state = normalState;
-    T01.uniqueID = @"T01";
-    T01.available = avalable;
-    DifferenceSet *T01A = [DifferenceSet createDifferenceFoto:@"T01A" forMaze:T01 inManagedObjectContext:context];
-    
-    [Seed insertDiffs:4.811966 topY:15.413342 downX:28.478630 downY:38.492229  diffFotos:T01A inContext:context];
-    [Seed insertDiffs:55.341879 topY:15.049343 downX:59.299141 downY:40.712456  diffFotos:T01A inContext:context];
-    [Seed insertDiffs:40.965813 topY:48.766674 downX:49.923073 downY:56.190674  diffFotos:T01A inContext:context];
-    [Seed insertDiffs:80.871796 topY:42.024672 downX:99.247864 downY:52.244896  diffFotos:T01A inContext:context];
-    [Seed insertDiffs:44.965813 topY:58.766674 downX:52.923073 downY:63.190674  diffFotos:T01A inContext:context];
-    
+//    Maze *T01 =[Maze createMaze:@"T01" forTheme:normal inManagedObjectContext:context];
+//    T01.dificulty = detective;
+//    T01.state = normalState;
+//    T01.uniqueID = @"T01";
+//    T01.available = avalable;
+//    DifferenceSet *T01A = [DifferenceSet createDifferenceFoto:@"T01A" forMaze:T01 inManagedObjectContext:context];
+//    
+//    [Seed insertDiffs:4.811966 topY:15.413342 downX:28.478630 downY:38.492229  diffFotos:T01A inContext:context];
+//    [Seed insertDiffs:55.341879 topY:15.049343 downX:59.299141 downY:40.712456  diffFotos:T01A inContext:context];
+//    [Seed insertDiffs:40.965813 topY:48.766674 downX:49.923073 downY:56.190674  diffFotos:T01A inContext:context];
+//    [Seed insertDiffs:80.871796 topY:42.024672 downX:99.247864 downY:52.244896  diffFotos:T01A inContext:context];
+//    [Seed insertDiffs:44.965813 topY:58.766674 downX:52.923073 downY:63.190674  diffFotos:T01A inContext:context];
+    //451x582
     Maze *T02 =[Maze createMaze:@"T02" forTheme:normal inManagedObjectContext:context];
     T02.dificulty = detective;
     T02.state = normalState;

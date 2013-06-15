@@ -1205,6 +1205,9 @@
 //    NSLog(@"must be 5:%d",[_mazeHelper.mazeDifferences count]);
     for(Differences *difference in _mazeHelper.mazeDifferences)
         difference.discovered=NULL;
+    //reset maze time
+    self.maze.timeRemaining = [NSNumber numberWithInt:0];
+
 }
 
 
@@ -2312,7 +2315,7 @@
     [self.sparkLine removeFromSuperview];
     [self.spark removeFromSuperview];
     [self.dynamite removeFromSuperview];
-
+//    NSLog(@"self.maze.timeRemaining.intValue:%d",self.maze.timeRemaining.intValue);
     
     self.sparkLine = [UikitFramework createImageViewWithImage:@"spark_line" positionX:halfViewSize- (220-(220/timeForEachGame)*self.maze.timeRemaining.intValue)/2 positionY:halfViewSizeH+10+(220/timeForEachGame)*self.maze.timeRemaining.intValue];
     self.sparkLine.frame = CGRectMake(halfViewSize - (220-(220/timeForEachGame)*self.maze.timeRemaining.intValue)/2, halfViewSizeH+10+(220/timeForEachGame)*self.maze.timeRemaining.intValue, 220-(220/timeForEachGame)*self.maze.timeRemaining.intValue, 6);
@@ -2413,11 +2416,14 @@
 
     }
     
-        NSLog(@"(%f,%f) (%f,%f)",rightImage.size.width, rightImage.size.height,_rightImageView.frame.size.width,_rightImageView.frame.size.height);
+//        NSLog(@"(%f,%f) (%f,%f)",rightImage.size.width, rightImage.size.height,_rightImageView.frame.size.width,_rightImageView.frame.size.height);
 
         
     self.timerForReal = 0;
     self.numbersOfMyanimating = self.maze.timeRemaining.intValue;
+    //when change a new image reset timer
+    [self addTimerUnitsToScreen];
+
     float initialZoomScale = [_mazeHelper initialZoomScale];
     float maximumZoomScale = (initialZoomScale * [_mazeHelper getMazeZoomFactor]);
     
@@ -2509,7 +2515,7 @@
   //    [self.view addSubview:imageview];
     //self.view.backgroundColor = [UIImage imageNamed:@"selectGameStatus"];
 
-    [self addTimerUnitsToScreen];
+//    [self addTimerUnitsToScreen];
     
         int halfViewSize = [self view].frame.size.width / 2;
     
