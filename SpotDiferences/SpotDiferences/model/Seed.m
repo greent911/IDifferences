@@ -935,44 +935,44 @@
     [Seed insertDiffs:52.871796 topY:61.024672 downX:66.247864 downY:72.244896  diffFotos:T04A inContext:context];
     [Seed insertDiffs:5.065813 topY:55.066674 downX:15.333073 downY:65.190674  diffFotos:T04A inContext:context];
     
-    Maze *T05 =[Maze createMaze:@"C01" forTheme:normal inManagedObjectContext:context];
-    T05.dificulty = detective;
-    T05.state = normalState;
-    T05.uniqueID = @"C01";
-    T05.available = avalable;
-    DifferenceSet *T05A = [DifferenceSet createDifferenceFoto:@"C01A" forMaze:T05 inManagedObjectContext:context];
-    
-    [Seed insertDiffs:47.811966 topY:8.413342 downX:57.478630 downY:18.492229  diffFotos:T05A inContext:context];
-    [Seed insertDiffs:65.341879 topY:38.049343 downX:79.299141 downY:48.712456  diffFotos:T05A inContext:context];
-    [Seed insertDiffs:25.965813 topY:58.766674 downX:40.923073 downY:75.190674  diffFotos:T05A inContext:context];
-    [Seed insertDiffs:80.871796 topY:70.024672 downX:95.247864 downY:82.244896  diffFotos:T05A inContext:context];
-    [Seed insertDiffs:47.965813 topY:82.766674 downX:65.923073 downY:92.190674  diffFotos:T05A inContext:context];
-    
-    Maze *T06 =[Maze createMaze:@"C02" forTheme:normal inManagedObjectContext:context];
-    T06.dificulty = detective;
-    T06.state = normalState;
-    T06.uniqueID = @"C02";
-    T06.available = avalable;
-    DifferenceSet *T06A = [DifferenceSet createDifferenceFoto:@"C02A" forMaze:T06 inManagedObjectContext:context];
-    
-    [Seed insertDiffs:45.811966 topY:8.413342 downX:57.478630 downY:16.492229  diffFotos:T06A inContext:context];
-    [Seed insertDiffs:80.341879 topY:2.549343 downX:91.299141 downY:12.712456  diffFotos:T06A inContext:context];
-    [Seed insertDiffs:9.765813 topY:37.766674 downX:23.923073 downY:45.190674  diffFotos:T06A inContext:context];
-    [Seed insertDiffs:35.871796 topY:14.024672 downX:43.247864 downY:20.244896  diffFotos:T06A inContext:context];
-    [Seed insertDiffs:53.965813 topY:70.766674 downX:65.923073 downY:81.190674  diffFotos:T06A inContext:context];
-    
-    Maze *T07 =[Maze createMaze:@"C03" forTheme:normal inManagedObjectContext:context];
-    T07.dificulty = detective;
-    T07.state = normalState;
-    T07.uniqueID = @"C03";
-    T07.available = avalable;
-    DifferenceSet *T07A = [DifferenceSet createDifferenceFoto:@"C03A" forMaze:T07 inManagedObjectContext:context];
-    
-    [Seed insertDiffs:19.211966 topY:69.413342 downX:38.478630 downY:83.492229  diffFotos:T07A inContext:context];
-    [Seed insertDiffs:71.141879 topY:16.549343 downX:85.299141 downY:28.712456  diffFotos:T07A inContext:context];
-    [Seed insertDiffs:23.765813 topY:30.766674 downX:31.923073 downY:42.190674  diffFotos:T07A inContext:context];
-    [Seed insertDiffs:15.871796 topY:7.224672 downX:22.247864 downY:14.244896  diffFotos:T07A inContext:context];
-    [Seed insertDiffs:64.965813 topY:76.766674 downX:79.523073 downY:85.190674  diffFotos:T07A inContext:context];
+//    Maze *T05 =[Maze createMaze:@"C01" forTheme:normal inManagedObjectContext:context];
+//    T05.dificulty = detective;
+//    T05.state = normalState;
+//    T05.uniqueID = @"C01";
+//    T05.available = avalable;
+//    DifferenceSet *T05A = [DifferenceSet createDifferenceFoto:@"C01A" forMaze:T05 inManagedObjectContext:context];
+//    
+//    [Seed insertDiffs:47.811966 topY:8.413342 downX:57.478630 downY:18.492229  diffFotos:T05A inContext:context];
+//    [Seed insertDiffs:65.341879 topY:38.049343 downX:79.299141 downY:48.712456  diffFotos:T05A inContext:context];
+//    [Seed insertDiffs:25.965813 topY:58.766674 downX:40.923073 downY:75.190674  diffFotos:T05A inContext:context];
+//    [Seed insertDiffs:80.871796 topY:70.024672 downX:95.247864 downY:82.244896  diffFotos:T05A inContext:context];
+//    [Seed insertDiffs:47.965813 topY:82.766674 downX:65.923073 downY:92.190674  diffFotos:T05A inContext:context];
+//    
+//    Maze *T06 =[Maze createMaze:@"C02" forTheme:normal inManagedObjectContext:context];
+//    T06.dificulty = detective;
+//    T06.state = normalState;
+//    T06.uniqueID = @"C02";
+//    T06.available = avalable;
+//    DifferenceSet *T06A = [DifferenceSet createDifferenceFoto:@"C02A" forMaze:T06 inManagedObjectContext:context];
+//    
+//    [Seed insertDiffs:45.811966 topY:8.413342 downX:57.478630 downY:16.492229  diffFotos:T06A inContext:context];
+//    [Seed insertDiffs:80.341879 topY:2.549343 downX:91.299141 downY:12.712456  diffFotos:T06A inContext:context];
+//    [Seed insertDiffs:9.765813 topY:37.766674 downX:23.923073 downY:45.190674  diffFotos:T06A inContext:context];
+//    [Seed insertDiffs:35.871796 topY:14.024672 downX:43.247864 downY:20.244896  diffFotos:T06A inContext:context];
+//    [Seed insertDiffs:53.965813 topY:70.766674 downX:65.923073 downY:81.190674  diffFotos:T06A inContext:context];
+//    
+//    Maze *T07 =[Maze createMaze:@"C03" forTheme:normal inManagedObjectContext:context];
+//    T07.dificulty = detective;
+//    T07.state = normalState;
+//    T07.uniqueID = @"C03";
+//    T07.available = avalable;
+//    DifferenceSet *T07A = [DifferenceSet createDifferenceFoto:@"C03A" forMaze:T07 inManagedObjectContext:context];
+//    
+//    [Seed insertDiffs:19.211966 topY:69.413342 downX:38.478630 downY:83.492229  diffFotos:T07A inContext:context];
+//    [Seed insertDiffs:71.141879 topY:16.549343 downX:85.299141 downY:28.712456  diffFotos:T07A inContext:context];
+//    [Seed insertDiffs:23.765813 topY:30.766674 downX:31.923073 downY:42.190674  diffFotos:T07A inContext:context];
+//    [Seed insertDiffs:15.871796 topY:7.224672 downX:22.247864 downY:14.244896  diffFotos:T07A inContext:context];
+//    [Seed insertDiffs:64.965813 topY:76.766674 downX:79.523073 downY:85.190674  diffFotos:T07A inContext:context];
     /***********************************************************************************************************************************************************************
      *
      *

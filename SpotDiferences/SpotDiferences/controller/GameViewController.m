@@ -5,7 +5,7 @@
  *  Copyright 2012 Go4Mobility
  *
  */
-
+#import "ChallengeViewController.h"
 #import "GameViewController.h"
 #import "ThemeViewController.h"
 #import "InicialViewController.h"
@@ -220,7 +220,7 @@
     if(i<=5){
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     NSString *gameState = [prefs stringForKey:@"gameState"];
-    if (difference && !([difference.discovered isEqualToString:@"YES"] && [gameState isEqualToString:@"paused"])) {
+    if (difference && !([difference.discovered isEqualToString:@"YES"] && [gameState isEqualToString:@"paused"]) && ![difference.discovered isEqualToString:@"YES"]) {
         [self playCheckSound];
         
         
@@ -247,7 +247,8 @@
     Differences *difference = [_mazeHelper differenceFound:position];
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     NSString *gameState = [prefs stringForKey:@"gameState"];
-    if (difference && !([difference.discovered isEqualToString:@"YES"] && [gameState isEqualToString:@"paused"])) { 
+    NSLog(@"difference:%@",[difference description]);
+    if (difference && !([difference.discovered isEqualToString:@"YES"] && [gameState isEqualToString:@"paused"]) && ![difference.discovered isEqualToString:@"YES"]) {
         [self playCheckSound];
         
         
@@ -678,7 +679,8 @@
     if ([self.timerUnits count] == 0) {
         time = 0;
     }
-    if (![self.maze.state isEqualToString:mazeFinishState]) {
+//    if (![self.maze.state isEqualToString:mazeFinishState]) {
+    if (![gameMode isEqualToString:@"challenge"]) {
         NSString *pausedState=[NSString stringWithFormat:@"paused%@",gameMode];
 //        NSLog(@"gameMode:%@",gameMode);
 //          NSLog(@"pausedState:%@",pausedState);
@@ -724,7 +726,10 @@
         [self saveContext];
         [self backToMenu];
     }else {
-        [self backToMenu];
+        self.maze.timeRemaining = [NSNumber numberWithInt:0];
+        for(Differences *difference in _mazeHelper.mazeDifferences)
+            difference.discovered=NULL;
+        [self backToChallengeView];
     }
 }
 
@@ -2192,6 +2197,15 @@
         id obj = [viewControllers objectAtIndex:c];
         if([obj isKindOfClass:[InicialViewController class]])
             [self.navigationController popToViewController:obj animated:YES];    
+    }
+}
+
+-(void)backToChallengeView {
+    NSArray *viewControllers = [[self navigationController] viewControllers];
+    for (int c=0; c < [viewControllers count]; c++) {
+        id obj = [viewControllers objectAtIndex:c];
+        if([obj isKindOfClass:[ChallengeViewController class]])
+            [self.navigationController popToViewController:obj animated:YES];
     }
 }
 
