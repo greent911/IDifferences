@@ -2014,18 +2014,28 @@
   //  [reTryButton setTitle:@"Go to next" forState:UIControlStateNormal];
     reTryButton.titleLabel.font = [UIFont fontWithName:[UikitFramework getFontName] size: fontSize];
     reTryButton.titleLabel.textColor = [UIColor whiteColor];
-   // [reTryButton addTarget:self action:@selector(backButtonTapped::) forControlEvents:UIControlEventTouchUpInside];
+    [reTryButton addTarget:self action:@selector(gameLostResumeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:reTryButton];
 
     UIButton *quitButton = [UikitFramework createButtonWithBackgroudImage:@"btn_red" title:@"Back TO MENU" positionX:halfViewSize+13 positionY:self.view.frame.size.height/2+162/2];
     quitButton.titleLabel.font = [UIFont fontWithName:[UikitFramework getFontName] size: 15];
     [quitButton addTarget:self action:@selector(wantToQuitButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     
+    //reset maze time
+    self.maze.timeRemaining = [NSNumber numberWithInt:0];
+    self.numbersOfMyanimating = self.maze.timeRemaining.intValue;
+
+    
     [self.view addSubview:quitButton];
 
     [self.pauseViews addObject:pauseView];
-    [self.pauseViews addObject:messagebox];
+    //[self.pauseViews addObject:messagebox];
+    [self.pauseViews addObject:imageView];
     [self.pauseViews addObject:quitButton];
+    
+    [self.pauseViews addObject:reTryButton];
+    [self.pauseViews addObject:pause_lable];
+
 
 }
 
@@ -2148,7 +2158,7 @@
 
 -(void)gameLostResumeButtonTapped:(UIButton*)sender{
     [self clearPauseWinLoseScreens];
-    [self clearTimer];
+    //[self clearTimer];
     [self addTimerUnitsToScreen];
     [self restartNumberOfErrors];
     self.clickError = 0;
@@ -2246,16 +2256,16 @@
 
 
 -(void)clearTimer {
-    while ([self.timerUnits count]> 0) {
-        UIView *view = [self.timerUnits lastObject];
-        [view removeFromSuperview];
-        [self.timerUnits removeLastObject];
-    }
-    while ([self.timerUnitsUsed count]> 0) {
-        UIView *view = [self.timerUnitsUsed lastObject];
-        [view removeFromSuperview];
-        [self.timerUnitsUsed removeLastObject];
-    }
+//    while ([self.timerUnits count]> 0) {
+//        UIView *view = [self.timerUnits lastObject];
+//        [view removeFromSuperview];
+//        [self.timerUnits removeLastObject];
+//    }
+//    while ([self.timerUnitsUsed count]> 0) {
+//        UIView *view = [self.timerUnitsUsed lastObject];
+//        [view removeFromSuperview];
+//        [self.timerUnitsUsed removeLastObject];
+//    }
 }
 
 
@@ -2400,6 +2410,7 @@
 
 
 -(void)clearPauseWinLoseScreens {
+    NSLog(@"[self.pauseViews count]:%d",[self.pauseViews count]);
     while ([self.pauseViews count]> 0) {
         UIView *view = [self.pauseViews lastObject];
         [view removeFromSuperview];
