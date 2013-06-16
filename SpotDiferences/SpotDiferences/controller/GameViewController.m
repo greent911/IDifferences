@@ -672,6 +672,9 @@
 //        NSLog(@"gameMode:%@",gameMode);
 //          NSLog(@"pausedState:%@",pausedState);
         // NSArray *resumeMazes = [Maze getMazeByState:@"paused" inManagedObjectContext:self.document.managedObjectContext];
+        NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+        NSString *gameState = [prefs stringForKey:@"gameState"];
+        if(![gameState isEqualToString:@"paused"]){
          NSArray *resumeMazes = [Maze getMazeByState:pausedState inManagedObjectContext:self.document.managedObjectContext];
         if ([resumeMazes count] > 0) {
             for (Maze *maz in resumeMazes) {
@@ -686,7 +689,7 @@
                     difference.discovered=NULL;
             }
         }
-        
+        }
         //Save current MaskView to local data!!!
         if ([gameMode isEqualToString:@"exciting"]) {
             NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
