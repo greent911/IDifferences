@@ -966,7 +966,7 @@
     self.numbersOfMyanimating+=6;
     self.maze.timeRemaining = [NSNumber numberWithInt:self.numbersOfMyanimating];
 
-    if (self.sparkLine.frame.size.height > 7 ){
+    if (self.sparkLine.frame.size.height-6*220/timeForEachGame > 7 ){
         self.sparkLine.frame = CGRectMake(self.sparkLine.frame.origin.x,
                                           self.sparkLine.frame.origin.y + 6*220/timeForEachGame,
                                           self.sparkLine.frame.size.width,
@@ -978,10 +978,19 @@
                                       self.spark.frame.size.height);
         NSLog(@"sparkLine.frame.size.height = %f",self.sparkLine.frame.size.height);
     }else{
-        self.spark.frame = CGRectMake(self.spark.frame.origin.x-(40),
-                                      self.spark.frame.origin.y+(220/timeForEachGame)-(30),
-                                      self.spark.frame.size.width*3,
-                                      self.spark.frame.size.height*3);
+        self.sparkLine.frame = CGRectMake(237,
+                                          276,
+                                          6,
+                                          7);
+        //            self.spark.frame = CGRectMake(self.spark.frame.origin.x-(40),
+        //                                          self.spark.frame.origin.y+(220/timeForEachGame)-(30),
+        //                                          self.spark.frame.size.width*3,
+        //                                          self.spark.frame.size.height*3);
+        self.spark.frame = CGRectMake(220,
+                                      256,
+                                      40,
+                                      40);
+
         [self stopTimer];
         [self gameLosedWithTimer];
     }
@@ -2297,10 +2306,21 @@
 //                [self performSelector:@selector(myAnimating) withObject:nil afterDelay:1.0f];
         }
         else{
-            self.spark.frame = CGRectMake(self.spark.frame.origin.x-(40),
-                                          self.spark.frame.origin.y+(220/timeForEachGame)-(30),
-                                          self.spark.frame.size.width*3,
-                                          self.spark.frame.size.height*3);
+            NSLog(@"[self.sparkLine description]:%@",[self.sparkLine description]);
+            NSLog(@"[self.spark description]:%@",[self.spark description]);
+            self.sparkLine.frame = CGRectMake(237,
+                                              276,
+                                              6,
+                                              7);
+//            self.spark.frame = CGRectMake(self.spark.frame.origin.x-(40),
+//                                          self.spark.frame.origin.y+(220/timeForEachGame)-(30),
+//                                          self.spark.frame.size.width*3,
+//                                          self.spark.frame.size.height*3);
+            self.spark.frame = CGRectMake(220,
+                                          256,
+                                          40,
+                                          40);
+
           
 //            self.maze.extendedAtLeastOneTime = @"YES";
 //            [self updateScoresExtendedTime];
