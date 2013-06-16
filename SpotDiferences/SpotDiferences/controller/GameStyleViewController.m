@@ -98,7 +98,14 @@
 	[prefs setObject:@"beginner" forKey:@"difficulty"];
     [prefs setObject:@"surprise" forKey:@"gameFlow"];
     [prefs synchronize];
-    NSArray *allMAzes = [Maze getMazeByState:@"normal" inManagedObjectContext:self.document.managedObjectContext];
+    NSString *gameMode=[prefs stringForKey:@"gameMode"];
+    NSString *mazesState=@"normal";
+    if ([gameMode isEqualToString:@"normal"]) {
+        mazesState=@"normal";
+    }else if ([gameMode isEqualToString:@"exciting"]){
+        mazesState=@"exciting";
+    }
+    NSArray *allMAzes = [Maze getMazeByState:mazesState inManagedObjectContext:self.document.managedObjectContext];
     if ([allMAzes count] == 0) {
         UIAlertView *alertView = [[UIAlertView alloc]
                                   initWithTitle:@"No Game!!!"
@@ -209,9 +216,14 @@
     if ([tapState isEqualToString:@"normal"]) {
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     //NSString *gameFlow = [prefs objectForKey:@"gameFlow"];
-    NSString *gameState = [prefs stringForKey:@"gameState"];
-    
-    NSArray *allMAzes = [Maze getMazeByState:gameState inManagedObjectContext:self.document.managedObjectContext];
+    NSString *gameMode = [prefs stringForKey:@"gameMode"];
+        NSString *mazesState=@"normal";
+        if ([gameMode isEqualToString:@"normal"]) {
+            mazesState=@"normal";
+        }else if ([gameMode isEqualToString:@"exciting"]){
+            mazesState=@"exciting";
+        }
+    NSArray *allMAzes = [Maze getMazeByState:mazesState inManagedObjectContext:self.document.managedObjectContext];
     int number = (arc4random()%[allMAzes count]);
     Maze *maze = [allMAzes objectAtIndex:number];
     GameViewController *gvc = (GameViewController*)segue.destinationViewController;

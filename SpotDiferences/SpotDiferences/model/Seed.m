@@ -29,6 +29,7 @@
 +(void)populateDatabase:(NSManagedObjectContext *)context
 {
     NSString *normalState = @"normal";
+    NSString *excitingState = @"exciting";
     NSString *challengeState = @"challenge";
     NSString *avalable = @"YES";
     //NSString *NewFotosAvalable = @"YES";
@@ -972,7 +973,52 @@
     [Seed insertDiffs:23.765813 topY:30.766674 downX:31.923073 downY:42.190674  diffFotos:T07A inContext:context];
     [Seed insertDiffs:15.871796 topY:7.224672 downX:22.247864 downY:14.244896  diffFotos:T07A inContext:context];
     [Seed insertDiffs:64.965813 topY:76.766674 downX:79.523073 downY:85.190674  diffFotos:T07A inContext:context];
-
+    /***********************************************************************************************************************************************************************
+     *
+     *
+     *                                               STATE - exciting
+     *
+     *
+     **********************************************************************************************************************************************************************/
+    
+    Maze *eT02 =[Maze createMaze:@"eT02" forTheme:normal inManagedObjectContext:context];
+    eT02.dificulty = detective;
+    eT02.state = excitingState;
+    eT02.uniqueID = @"eT02";
+    eT02.available = avalable;
+    DifferenceSet *eT02A = [DifferenceSet createDifferenceFoto:@"eT02A" forMaze:eT02 inManagedObjectContext:context];
+    
+    [Seed insertDiffs:11.011966 topY:4.413342 downX:21.078630 downY:11.092229  diffFotos:eT02A inContext:context];
+    [Seed insertDiffs:24.341879 topY:15.049343 downX:42.299141 downY:19.712456  diffFotos:eT02A inContext:context];
+    [Seed insertDiffs:52.965813 topY:65.766674 downX:64.923073 downY:77.190674  diffFotos:eT02A inContext:context];
+    [Seed insertDiffs:63.871796 topY:51.024672 downX:70.247864 downY:57.244896  diffFotos:eT02A inContext:context];
+    [Seed insertDiffs:90.065813 topY:0.066674 downX:99.923073 downY:52.190674  diffFotos:eT02A inContext:context];
+    
+    Maze *eT03 =[Maze createMaze:@"eT03" forTheme:normal inManagedObjectContext:context];
+    eT03.dificulty = detective;
+    eT03.state = excitingState;
+    eT03.uniqueID = @"eT03";
+    eT03.available = avalable;
+    DifferenceSet *eT03A = [DifferenceSet createDifferenceFoto:@"eT03A" forMaze:eT03 inManagedObjectContext:context];
+    
+    [Seed insertDiffs:32.011966 topY:18.413342 downX:42.078630 downY:26.092229  diffFotos:eT03A inContext:context];
+    [Seed insertDiffs:51.341879 topY:34.549343 downX:65.299141 downY:44.212456  diffFotos:eT03A inContext:context];
+    [Seed insertDiffs:40.965813 topY:82.766674 downX:57.923073 downY:95.190674  diffFotos:eT03A inContext:context];
+    [Seed insertDiffs:86.871796 topY:92.024672 downX:96.247864 downY:98.244896  diffFotos:eT03A inContext:context];
+    [Seed insertDiffs:46.065813 topY:34.066674 downX:51.333073 downY:39.190674  diffFotos:eT03A inContext:context];
+    
+    Maze *eT04 =[Maze createMaze:@"eT04" forTheme:normal inManagedObjectContext:context];
+    eT04.dificulty = detective;
+    eT04.state = excitingState;
+    eT04.uniqueID = @"eT04";
+    eT04.available = avalable;
+    DifferenceSet *eT04A = [DifferenceSet createDifferenceFoto:@"eT04A" forMaze:eT04 inManagedObjectContext:context];
+    
+    [Seed insertDiffs:38.011966 topY:1.413342 downX:46.078630 downY:11.692229  diffFotos:eT04A inContext:context];
+    [Seed insertDiffs:51.341879 topY:38.549343 downX:65.299141 downY:51.212456  diffFotos:eT04A inContext:context];
+    [Seed insertDiffs:37.965813 topY:78.766674 downX:54.923073 downY:96.190674  diffFotos:eT04A inContext:context];
+    [Seed insertDiffs:52.871796 topY:61.024672 downX:66.247864 downY:72.244896  diffFotos:eT04A inContext:context];
+    [Seed insertDiffs:5.065813 topY:55.066674 downX:15.333073 downY:65.190674  diffFotos:eT04A inContext:context];
 
     
     /***********************************************************************************************************************************************************************

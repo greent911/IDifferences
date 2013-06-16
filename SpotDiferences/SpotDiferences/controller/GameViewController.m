@@ -54,6 +54,7 @@
 {
     NSString *gameMode;
     ImageMaskView *imageMaskView;
+    NSString *mazeFinishState;
 }
 
 // ScrollViews
@@ -667,7 +668,7 @@
     if ([self.timerUnits count] == 0) {
         time = 0;
     }
-    if (![self.maze.state isEqualToString:@"finished"]) {
+    if (![self.maze.state isEqualToString:mazeFinishState]) {
         NSString *pausedState=[NSString stringWithFormat:@"paused%@",gameMode];
 //        NSLog(@"gameMode:%@",gameMode);
 //          NSLog(@"pausedState:%@",pausedState);
@@ -678,7 +679,7 @@
          NSArray *resumeMazes = [Maze getMazeByState:pausedState inManagedObjectContext:self.document.managedObjectContext];
         if ([resumeMazes count] > 0) {
             for (Maze *maz in resumeMazes) {
-                maz.state=@"normal";
+                maz.state=gameMode;
                 maz.differencesMissed = [NSNumber numberWithInt:0];
                 maz.personalscore = [NSNumber numberWithInt:0];
                 maz.personalTime =  [NSNumber numberWithInt:0];
@@ -1026,7 +1027,7 @@
 }
 
 -(void)changeStateToFinished{
-    self.maze.state = @"finished";   
+    self.maze.state = mazeFinishState;
     [self saveContext];
 }
 
@@ -1044,7 +1045,7 @@
     [self playWinSound];
     [self clearPauseView];
     [self updateWinScore];
-    self.maze.state = @"finished";
+    self.maze.state = mazeFinishState;
     self.maze.newColection = @"NO";
 //    UIView *pauseView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
 //    pauseView.backgroundColor = [UIColor blackColor];
@@ -1317,13 +1318,13 @@
             [self backToMazeView];
     }else {
         
-        NSArray *allMAzes = [Maze getMazeByState:gameState inManagedObjectContext:self.document.managedObjectContext];
+        NSArray *allMAzes = [Maze getMazeByState:gameMode inManagedObjectContext:self.document.managedObjectContext];
         if ([allMAzes count] == 0) {
             //may have problem with soft and challenge,the same finished state
-            NSArray *finishMAzes = [Maze getMazeByState:@"finished" inManagedObjectContext:self.document.managedObjectContext];
+            NSArray *finishMAzes = [Maze getMazeByState:mazeFinishState inManagedObjectContext:self.document.managedObjectContext];
 
             for (Maze *maze in finishMAzes) {
-                maze.state=gameState;
+                maze.state=gameMode;
             }
             [self saveContext];
             [self decideWhereToGo];
@@ -2729,6 +2730,7 @@
     [super viewDidLoad];
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     gameMode=[prefs stringForKey:@"gameMode"];
+    mazeFinishState=[NSString stringWithFormat:@"finished%@",gameMode];
     
     [[MyDocumentHandler sharedDocumentHandler] performWithDocument:^(UIManagedDocument *document){
         _document = document;

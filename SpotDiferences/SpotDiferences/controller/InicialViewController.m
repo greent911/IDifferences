@@ -266,7 +266,7 @@
 {
     [self playInterfaceSound];
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
-    [prefs setObject:@"Soft" forKey:@"gameMode"];
+    [prefs setObject:@"normal" forKey:@"gameMode"];
     [prefs synchronize];
     
     [self performSegueWithIdentifier:@"playStyle" sender:self];
