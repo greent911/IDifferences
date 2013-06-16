@@ -111,6 +111,8 @@
 @property (nonatomic,weak) NSString *twitterShare;
 @property (nonatomic,weak) NSString *lastShare;
 @property (nonatomic) BOOL stopAnimation;
+@property (nonatomic) BOOL isGameWin;
+
 @end
 
 @implementation GameViewController
@@ -158,6 +160,7 @@
 @synthesize numbersOfMyanimating = _numbersOfMyanimating;
 @synthesize countOfMagnifier = _countOfMagnifier;
 @synthesize countOfTimeIncrease = _countOfTimeIncrease;
+@synthesize isGameWin;
 #pragma mark - Setup
 
 
@@ -637,13 +640,20 @@
     [quitButton setTitle:@"NO" forState:UIControlStateNormal];
     quitButton.titleLabel.font = [UIFont fontWithName:[UikitFramework getFontName] size: fontSize];
     quitButton.titleLabel.textColor = [UIColor whiteColor];
-    [quitButton addTarget:self action:@selector(onlyQuit:) forControlEvents:UIControlEventTouchUpInside];
+    if (self.isGameWin) {
+        [quitButton addTarget:self action:@selector(onlyQuit:) forControlEvents:UIControlEventTouchUpInside];
+    } else {
+        [quitButton addTarget:self action:@selector(continueButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+
+    }
     [self.view addSubview:quitButton];
     
     [self.pauseViews addObject:imageView];
     [self.pauseViews addObject:continueButton];
     [self.pauseViews addObject:quitButton];
     [self.pauseViews addObject:quit_lable];
+    
+    self.isGameWin=NO;
 
 }
 
@@ -1213,7 +1223,9 @@
     quitButton.titleLabel.textColor = [UIColor whiteColor];
     [quitButton addTarget:self action:@selector(quitButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:quitButton];
-        
+    
+    self.isGameWin=YES;
+    
         [self.pauseViews addObject:pauseView];
         [self.pauseViews addObject:imageView];
         [self.pauseViews addObject:continueButton];
@@ -1320,7 +1332,6 @@
         
         NSArray *allMAzes = [Maze getMazeByState:gameMode inManagedObjectContext:self.document.managedObjectContext];
         if ([allMAzes count] == 0) {
-            //may have problem with soft and challenge,the same finished state
             NSArray *finishMAzes = [Maze getMazeByState:mazeFinishState inManagedObjectContext:self.document.managedObjectContext];
 
             for (Maze *maze in finishMAzes) {
@@ -2739,6 +2750,7 @@
     [self setupWithHelper:self.maze andContext:self.context];
 
     self.followUp = 0;
+    self.isGameWin=NO;
     _rightScrollView.delegate = self;
     _leftScrollView.delegate = self;
     [_rightScrollView setScrollEnabled:YES];
