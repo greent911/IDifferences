@@ -17,7 +17,7 @@
  * Game Controller
  *
  */
-@interface GameViewController : UIViewController<ImageMaskFilledDelegate>
+@interface GameViewController : UIViewController<ImageMaskFilledDelegate,MoveImageViewDelegate>
 
 @property (nonatomic) MazeHelper *mazeHelper;
 

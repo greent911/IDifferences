@@ -7,6 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+@protocol MoveImageViewDelegate
+@optional
+-(void) playTouchSound;
+
+@end
+
 
 @interface MoveImageView : UIImageView
 {
@@ -16,6 +22,7 @@
     CGPoint endlocation;
     BOOL isShow;
 }
+@property (nonatomic, weak) id<MoveImageViewDelegate> moveImageViewDelegate;
 
 
 - (id)initWithImage:(UIImage *)img;

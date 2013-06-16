@@ -169,10 +169,16 @@
  * 
  *
  **/
+-(void)playInterfaceSound
+{
+    [[SoundManager sharedSoundManager] playInterface];
+}
+
 
 -(void)playCheckSound{    
         [[SoundManager sharedSoundManager] playCheck];
 }
+
 
 -(void)playErrorSound{
         [[SoundManager sharedSoundManager] playErro];
@@ -182,7 +188,9 @@
 {
     moveImageViewArray=[[NSMutableArray alloc] init];
     for (int i=0; i< count; i++) {
-        [moveImageViewArray addObject:[[MoveImageView alloc] initWithRandomPointImage:[UIImage imageNamed:@"bean3.png"] andTouchedImage:[UIImage imageNamed:@"bean4.png"]]];
+        MoveImageView *mv=[[MoveImageView alloc] initWithRandomPointImage:[UIImage imageNamed:@"bean3.png"] andTouchedImage:[UIImage imageNamed:@"bean4.png"]];
+        mv.moveImageViewDelegate=self;
+        [moveImageViewArray addObject:mv];
 //       [moveImageViewArray addObject:[[MoveImageView alloc] initWitPoint:CGPointMake([ UIScreen mainScreen].bounds.size.height-60, [ UIScreen mainScreen].bounds.size.width-60) Image:[UIImage imageNamed:@"60px-SurprisedSmiley.svg.png"] andTouchedImage:[UIImage imageNamed:@"60px-718smiley_608EC2.svg.png"]]];
 
     }
@@ -435,6 +443,7 @@
 }
 
 -(void)pauseButtonTapped:(UIButton*)sender {
+    [self playInterfaceSound];
     [self stopTimer];
     UIView *pauseView = [self makeAPauseView];
     UIImage *messagebox;
@@ -520,7 +529,8 @@
 }
 
 -(void)timeIncreaseButtonTapped:(UIButton*)sender {
-        
+    [self playInterfaceSound];
+    
     if((self.sparkLine.frame.size.height+6*220/timeForEachGame) < 220){
         self.numbersOfMyanimating-=6;
         self.maze.timeRemaining = [NSNumber numberWithInt:self.numbersOfMyanimating];
@@ -563,11 +573,13 @@
 }
 
 -(void)continueButtonTapped:(UIButton*)sender {
+    [self playInterfaceSound];
     [self clearPauseWinLoseScreens];
     [self startTimer];
 }
 
 -(void)quitButtonTapped:(UIButton*)sender {
+    [self playInterfaceSound];
     //[self backToMenu];
     NSLog(@"%d",[self.pauseViews count]);
     for(int c=0;c<4;c++)
@@ -660,6 +672,7 @@
 }
 
 -(void)onlyQuit:(UIButton*)sender{
+    [self playInterfaceSound];
     if ([gameMode isEqualToString:@"exciting"]) {
         for (MoveImageView *mview in moveImageViewArray) {
         
@@ -674,6 +687,7 @@
 }
 
 -(void)wantToQuitButtonTapped:(UIButton*)sender {
+    [self playInterfaceSound];
     if(self.clickError >= 3)
         self.clickError = 0;
     int time = timeUnitNumber-[self.timerUnits count];
@@ -2234,6 +2248,8 @@
 }
 -(void) allShowMoveViewToBack:(UIButton*)sender
 {
+    [self playInterfaceSound];
+
     for (MoveImageView *mview in moveImageViewArray) {
         
         [mview showViewMoveToBack];
@@ -2241,6 +2257,8 @@
 }
 -(void) clearImageMask:(UIButton*)sender
 {
+    [self playInterfaceSound];
+
     [imageMaskView clearMaskView];
 }
 
@@ -2837,6 +2855,10 @@
         NSLog(@"ellipseHasNotDrawed");
     }
 
+}
+-(void) playTouchSound
+{
+    [self playInterfaceSound];
 }
 
 @end

@@ -10,6 +10,8 @@
 
 @implementation MoveImageView
 
+@synthesize moveImageViewDelegate;
+
 - (id)initWithImage:(UIImage *)img
 {
     self = [super init];
@@ -117,7 +119,7 @@
 //    CGPoint point = [[touches anyObject] locationInView:self];
 //    while (self.frame.origin.y != [ UIScreen mainScreen].bounds.size.height-100) {
         [self setImage:touchedImg];
-
+    [self.moveImageViewDelegate playTouchSound];
     
     endlocation=[self randomGo];
     [UIView animateWithDuration:1.0f animations:^{
