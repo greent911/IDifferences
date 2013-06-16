@@ -636,7 +636,7 @@
     [quitButton setTitle:@"NO" forState:UIControlStateNormal];
     quitButton.titleLabel.font = [UIFont fontWithName:[UikitFramework getFontName] size: fontSize];
     quitButton.titleLabel.textColor = [UIColor whiteColor];
-    [quitButton addTarget:self action:@selector(continueButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [quitButton addTarget:self action:@selector(onlyQuit:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:quitButton];
     
     [self.pauseViews addObject:imageView];
