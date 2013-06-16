@@ -92,9 +92,9 @@
 }
 
 - (void)setValue:(char)value forCoordinates:(size_t)x y:(size_t)y{
-    	if(data){
-    		free(data);
-    	}
+//    	if(data){
+//    		free(data);
+//    	}
     data=[ndata bytes];
 	data[x+ self.max.x*y] = value;
     
@@ -107,9 +107,9 @@
 }
 
 - (void)fillWithValue:(char)value {
-    	if(data){
-    		free(data);
-    	}
+//    	if(data){
+//    		free(data);
+//    	}
 	size_t last = self.max.x * self.max.y;
     data = [ndata bytes];
 	for(size_t i = 0; i < last; ++i){
