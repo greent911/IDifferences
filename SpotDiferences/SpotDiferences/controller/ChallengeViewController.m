@@ -91,7 +91,7 @@
         case 3:
             [self.CH3 setBackgroundImage:[UIImage imageNamed:@"level_pink.png"] forState:UIControlStateNormal];
             [self.CH3 setTitle:@"3" forState:UIControlStateNormal];
-            self.CH2.tag = 3;
+            self.CH3.tag = 3;
             [self.CH3 addTarget:self action:@selector(CH1ButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         case 2:
             [self.CH2 setBackgroundImage:[UIImage imageNamed:@"level_pink.png"] forState:UIControlStateNormal];

@@ -42,6 +42,7 @@
 #define intervalTimer 30
 #define timeForEachGame 60
 #define errorImage @"erro"
+#define maxChallengeGameNumber 3
 
 #define MoveImageViewNumber 8
 
@@ -1347,14 +1348,15 @@
         }else {
             //soft&exciting
             if([gameState isEqualToString:@"normal"]){
-                int number = (arc4random()%[allMAzes count]);
-                Maze *maze = [allMAzes objectAtIndex:number];
+                int numberR = (arc4random()%[allMAzes count]);
+                Maze *maze = [allMAzes objectAtIndex:numberR];
                 [self setupWith:maze andContext:self.document.managedObjectContext];
                 [self setupWithHelper:self.maze andContext:self.context];
                 [self resetAndChangeImage];
             }
             //challenge
             else{
+                if(number < maxChallengeGameNumber){
                 number = number+1;
                 [prefs setInteger:number forKey:@"number"];
                 [prefs setInteger:number forKey:@"level"];
@@ -1367,6 +1369,10 @@
                 [self setupWith:maze andContext:self.document.managedObjectContext];
                 [self setupWithHelper:self.maze andContext:self.context];
                 [self resetAndChangeImage];
+                }else{
+                    [prefs setInteger:1 forKey:@"number"];
+                    [self backToChallengeView];
+                }
             }
 
         }

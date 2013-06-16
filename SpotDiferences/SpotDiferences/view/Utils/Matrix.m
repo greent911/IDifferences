@@ -140,9 +140,9 @@
 #pragma mark -
 
 - (void)dealloc {
-	if(data){
-		free(data);
-	}
+//	if(data){
+//		free(data);
+//	}
 }
 
 @end
