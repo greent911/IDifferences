@@ -137,8 +137,6 @@
         NSLog(@"_resumeName:%@",_resumeName);
 //        [self performSegueWithIdentifier:@"resume" sender:self];
         [self performSegueWithIdentifier:@"SoftExciting" sender:self];
-
-
     } else {
         NSLog(@"No Resume Game!!!");
         UIAlertView *alertView = [[UIAlertView alloc]
