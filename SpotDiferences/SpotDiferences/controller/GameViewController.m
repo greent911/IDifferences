@@ -33,7 +33,7 @@
 #import "MazeHelper.h"
 #import "CGMarkerHelper.h"
 
-#define starOffset 10
+#define starOffset 15
 #define starToLeftOffset 30
 #define numberOfErrorsOffSet 30
 #define offset 5
@@ -386,9 +386,9 @@
 -(void)restartStar {
     [self removeAllStars];
     for (int c = 2; c > -3; c--) {
-        UIImage *starimage = [UIImage imageNamed:@"mouse_empty"];
+        UIImage *starimage = [UIImage imageNamed:@"graduationCap_empty"];
      //   starimage.frame.CGRectMake(self.view.frame.size.width/2-starimage.size.width/2 + starOffset * c - starToLeftOffset, 15, 17, 17);
-        UIImageView *starimageview = [UikitFramework createImageViewWithImage:@"mouse_empty" positionX:130 + starOffset * 2*c - starToLeftOffset positionY:5];
+        UIImageView *starimageview = [UikitFramework createImageViewWithImage:@"graduationCap_empty" positionX:120 + starOffset * 2*c - starToLeftOffset positionY:7];
         [self.view addSubview:starimageview];
         [self.stars addObject:starimageview];
     }
@@ -1111,7 +1111,7 @@
 -(void)updateStars {
     UIImageView *star = [self.stars lastObject];
     
-    UIImageView *starimageview = [UikitFramework createImageViewWithImage:@"mouse" positionX:star.frame.origin.x positionY:star.frame.origin.y];
+    UIImageView *starimageview = [UikitFramework createImageViewWithImage:@"graduationCap_blue" positionX:star.frame.origin.x positionY:star.frame.origin.y];
     
     [self.view addSubview:starimageview];
     
