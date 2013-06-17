@@ -55,8 +55,6 @@
     int halfViewSize = [self view].frame.size.width / 2;
     UIImage *image = [UIImage imageNamed:@"btn_wine"];
     
-    UIImage *bimage = [UIImage imageNamed:@"btn_back"];
-    
     UIButton *bbutton = [UikitFramework createButtonWithBackgroudImage:@"backButton" title:@"" positionX:5 positionY:220];
     bbutton.frame = CGRectMake(20, 250, 60, 40);
     [bbutton addTarget:self action:@selector(backButtonTapped:) forControlEvents:UIControlEventTouchUpInside];

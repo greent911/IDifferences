@@ -110,7 +110,7 @@
 
 -(void)login
 {
-    NSString *nickname = [self.registData objectForKey:@"nickname"];
+    //NSString *nickname = [self.registData objectForKey:@"nickname"];
     NSString *email = [self.registData objectForKey:@"email"];
     NSString *password = [self.registData objectForKey:@"password"];
     

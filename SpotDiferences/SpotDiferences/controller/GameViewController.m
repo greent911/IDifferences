@@ -262,7 +262,7 @@
     Differences *difference;
     while (!difference && i<5) {
         Differences *checkdifference = [_mazeHelper.mazeDifferences objectAtIndex:i];
-        NSLog(@"checkdifference.discovered:%@",checkdifference.discovered);//checkdifference.discovered=NULL;
+        //NSLog(@"checkdifference.discovered:%@",checkdifference.discovered);//checkdifference.discovered=NULL;
         if (![checkdifference.discovered isEqualToString:@"YES"]) {
             difference=checkdifference;
         }
@@ -299,7 +299,7 @@
     Differences *difference = [_mazeHelper differenceFound:position];
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     NSString *gameState = [prefs stringForKey:@"gameState"];
-    NSLog(@"difference:%@",[difference description]);
+    //NSLog(@"difference:%@",[difference description]);
     if (difference && !([difference.discovered isEqualToString:@"YES"] && [gameState isEqualToString:@"paused"]) && ![difference.discovered isEqualToString:@"YES"]) {
         [self playCheckSound];
         
@@ -386,7 +386,6 @@
 -(void)restartStar {
     [self removeAllStars];
     for (int c = 2; c > -3; c--) {
-        UIImage *starimage = [UIImage imageNamed:@"graduationCap_empty"];
      //   starimage.frame.CGRectMake(self.view.frame.size.width/2-starimage.size.width/2 + starOffset * c - starToLeftOffset, 15, 17, 17);
         UIImageView *starimageview = [UikitFramework createImageViewWithImage:@"graduationCap_empty" positionX:120 + starOffset * 2*c - starToLeftOffset positionY:7];
         [self.view addSubview:starimageview];
@@ -657,7 +656,7 @@
 -(void)quitButtonTapped:(UIButton*)sender {
     [self playInterfaceSound];
     //[self backToMenu];
-    NSLog(@"%d",[self.pauseViews count]);
+    //NSLog(@"%d",[self.pauseViews count]);
     for(int c=0;c<4;c++)
     {
         id obj = [self.pauseViews lastObject];
@@ -685,7 +684,6 @@
         
     }else
     {
-        NSString *dialog_box = [NSString stringWithFormat:@"dialog_box_%@",self.maze.name];
         messagebox = [UIImage imageNamed:@"dialogBox"];
     }
     
@@ -803,7 +801,7 @@
             [NSKeyedArchiver archiveRootObject:dict toFile:filePath];
         }
 
-        NSLog(@"self.maze.state=%@",self.maze.state);
+        //NSLog(@"self.maze.state=%@",self.maze.state);
         //self.maze.state = @"paused";
         self.maze.state = pausedState;
         self.maze.differencesMissed = [NSNumber numberWithInt:self.clickError];
@@ -1279,7 +1277,6 @@
     {
         
       //
-        NSString *dialog_box = [NSString stringWithFormat:@"dialog_box_%@",self.maze.name];
         //    messagebox = [UIImage imageNamed:dialog_box];
           messagebox = [UIImage imageNamed:@"dialogBox"];
 
@@ -1358,7 +1355,7 @@
     int number = [prefs integerForKey:@"number"];
     
     if ([gameState isEqualToString:@"paused"]) {
-        NSLog(@"%@",gameFlow);
+        //NSLog(@"%@",gameFlow);
         [prefs setObject:@"normal" forKey:@"gameState"];
         [prefs synchronize];
         gameState = [prefs stringForKey:@"gameState"];
@@ -2345,7 +2342,7 @@
 -(void)timerCallForReal:(NSTimer *)timer 
 {
     self.timerForReal ++;
-    NSLog(@"timerForReal:%d",self.timerForReal);
+    //NSLog(@"timerForReal:%d",self.timerForReal);
 //    if (self.timerForReal %4    == 0) {
 //        [self findOneDiff];
 //    }
@@ -2408,10 +2405,10 @@
 -(void) myAnimating{
         
     self.numbersOfMyanimating++;
-    NSLog(@"numbersOfMyanimating = %d",self.numbersOfMyanimating);
-    NSLog(@"o:sparkLine.frame.size.height = %f",self.sparkLine.frame.size.height);
-    NSLog(@"o:sparkLine.frame.size.y = %f",self.sparkLine.frame.origin.y);
-    NSLog(@"220/timeForEachGame:%d",220/timeForEachGame);
+   // NSLog(@"numbersOfMyanimating = %d",self.numbersOfMyanimating);
+   // NSLog(@"o:sparkLine.frame.size.height = %f",self.sparkLine.frame.size.height);
+   // NSLog(@"o:sparkLine.frame.size.y = %f",self.sparkLine.frame.origin.y);
+   // NSLog(@"220/timeForEachGame:%d",220/timeForEachGame);
 
         if (self.sparkLine.frame.size.height > 7 ){
             //[self.myTimer setProgress:self.myTimer.progress+0.005 animated:YES];
@@ -2425,16 +2422,16 @@
                                           self.sparkLine.frame.origin.y-(self.spark.frame.size.height/2),
                                           self.spark.frame.size.width,
                                           self.spark.frame.size.height);
-            NSLog(@"sparkLine.frame.size.height = %f",self.sparkLine.frame.size.height);
-           NSLog(@"sparkLine.frame.size.y = %f",self.sparkLine.frame.origin.y);
+           // NSLog(@"sparkLine.frame.size.height = %f",self.sparkLine.frame.size.height);
+           //NSLog(@"sparkLine.frame.size.y = %f",self.sparkLine.frame.origin.y);
 
             //self.spark.transform = CGAffineTransformMakeRotation( M_PI * self.myIndicator.progress);
 //            if (!_stopAnimation)
 //                [self performSelector:@selector(myAnimating) withObject:nil afterDelay:1.0f];
         }
         else{
-            NSLog(@"[self.sparkLine description]:%@",[self.sparkLine description]);
-            NSLog(@"[self.spark description]:%@",[self.spark description]);
+            //NSLog(@"[self.sparkLine description]:%@",[self.sparkLine description]);
+            //NSLog(@"[self.spark description]:%@",[self.spark description]);
             self.sparkLine.frame = CGRectMake(237,
                                               276,
                                               6,
@@ -2783,7 +2780,6 @@
     NSLog(@"Number of Magic Wand = %d", self.countOfMagicWand);
        
     }
-    UIButton *menu = [UikitFramework createButtonWithBackgroudImage:@"menu_small" title:@"" positionX:halfViewSize + 200 positionY:0];
     //[magnifierbutton addTarget:self action:@selector(magnifierButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
    // [self.view addSubview:menu];
 
@@ -2970,7 +2966,7 @@
 -(void) imageMaskView:(ImageMaskView *)maskView touchMaskEvent:(BOOL)ellipseHasDrawed touchPosition:(CGPoint)touchPosition
 {
     if (ellipseHasDrawed) {
-        NSLog(@"ya Touch %f - %f", touchPosition.x, touchPosition.y);
+        //NSLog(@"ya Touch %f - %f", touchPosition.x, touchPosition.y);
        [self checkDiffMatchs:touchPosition inView:_rightImageView];
         
     } else {

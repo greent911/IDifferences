@@ -192,7 +192,6 @@
     if ([segue.identifier isEqualToString:@"ChallengeStart"]) {
         NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
         //NSString *gameFlow = [prefs objectForKey:@"gameFlow"];
-        NSString *gameState = [prefs stringForKey:@"gameState"];
         NSString *number = [prefs stringForKey:@"number"];
         NSString *PhotoName = [NSString stringWithFormat:@"C0%@", number];
         //NSArray *allMAzes = [Maze getMazeByState:gameState inManagedObjectContext:self.document.managedObjectContext];

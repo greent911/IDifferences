@@ -29,7 +29,7 @@
 @property (nonatomic, retain) NSString * newColection;
 @property (nonatomic, retain) NSNumber * personalscore;
 @property (nonatomic, retain) NSNumber * personalTime;
-@property (nonatomic, retain) NSNumber * spark_line_length;
+//@property (nonatomic, retain) NSNumber * spark_line_length;
 @property (nonatomic, retain) NSString * showLabel;
 @property (nonatomic, retain) NSString * state;
 @property (nonatomic, retain) NSNumber * timeRemaining;

@@ -46,9 +46,9 @@
     Theme * normal =[Theme createTheme:@"NORMAL" foto:@"theme_box_cities" inManagedObjectContext:context]; normal.available = NewThemeAvalable;
     Theme * challenge =[Theme createTheme:@"CHALLENGE" foto:@"theme_box_cities" inManagedObjectContext:context]; challenge.available = NewThemeAvalable;
     
-    Difficulty *beginner = [Difficulty createDifficulty:@"beginner" inManagedObjectContext:context];
-    Difficulty *intermediate = [Difficulty createDifficulty:@"intermediate" inManagedObjectContext:context];
-    Difficulty *expert = [Difficulty createDifficulty:@"expert" inManagedObjectContext:context];
+//    Difficulty *beginner = [Difficulty createDifficulty:@"beginner" inManagedObjectContext:context];
+//    Difficulty *intermediate = [Difficulty createDifficulty:@"intermediate" inManagedObjectContext:context];
+//    Difficulty *expert = [Difficulty createDifficulty:@"expert" inManagedObjectContext:context];
     Difficulty *detective = [Difficulty createDifficulty:@"detective" inManagedObjectContext:context];
     
         /***********************************************************************************************************************************************************************
