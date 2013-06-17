@@ -2637,10 +2637,10 @@
 
 
     //Cheat!!!
-//     for (int c=0; c < [_mazeHelper.mazeDifferences count]; c++) {
-//         Differences *difference = [_mazeHelper.mazeDifferences objectAtIndex:c];
-//         [CGMarkerHelper drawMarker:difference inView:_rightImageView insecundView:_leftImageView inBounds:[_mazeHelper viewSize]];
-//     }
+     for (int c=0; c < [_mazeHelper.mazeDifferences count]; c++) {
+         Differences *difference = [_mazeHelper.mazeDifferences objectAtIndex:c];
+         [CGMarkerHelper drawMarker:difference inView:_rightImageView insecundView:_leftImageView inBounds:[_mazeHelper viewSize]];
+     }
     
 
     if([gameMode isEqual: @"exciting"]){
