@@ -87,7 +87,19 @@
 
 @property (nonatomic) int numberOfExtendedTimes;
 
+@property (nonatomic,weak) UIButton *magnifierbutton;
+@property (nonatomic,weak) UIButton *timeIncrease;
+@property (nonatomic,weak) UIButton *magicButton;
+@property (nonatomic,weak) UIButton *fingerbutton;
+
 @property (nonatomic,weak) UILabel *score;
+@property (nonatomic,strong) UILabel *NumberOfMagnifier;
+@property (nonatomic,strong) UILabel *NumberOfTimeIncrease;
+@property (nonatomic,strong) UILabel *NumberOfMagicWand;
+@property (nonatomic,strong) UILabel *NumberOfFinger;
+
+
+
 @property (nonatomic,strong) NSMutableArray *pauseViews;
 
 @property (nonatomic,strong) NSString* fetchFoto;
@@ -96,6 +108,8 @@
 @property (nonatomic) int clickOk;
 @property (nonatomic) int countOfMagnifier;
 @property (nonatomic) int countOfTimeIncrease;
+@property (nonatomic) int  countOfFinger;
+@property (nonatomic) int  countOfMagicWand;
 @property (nonatomic) Maze *maze;
 @property (nonatomic) NSManagedObjectContext *context;
 
@@ -132,6 +146,13 @@
 @synthesize timerUnits = _timerUnits;
 @synthesize stars = _stars;
 @synthesize score =_score;
+@synthesize NumberOfMagnifier =_NumberOfMagnifier;
+@synthesize NumberOfTimeIncrease =_NumberOfTimeIncrease;
+@synthesize NumberOfFinger =_NumberOfFinger;
+@synthesize NumberOfMagicWand =_NumberOfMagicWand;
+
+
+
 @synthesize pauseViews = _pauseViews;
 @synthesize redstars = _redstars;
 @synthesize numberOfExtendedTimes = _numberOfExtendedTimes;
@@ -162,6 +183,9 @@
 @synthesize countOfMagnifier = _countOfMagnifier;
 @synthesize countOfTimeIncrease = _countOfTimeIncrease;
 @synthesize isGameWin;
+@synthesize countOfFinger = _countOfFinger;
+@synthesize countOfMagicWand = _countOfMagicWand;
+
 #pragma mark - Setup
 
 
@@ -515,22 +539,66 @@
 }
 
 -(void)magnifierButtonTapped:(UIButton*)sender {
-    
-    //放大鏡功能
-    [self findOneDiff];
-    
-    if(self.countOfMagnifier > 0){
-        self.countOfMagnifier --;
-    }else{
-        
+    if(self.countOfMagnifier > 1){
+        [self findOneDiff];
+        self.countOfMagnifier--;
+    }else if(self.countOfMagnifier==1){
+        [self findOneDiff];
+        self.countOfMagnifier--;
+        self.magnifierbutton.hidden=YES;
+        self.NumberOfMagnifier.hidden=YES;
     }
-    
-    NSLog(@"x%d",self.countOfMagnifier);
+    self.NumberOfMagnifier.text = [NSString stringWithFormat:@"x%d", self.countOfMagnifier];
+    NSLog(@"self.countOfMagnifier = %d",self.countOfMagnifier);
 }
 
 -(void)timeIncreaseButtonTapped:(UIButton*)sender {
     [self playInterfaceSound];
-    
+        
+    if(self.countOfTimeIncrease > 1){
+        [self LongerSparkLine];
+        self.countOfTimeIncrease--;
+    }else if(self.countOfTimeIncrease==1){
+        [self LongerSparkLine];
+        self.countOfTimeIncrease--;
+        self.timeIncrease.hidden=YES;
+        self.NumberOfTimeIncrease.hidden=YES;
+        //[self.timeIncrease removeFromSuperview];
+    }
+    self.NumberOfTimeIncrease.text = [NSString stringWithFormat:@"x%d", self.countOfTimeIncrease];
+    NSLog(@"countOfTimeIncrease = %d",self.countOfTimeIncrease);
+}
+
+-(void)fingerButtonTapped:(UIButton*)sender {
+    if(self.countOfFinger > 1){
+        [self clearImageMask];
+        self.countOfFinger--;
+    }else if(self.countOfFinger==1){
+        [self clearImageMask];
+        self.countOfFinger--;
+        self.fingerbutton.hidden=YES;
+        self.NumberOfFinger.hidden=YES;
+    }
+    self.NumberOfFinger.text = [NSString stringWithFormat:@"x%d", self.countOfFinger];
+    NSLog(@"countOfFinger = %d",self.countOfFinger);
+}
+
+-(void)magicButtonTapped:(UIButton*)sender {
+    if(self.countOfMagicWand > 1){
+        [self allShowMoveViewToBack];
+        self.countOfMagicWand--;
+    }else if(self.countOfMagicWand==1){
+        [self allShowMoveViewToBack];
+        self.countOfMagicWand--;
+        self.magicButton.hidden=YES;
+        self.NumberOfMagicWand.hidden=YES;
+    }
+    self.NumberOfMagicWand.text = [NSString stringWithFormat:@"x%d", self.countOfMagicWand];
+    NSLog(@"countOfMagicWand = %d",self.countOfMagicWand);
+}
+
+
+-(void)LongerSparkLine{
     if((self.sparkLine.frame.size.height+6*220/timeForEachGame) < 220){
         self.numbersOfMyanimating-=6;
         self.maze.timeRemaining = [NSNumber numberWithInt:self.numbersOfMyanimating];
@@ -557,19 +625,6 @@
                                       self.spark.frame.size.width,
                                       self.spark.frame.size.height);
     }
-    
-   // self.numbersOfMyanimating-=5;
-   // self.maze.timeRemaining = [NSNumber numberWithInt:self.numbersOfMyanimating];
-//    NSLog(@"numbersOfMyanimating = %d",self.numbersOfMyanimating);
-//    
-//    if(self.countOfMagnifier > 0){
-//        self.countOfTimeIncrease --;
-//    }else{
-//        self.countOfTimeIncrease = 0;
-//    }
-//    
-//    NSLog(@"x%d",self.countOfTimeIncrease);
-    
 }
 
 -(void)continueButtonTapped:(UIButton*)sender {
@@ -738,6 +793,7 @@
         self.maze.personalTime =  [NSNumber numberWithInt:self.timerForReal];
         NSLog(@"inside wants to quit %d",self.timerForReal);
         self.maze.timeRemaining = [NSNumber numberWithInt:self.numbersOfMyanimating];
+        self.maze.firstTime = [NSNumber numberWithInt:self.countOfMagnifier]; //ResumeGame's countOfMagnifier
         [self saveContext];
         [self backToMenu];
     }else {
@@ -2246,7 +2302,7 @@
             [self.navigationController popToViewController:obj animated:YES];    
     }
 }
--(void) allShowMoveViewToBack:(UIButton*)sender
+-(void) allShowMoveViewToBack//:(UIButton*)sender
 {
     [self playInterfaceSound];
 
@@ -2255,7 +2311,7 @@
         [mview showViewMoveToBack];
     }
 }
--(void) clearImageMask:(UIButton*)sender
+-(void) clearImageMask//:(UIButton*)sender
 {
     [self playInterfaceSound];
 
@@ -2616,6 +2672,8 @@
     self.numberOfExtendedTimes = 0;
     self.countOfMagnifier = 3;
     self.countOfTimeIncrease =3;
+    self.countOfFinger = 3;
+    self.countOfMagicWand = 3;
     
     [self.slider setProgress:1.0];
     
@@ -2630,36 +2688,79 @@
 
 //    [self addTimerUnitsToScreen];
     
-        int halfViewSize = [self view].frame.size.width / 2;
+    int halfViewSize = [self view].frame.size.width / 2;
     
+    self.magnifierbutton = [UikitFramework createButtonWithBackgroudImage:@"magnifier_big_new" title:@"" positionX:halfViewSize + 50 positionY:4];
+    [self.magnifierbutton addTarget:self action:@selector(magnifierButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.magnifierbutton];
     
-    UIButton *magnifierbutton = [UikitFramework createButtonWithBackgroudImage:@"magnifier_big_new" title:@"" positionX:halfViewSize + 50 positionY:4];
-    [magnifierbutton addTarget:self action:@selector(magnifierButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:magnifierbutton];
+    int Magnifier_PositionX = self.magnifierbutton.frame.origin.x;
+    
+    //NSLog(@"self.countOfMagnifier: %d", self.countOfMagnifier);
+    
+    //設定UILabel_放大鏡數量
+    self.NumberOfMagnifier = [[UILabel alloc]initWithFrame:CGRectMake(Magnifier_PositionX+28, -3, 50, 50)];
+    self.NumberOfMagnifier.text = [NSString stringWithFormat:@"x%d", self.countOfMagnifier];
+    self.NumberOfMagnifier.textColor = [UIColor redColor];
+    
+    UIFont *font = [UIFont fontWithName:[UikitFramework getFontName] size: 12];
+    [self.NumberOfMagnifier setFont:font];
+    [self.NumberOfMagnifier setBackgroundColor:[UIColor clearColor]];
+    [self.view addSubview:self.NumberOfMagnifier];
+    
+    NSLog(@"Number of magnifier = %d", self.countOfMagnifier);
 
-   // UILabel *NumberOfMagnifier = [UikitFramework createLableWithText:@"x%d",self.countOfMagnifier positionX:halfViewSize + 80 positionY:-3 width:50 height:50];
-   // NumberOfMagnifier.font = [UIFont fontWithName:[UikitFramework getFontName] size: 14];
-    //NumberOfMagnifier.textColor = [UIColor redColor];
-    //[self.view addSubview:NumberOfMagnifier];
     
     UIButton *timeIncrease = [UikitFramework createButtonWithBackgroudImage:@"clock_brown" title:@"" positionX:halfViewSize + 100 positionY:2];
     [timeIncrease addTarget:self action:@selector(timeIncreaseButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:timeIncrease];
     
-//    UILabel *NumberOfTimeIncrease = [UikitFramework createLableWithText:(@"x%d",self.countOfTimeIncrease) positionX:halfViewSize + 140 positionY:-3 width:50 height:50];
-//    //NumberOfTimeIncrease.font = [UIFont fontWithName:[UikitFramework getFontName] size: 14];
-    //NumberOfTimeIncrease.textColor = [UIColor redColor];
-    //[self.view addSubview:NumberOfTimeIncrease];
+    int timeIncrease_PositionX = halfViewSize + 100;
+    
+    self.NumberOfTimeIncrease = [[UILabel alloc]initWithFrame:CGRectMake(timeIncrease_PositionX+23, -3, 50, 50)];
+    self.NumberOfTimeIncrease.text = [NSString stringWithFormat:@"x%d", self.countOfTimeIncrease];
+    self.NumberOfTimeIncrease.textColor = [UIColor redColor];
+    
+    [self.NumberOfTimeIncrease setFont:font];
+    [self.NumberOfTimeIncrease setBackgroundColor:[UIColor clearColor]];
+    [self.view addSubview:self.NumberOfTimeIncrease];
+    
+    NSLog(@"Number of TimeIncrease = %d", self.countOfTimeIncrease);
+
    if([gameMode isEqual: @"exciting"]){ 
     UIButton *fingerbutton = [UikitFramework createButtonWithBackgroudImage:@"finger" title:@"" positionX:halfViewSize + 150 positionY:2];
-    [fingerbutton addTarget:self action:@selector(clearImageMask:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:fingerbutton];
+   // [fingerbutton addTarget:self action:@selector(clearImageMask:) forControlEvents:UIControlEventTouchUpInside];
+       [fingerbutton addTarget:self action:@selector(fingerButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+       [self.view addSubview:fingerbutton];
+       
+    int fingerbutton_PositionX = halfViewSize + 150;
+       
+    self.NumberOfFinger = [[UILabel alloc]initWithFrame:CGRectMake(fingerbutton_PositionX + 20, -3, 50, 50)];
+    self.self.NumberOfFinger.text = [NSString stringWithFormat:@"x%d", self.countOfFinger];
+    self.self.NumberOfFinger.textColor = [UIColor redColor];
+       
+    [self.self.NumberOfFinger setFont:font];
+    [self.self.NumberOfFinger setBackgroundColor:[UIColor clearColor]];
+    [self.view addSubview:self.self.NumberOfFinger];
+    
+    NSLog(@"Number of Finger = %d", self.countOfFinger);
 
     
     UIButton *magicButton = [UikitFramework createButtonWithBackgroudImage:@"magic" title:@"" positionX:halfViewSize + 200 positionY:4];
-    [magicButton addTarget:self action:@selector(allShowMoveViewToBack:) forControlEvents:UIControlEventTouchUpInside];
+    [magicButton addTarget:self action:@selector(magicButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:magicButton];
 
+    int magicButton_PositionX = halfViewSize + 200;
+       
+    self.NumberOfMagicWand = [[UILabel alloc]initWithFrame:CGRectMake(magicButton_PositionX + 16, -3, 50, 50)];
+    self.NumberOfMagicWand.text = [NSString stringWithFormat:@"x%d", self.countOfMagicWand];
+    self.NumberOfMagicWand.textColor = [UIColor redColor];
+       
+    [self.NumberOfMagicWand setFont:font];
+    [self.NumberOfMagicWand setBackgroundColor:[UIColor clearColor]];
+    [self.view addSubview:self.self.NumberOfMagicWand];
+    NSLog(@"Number of Magic Wand = %d", self.countOfMagicWand);
+       
     }
     UIButton *menu = [UikitFramework createButtonWithBackgroudImage:@"menu_small" title:@"" positionX:halfViewSize + 200 positionY:0];
     //[magnifierbutton addTarget:self action:@selector(magnifierButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
