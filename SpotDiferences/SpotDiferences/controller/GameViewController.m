@@ -193,11 +193,30 @@
  * 
  *
  **/
+-(void)playAddtimeSound
+{
+    [[SoundManager sharedSoundManager] playAddtime];
+}
+
+-(void)playCleanSound
+{
+    [[SoundManager sharedSoundManager] playClean];
+}
+
+-(void)playWindSound
+{
+    [[SoundManager sharedSoundManager] playWind];
+}
+
+-(void)playCrowSound
+{
+    [[SoundManager sharedSoundManager] playCrow];
+}
+
 -(void)playInterfaceSound
 {
     [[SoundManager sharedSoundManager] playInterface];
 }
-
 
 -(void)playCheckSound{    
         [[SoundManager sharedSoundManager] playCheck];
@@ -554,7 +573,7 @@
 
 -(void)timeIncreaseButtonTapped:(UIButton*)sender {
     [self playInterfaceSound];
-        
+    [self playAddtimeSound];
     if(self.countOfTimeIncrease > 1){
         [self LongerSparkLine];
         self.countOfTimeIncrease--;
@@ -570,6 +589,7 @@
 }
 
 -(void)fingerButtonTapped:(UIButton*)sender {
+    [self playCleanSound];
     if(self.countOfFinger > 1){
         [self clearImageMask];
         self.countOfFinger--;
@@ -584,6 +604,7 @@
 }
 
 -(void)magicButtonTapped:(UIButton*)sender {
+    [self playWindSound];
     if(self.countOfMagicWand > 1){
         [self allShowMoveViewToBack];
         self.countOfMagicWand--;
@@ -2637,10 +2658,10 @@
 
 
     //Cheat!!!
-     for (int c=0; c < [_mazeHelper.mazeDifferences count]; c++) {
-         Differences *difference = [_mazeHelper.mazeDifferences objectAtIndex:c];
-         [CGMarkerHelper drawMarker:difference inView:_rightImageView insecundView:_leftImageView inBounds:[_mazeHelper viewSize]];
-     }
+//     for (int c=0; c < [_mazeHelper.mazeDifferences count]; c++) {
+//         Differences *difference = [_mazeHelper.mazeDifferences objectAtIndex:c];
+//         [CGMarkerHelper drawMarker:difference inView:_rightImageView insecundView:_leftImageView inBounds:[_mazeHelper viewSize]];
+//     }
     
 
     if([gameMode isEqual: @"exciting"]){
@@ -2959,7 +2980,7 @@
 }
 -(void) playTouchSound
 {
-    [self playInterfaceSound];
+    [self playCrowSound];
 }
 
 @end

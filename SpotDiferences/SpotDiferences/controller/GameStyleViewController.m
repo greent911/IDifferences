@@ -50,7 +50,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    //[self playSound];
+    [self playSound];
     int offset = 25;
     int halfViewSize = [self view].frame.size.width / 2;
     UIImage *image = [UIImage imageNamed:@"btn_wine"];
@@ -90,6 +90,7 @@
 -(void)newGameButtonTapped:(UIButton *)sender
 {
     [self playInterfaceSound];
+    [[SoundManager sharedSoundManager] stopIntro];
     [self setGameState:@"normal"];
     /*
     [self performSegueWithIdentifier:@"go to dificulty" sender:self];
@@ -131,6 +132,7 @@
 -(void)resumeGameButtonTapped:(UIButton*)sender
 {
     [self playInterfaceSound];
+    [[SoundManager sharedSoundManager] stopIntro];
     [self setGameState:@"paused"];
     //[self performSegueWithIdentifier:@"resumeGame" sender:self];
    // NSArray *resumeMazes = [Maze getMazeByResumedGames:self.document.managedObjectContext];

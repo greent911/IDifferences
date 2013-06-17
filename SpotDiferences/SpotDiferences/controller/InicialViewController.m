@@ -72,7 +72,7 @@
 {
     [super viewDidAppear:animated];
     
-    //[self playSound];
+    [self playSound];
     int offset = 40;
     int halfViewSize = [self view].frame.size.width / 2;
     UIImage *image = [UIImage imageNamed:@"beginning"];

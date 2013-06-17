@@ -22,4 +22,13 @@
 -(void)stopFinal;
 -(void)playInterface;
 -(void)stopInterface;
+-(void)playCrow;
+-(void)stopCrow;
+-(void)playWind;
+-(void)stopWind;
+-(void)playClean;
+-(void)stopClean;
+-(void)playAddtime;
+-(void)stopAddtime;
+
 @end

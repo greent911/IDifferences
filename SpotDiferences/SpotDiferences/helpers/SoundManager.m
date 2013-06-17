@@ -14,6 +14,12 @@
 @property(nonatomic,strong) AVAudioPlayer *erro;
 @property(nonatomic,strong) AVAudioPlayer *final;
 @property(nonatomic,strong) AVAudioPlayer *interface;
+@property(nonatomic,strong) AVAudioPlayer *crow;
+@property(nonatomic,strong) AVAudioPlayer *wind;
+@property(nonatomic,strong) AVAudioPlayer *clean;
+@property(nonatomic,strong) AVAudioPlayer *addtime;
+
+
 @end
 
 
@@ -23,6 +29,11 @@
 @synthesize erro = _erro;
 @synthesize final = _final;
 @synthesize interface = _interface;
+@synthesize crow=_crow;
+@synthesize wind=_wind;
+@synthesize clean=_clean;
+@synthesize addtime=_addtime;
+
 static  SoundManager * _sharedSOundManager;
 
 + (SoundManager *)sharedSoundManager
@@ -98,6 +109,49 @@ static  SoundManager * _sharedSOundManager;
             self.intro.accessibilityValue = @"interface";
         }
         
+        url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"crow" ofType:@"wav"]];
+        
+        self.crow = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
+        
+        if (error) {
+            NSLog(@"Error in audioPlayer: %@", [error localizedDescription]);
+        }else {
+            [self.crow prepareToPlay];
+            self.intro.accessibilityValue = @"crow";
+        }
+        
+        url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"wind" ofType:@"mp3"]];
+        
+        self.wind = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
+        
+        if (error) {
+            NSLog(@"Error in audioPlayer: %@", [error localizedDescription]);
+        }else {
+            [self.wind prepareToPlay];
+            self.intro.accessibilityValue = @"wind";
+        }
+        
+        url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"clean" ofType:@"mp3"]];
+        
+        self.clean = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
+        
+        if (error) {
+            NSLog(@"Error in audioPlayer: %@", [error localizedDescription]);
+        }else {
+            [self.clean prepareToPlay];
+            self.intro.accessibilityValue = @"clean";
+        }
+        
+        url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"addtime" ofType:@"mp3"]];
+        
+        self.addtime = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
+        
+        if (error) {
+            NSLog(@"Error in audioPlayer: %@", [error localizedDescription]);
+        }else {
+            [self.addtime prepareToPlay];
+            self.intro.accessibilityValue = @"addtime";
+        }
     }
     return self;
 }
@@ -194,6 +248,56 @@ static  SoundManager * _sharedSOundManager;
 {
     [self.interface stop];
 }
+-(void)playCrow
+{
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    NSString *sound = [prefs stringForKey:@"sound"];
+    if (![sound isEqualToString:@"NO"]) {
+        [self.crow play];
+    }
+}
+-(void)stopCrow
+{
+    [self.crow stop];
+}
+-(void)playWind
+{
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    NSString *sound = [prefs stringForKey:@"sound"];
+    if (![sound isEqualToString:@"NO"]) {
+        [self.wind play];
+    }
+}
+-(void)stopWind
+{
+    [self.wind stop];
+}
+
+-(void)playClean
+{
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    NSString *sound = [prefs stringForKey:@"sound"];
+    if (![sound isEqualToString:@"NO"]) {
+        [self.clean play];
+    }
+}
+-(void)stopClean
+{
+    [self.clean stop];
+}
+
+-(void)playAddtime
+{
+    NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
+    NSString *sound = [prefs stringForKey:@"sound"];
+    if (![sound isEqualToString:@"NO"]) {
+        [self.addtime play];
+    }
+}
+-(void)stopAddtime
+{
+    [self.addtime stop];
+}
 
 -(void)stopAllSounds
 {
@@ -202,6 +306,10 @@ static  SoundManager * _sharedSOundManager;
     [self stopErro];
     [self stopFinal];
     [self stopInterface];
+    [self stopCrow];
+    [self stopWind];
+    [self stopClean];
+    [self stopAddtime];
 }
 
 @end

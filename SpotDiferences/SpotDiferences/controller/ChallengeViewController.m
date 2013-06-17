@@ -40,6 +40,10 @@
     }
     return self;
 }
+-(void)playSound
+{
+    [[SoundManager sharedSoundManager] playIntro];
+}
 
 - (void)viewDidLoad
 {
@@ -75,6 +79,7 @@
 
 -(void)viewDidAppear:(BOOL)animated
 {
+    [self playSound];
     NSUserDefaults *prefs = [NSUserDefaults standardUserDefaults];
     self.CH1.tag = 1;
     
@@ -125,6 +130,7 @@
 //    [self performSegueWithIdentifier:@"ChallengeStart" sender:self];
     
     [self playInterfaceSound];
+    [[SoundManager sharedSoundManager] stopIntro];
     [self setGameState:@"challenge"];
     UIButton* btn = sender;
     int number;
