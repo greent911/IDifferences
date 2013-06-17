@@ -2711,9 +2711,9 @@
     NSLog(@"Number of magnifier = %d", self.countOfMagnifier);
 
     
-    UIButton *timeIncrease = [UikitFramework createButtonWithBackgroudImage:@"clock_brown" title:@"" positionX:halfViewSize + 100 positionY:2];
-    [timeIncrease addTarget:self action:@selector(timeIncreaseButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:timeIncrease];
+    self.timeIncrease = [UikitFramework createButtonWithBackgroudImage:@"clock_brown" title:@"" positionX:halfViewSize + 100 positionY:2];
+    [self.timeIncrease addTarget:self action:@selector(timeIncreaseButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.timeIncrease];
     
     int timeIncrease_PositionX = halfViewSize + 100;
     
@@ -2728,10 +2728,10 @@
     NSLog(@"Number of TimeIncrease = %d", self.countOfTimeIncrease);
 
    if([gameMode isEqual: @"exciting"]){ 
-    UIButton *fingerbutton = [UikitFramework createButtonWithBackgroudImage:@"finger" title:@"" positionX:halfViewSize + 150 positionY:2];
+    self.fingerbutton = [UikitFramework createButtonWithBackgroudImage:@"finger" title:@"" positionX:halfViewSize + 150 positionY:2];
    // [fingerbutton addTarget:self action:@selector(clearImageMask:) forControlEvents:UIControlEventTouchUpInside];
-       [fingerbutton addTarget:self action:@selector(fingerButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-       [self.view addSubview:fingerbutton];
+       [self.fingerbutton addTarget:self action:@selector(fingerButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+       [self.view addSubview:self.fingerbutton];
        
     int fingerbutton_PositionX = halfViewSize + 150;
        
@@ -2746,9 +2746,9 @@
     NSLog(@"Number of Finger = %d", self.countOfFinger);
 
     
-    UIButton *magicButton = [UikitFramework createButtonWithBackgroudImage:@"magic" title:@"" positionX:halfViewSize + 200 positionY:4];
-    [magicButton addTarget:self action:@selector(magicButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:magicButton];
+    self.magicButton = [UikitFramework createButtonWithBackgroudImage:@"magic" title:@"" positionX:halfViewSize + 200 positionY:4];
+    [self.magicButton addTarget:self action:@selector(magicButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.magicButton];
 
     int magicButton_PositionX = halfViewSize + 200;
        
